@@ -115,4 +115,100 @@
   }
 
   loadJadwal();
+
+  /* ===== BAITUL MAAL ===== */
+  var BM_PROGRAMS = {
+    zakat: {
+      tag: 'Zakat',
+      title: 'Penyaluran zakat melalui Baitul Maal',
+      text: 'Baitul Maal Masjid Noor Islam menerima zakat maal dan zakat fitrah, lalu menyalurkannya kepada 8 asnaf mustahik di lingkungan Semaki Kulon dengan verifikasi takmir.',
+      list: [
+        'Identifikasi mustahik oleh tim takmir & RT setempat',
+        'Penyaluran rutin bulanan & program Ramadan',
+        'Rekap penerima dicatat untuk laporan jamaah'
+      ]
+    },
+    infaq: {
+      tag: 'Infaq',
+      title: 'Infaq untuk operasional masjid',
+      text: 'Infaq jamaah membantu biaya harian masjid: listrik, air, kebersihan, sound system, dan perlengkapan ibadah lima waktu.',
+      list: [
+        'Perawatan fasilitas sholat & tempat wudhu',
+        'Kebutuhan takbir, mushaf, dan perlengkapan jamaah',
+        'Dukungan kegiatan rutin masjid'
+      ]
+    },
+    sedekah: {
+      tag: 'Sedekah',
+      title: 'Sedekah untuk warga & mustahik',
+      text: 'Sedekah disalurkan untuk bantuan sosial warga Semaki Kulon: santunan, bantuan sembako, dan kebutuhan darurat.',
+      list: [
+        'Program bantuan fakir miskin & lansia',
+        'Bantuan bencana / kebutuhan mendesak warga',
+        'Kolaborasi dengan RT/RW setempat'
+      ]
+    },
+    wakaf: {
+      tag: 'Wakaf',
+      title: 'Wakaf untuk kebermanfaatan jangka panjang',
+      text: 'Wakaf uang atau barang dicatat sebagai aset masjid untuk pembangunan, perbaikan, dan program berkelanjutan.',
+      list: [
+        'Pencatatan wakaf oleh takmir masjid',
+        'Digunakan sesuai peruntukan yang disepakati',
+        'Laporan perkembangan aset wakaf'
+      ]
+    }
+  };
+
+  var bmDetailEl = document.getElementById('bmDetail');
+  var bmPrograms = document.querySelectorAll('.bm-program');
+
+  function setBmProgram(key){
+    var data = BM_PROGRAMS[key];
+    if(!data) return;
+    document.getElementById('bmDetailTag').textContent = data.tag;
+    document.getElementById('bmDetailTitle').textContent = data.title;
+    document.getElementById('bmDetailText').textContent = data.text;
+    var listEl = document.getElementById('bmDetailList');
+    listEl.innerHTML = data.list.map(function(item){ return '<li>'+item+'</li>'; }).join('');
+    bmPrograms.forEach(function(btn){
+      var active = btn.getAttribute('data-program') === key;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    if(bmDetailEl){
+      bmDetailEl.style.animation = 'none';
+      void bmDetailEl.offsetWidth;
+      bmDetailEl.style.animation = '';
+    }
+  }
+
+  bmPrograms.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      setBmProgram(btn.getAttribute('data-program'));
+    });
+  });
+
+  var copyBtn = document.getElementById('bmCopyBtn');
+  if(copyBtn){
+    copyBtn.addEventListener('click', function(){
+      var rek = document.getElementById('bmRekNumber');
+      var note = document.getElementById('bmCopyNote');
+      if(!rek || copyBtn.disabled) return;
+      var text = rek.textContent.trim();
+      if(!text || text.indexOf('menyusul') !== -1 || text.indexOf('akan ditambahkan') !== -1) return;
+      navigator.clipboard.writeText(text.replace(/\s/g,'')).then(function(){
+        copyBtn.textContent = 'Tersalin!';
+        copyBtn.classList.add('copied');
+        if(note) note.textContent = 'Nomor rekening berhasil disalin.';
+        setTimeout(function(){
+          copyBtn.textContent = 'Salin';
+          copyBtn.classList.remove('copied');
+          if(note) note.textContent = 'Pastikan transfer ke rekening resmi Baitul Maal.';
+        }, 2000);
+      }).catch(function(){
+        if(note) note.textContent = 'Salin manual: ' + text;
+      });
+    });
+  }
 })();
