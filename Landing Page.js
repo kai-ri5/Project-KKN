@@ -115,4 +115,68 @@
   }
 
   loadJadwal();
+
+  // ===== KEGIATAN (dari Supabase) =====
+  var SUPABASE_URL = 'https://ljgedntbohlgdtkphqex.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_j06auKDeW4sdrJGBoIqkXg_F3dQSjV9';
+  var supabaseClient = null;
+  if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+
+  function escapeHtml(str){
+    if(!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function renderKegiatan(list){
+    var grid = document.getElementById('kegiatanGrid');
+    var note = document.getElementById('kegiatanNote');
+    if(!grid) return;
+
+    if(!list || list.length === 0){
+      grid.innerHTML = '';
+      if(note){
+        note.style.display = 'block';
+        note.textContent = 'Belum ada kegiatan yang ditambahkan oleh takmir. Bagian ini akan otomatis terisi begitu data dimasukkan.';
+      }
+      return;
+    }
+
+    if(note) note.style.display = 'none';
+    var html = '';
+    list.forEach(function(k){
+      var jadwalTxt = [k.hari, k.jam].filter(Boolean).join(' · ');
+      html += '<div class="keg-card">'+
+        '<div>'+
+          (jadwalTxt ? '<div class="keg-tag">'+escapeHtml(jadwalTxt)+'</div>' : '') +
+          '<h3>'+escapeHtml(k.nama_kegiatan || 'Kegiatan')+'</h3>'+
+          (k.deskripsi ? '<p>'+escapeHtml(k.deskripsi)+'</p>' : '') +
+        '</div>'+
+      '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function loadKegiatan(){
+    if(!supabaseClient){
+      renderKegiatan([]);
+      return;
+    }
+    supabaseClient
+      .from('kegiatan')
+      .select('*')
+      .order('id', { ascending: true })
+      .then(function(res){
+        if(res.error){
+          console.error('Gagal ambil data kegiatan:', res.error);
+          renderKegiatan([]);
+          return;
+        }
+        renderKegiatan(res.data);
+      });
+  }
+
+  loadKegiatan();
 })();
