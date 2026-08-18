@@ -42,7 +42,7 @@
       <div class="eyebrow">Kampung Semaki Kulon</div>
       <h1>Rumah ibadah,<br><em>rumah warga.</em></h1>
       <p class="lede">Masjid Noor Islam melayani jamaah Kampung Semaki Kulon dengan sholat lima waktu, kegiatan rutin, dan ruang untuk warga saling menopang.</p>
-      <p style="margin-top:8px; font-size:13px; color:rgba(246,241,228,0.55);">✦ Halaman ini masih terus dikembangkan oleh tim KKN.</p>
+      <p class="hero-note">✦ Halaman ini masih terus dikembangkan oleh tim KKN.</p>
       <div class="hero-cta">
         <a href="#jadwal" class="btn btn-primary">Lihat Jadwal Sholat</a>
         <a href="#lokasi" class="btn btn-ghost">Lokasi Masjid</a>
@@ -82,13 +82,18 @@
   <div class="motif motif-brass"></div>
 </section>
 
-<div class="strip">
-  <div class="strip-inner">
-    <div>
-      <div class="strip-label">Waktu sekarang</div>
-      <div class="strip-now" id="clockNow">--:--:--</div>
+<div class="pc-wrap">
+  <div class="wrap">
+    <div class="pc-card">
+      <div class="pc-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Waktu Menuju <span id="pcNextName">Sholat</span></div>
+        <div class="pc-timer" id="pcTimer">--:--:--</div>
+        <div class="pc-sub">Insya Allah <span id="pcTime">--:--</span></div>
+      </div>
     </div>
-    <div class="strip-count" id="nextPrayerStrip">Memuat jadwal sholat…</div>
   </div>
 </div>
 

@@ -15,9 +15,10 @@
   function pad(n){ return n < 10 ? '0'+n : ''+n; }
 
   function updateClock(){
+    var el = document.getElementById('clockNow');
+    if(!el) return;
     var now = new Date();
-    document.getElementById('clockNow').textContent =
-      pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+    el.textContent = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
   }
   setInterval(updateClock, 1000);
   updateClock();
@@ -60,22 +61,43 @@
       if(toMinutes(jadwalData[key]) > nowMin){ upcoming = key; break; }
     }
 
-    var stripEl = document.getElementById('nextPrayerStrip');
+    // === Countdown card (pc-*) ===
+    var pcNameEl = document.getElementById('pcNextName');
+    var pcTimeEl = document.getElementById('pcTime');
+    var pcTimerEl = document.getElementById('pcTimer');
+    var targetKey, targetHHMM, isTomorrow = false;
+
     if(upcoming){
       var card = document.querySelector('#jadwalGrid .jcard[data-key="'+upcoming+'"]');
       if(card) card.classList.add('active');
-      var diff = toMinutes(jadwalData[upcoming]) - nowMin;
-      var h = Math.floor(diff/60), m = diff%60;
-      var sisa = h > 0 ? (h+' jam '+m+' menit') : (m+' menit');
-      stripEl.textContent = PRAYER_LABEL[upcoming] + ' pukul ' + jadwalData[upcoming] + ' · ' + sisa + ' lagi';
+      targetKey = upcoming;
+      targetHHMM = jadwalData[upcoming];
     } else {
-      // sudah lewat isya, sholat berikutnya subuh besok
       var card2 = document.querySelector('#jadwalGrid .jcard[data-key="subuh"]');
       if(card2) card2.classList.add('active');
-      stripEl.textContent = 'Subuh besok pukul ' + (jadwalData.subuh || '--:--');
+      targetKey = 'subuh';
+      targetHHMM = jadwalData.subuh;
+      isTomorrow = true;
+    }
+
+    if(pcNameEl) pcNameEl.textContent = PRAYER_LABEL[targetKey] || 'Sholat';
+    if(pcTimeEl) pcTimeEl.textContent = targetHHMM || '--:--';
+
+    if(pcTimerEl && targetHHMM){
+      var p = targetHHMM.split(':');
+      var targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(p[0],10), parseInt(p[1],10), 0);
+      if(isTomorrow || targetDate.getTime() <= now.getTime()){
+        targetDate.setDate(targetDate.getDate()+1);
+      }
+      var diffMs = targetDate.getTime() - now.getTime();
+      var totalSec = Math.max(0, Math.floor(diffMs/1000));
+      var hh = Math.floor(totalSec/3600);
+      var mm = Math.floor((totalSec%3600)/60);
+      var ss = totalSec%60;
+      pcTimerEl.textContent = pad(hh)+':'+pad(mm)+':'+pad(ss);
     }
   }
-  setInterval(highlightNextPrayer, 30000);
+  setInterval(highlightNextPrayer, 1000);
 
   function fetchJadwalById(kotaId, lokasiLabel){
     var now = new Date();
@@ -109,7 +131,8 @@
         fetchJadwalById(FALLBACK_KOTA_ID, 'Kota Yogyakarta').catch(function(){
           document.getElementById('jadwalStatus').textContent =
             'Jadwal sholat belum bisa dimuat otomatis saat ini. Silakan periksa kembali beberapa saat lagi.';
-          document.getElementById('nextPrayerStrip').textContent = 'Jadwal tidak tersedia saat ini';
+          var pcTimerFallback = document.getElementById('pcTimer');
+          if(pcTimerFallback) pcTimerFallback.textContent = '--:--:--';
         });
       });
   }
