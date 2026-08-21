@@ -1,307 +1,393 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Masjid Noor Islam — Semaki Kulon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="Landing Page.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
 
-<header>
-  <div class="nav">
-    <div class="brand">
-      <svg class="brand-mark" viewBox="0 0 48 48" fill="none">
-        <path d="M24 4 L34 16 L14 16 Z" fill="#B8874B"/>
-        <rect x="18" y="16" width="12" height="22" fill="#0F3D3E"/>
-        <path d="M12 38 L18 38 L18 22 L12 28 Z" fill="#0F3D3E"/>
-        <path d="M36 38 L30 38 L30 22 L36 28 Z" fill="#0F3D3E"/>
-        <rect x="10" y="38" width="28" height="4" fill="#0A2B2C"/>
-      </svg>
-      <div class="brand-text">
-        <div class="name">Masjid Noor Islam</div>
-        <div class="place">Semaki Kulon</div>
-      </div>
-    </div>
-    <nav class="links">
-      <a href="#jadwal">Jadwal Sholat</a>
-      <a href="#kegiatan">Kegiatan</a>
-      <a href="#infaq">Infaq</a>
-      <a href="#lokasi">Lokasi</a>
-    </nav>
-  </div>
-</header>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
 
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="eyebrow">Kampung Semaki Kulon</div>
-      <h1>Rumah ibadah,<br><em>rumah warga.</em></h1>
-      <p class="lede">Masjid Noor Islam melayani jamaah Kampung Semaki Kulon dengan sholat lima waktu, kegiatan rutin, dan ruang untuk warga saling menopang.</p>
-      <p class="hero-note">✦ Halaman ini masih terus dikembangkan oleh tim KKN.</p>
-      <div class="hero-cta">
-        <a href="#jadwal" class="btn btn-primary">Lihat Jadwal Sholat</a>
-        <a href="#lokasi" class="btn btn-ghost">Lokasi Masjid</a>
-      </div>
-    </div>
-    <div class="hero-art">
-      <svg viewBox="0 0 420 340" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#D9B577" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#D9B577" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <ellipse cx="230" cy="120" rx="170" ry="150" fill="url(#skyfade)"/>
-        <g fill="#F6F1E4" opacity="0.95">
-          <polygon points="150,150 210,110 270,150"/>
-          <polygon points="160,170 210,138 260,170"/>
-          <polygon points="170,190 210,164 250,190"/>
-          <rect x="185" y="190" width="50" height="70"/>
-          <rect x="150" y="230" width="18" height="30"/>
-          <polygon points="150,230 159,214 168,230"/>
-          <rect x="252" y="230" width="18" height="30"/>
-          <polygon points="252,230 261,214 270,230"/>
-          <rect x="100" y="255" width="30" height="45"/>
-          <polygon points="98,255 115,238 132,255"/>
-          <rect x="290" y="255" width="30" height="45"/>
-          <polygon points="288,255 305,238 322,255"/>
-          <rect x="0" y="298" width="420" height="4"/>
-        </g>
-        <g stroke="#B8874B" stroke-width="1.4" opacity="0.7">
-          <line x1="60" y1="300" x2="60" y2="270"/>
-          <line x1="360" y1="300" x2="360" y2="275"/>
-        </g>
-      </svg>
-    </div>
-  </div>
-  <div class="motif motif-brass"></div>
-</section>
+    <meta name="theme-color" content="#0A2B2C" />
 
-<div class="pc-wrap">
-  <div class="wrap">
-    <div class="pc-card">
-      <div class="pc-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
-      </div>
-      <div class="pc-body">
-        <div class="pc-label">Waktu Menuju <span id="pcNextName">Sholat</span></div>
-        <div class="pc-timer" id="pcTimer">--:--:--</div>
-        <div class="pc-sub">Insya Allah <span id="pcTime">--:--</span></div>
-      </div>
-    </div>
-  </div>
-</div>
+    <title>Masjid Noor Islam — Semaki Kulon</title>
 
-<section id="jadwal">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Bersumber Kemenag</div>
-      <h2>Jadwal Sholat Hari Ini</h2>
-      <p>Waktu sholat untuk wilayah Kota Yogyakarta, diambil otomatis dari data Kementerian Agama RI.</p>
-    </div>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <div class="jadwal-grid" id="jadwalGrid">
-      <div class="jcard"><div class="jname">Imsak</div><div class="jtime">--:--</div></div>
-      <div class="jcard"><div class="jname">Subuh</div><div class="jtime">--:--</div></div>
-      <div class="jcard"><div class="jname">Dzuhur</div><div class="jtime">--:--</div></div>
-      <div class="jcard"><div class="jname">Ashar</div><div class="jtime">--:--</div></div>
-      <div class="jcard"><div class="jname">Maghrib</div><div class="jtime">--:--</div></div>
-      <div class="jcard"><div class="jname">Isya</div><div class="jtime">--:--</div></div>
-    </div>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <div class="jadwal-meta">
-      <span id="jadwalTanggal">Memuat tanggal…</span>
-      <span id="jadwalSumber">Sumber: api.myquran.com (Kemenag RI)</span>
-    </div>
-    <div class="jadwal-status" id="jadwalStatus"></div>
-  </div>
-</section>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-<div class="wrap"><div class="motif motif-brass" style="opacity:0.5"></div></div>
+    <!-- CSS -->
+    <link rel="stylesheet" href="Landing Page.css" />
 
-<section id="kegiatan" style="background:var(--plaster-dim);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Warga & Jamaah</div>
-      <h2>Kegiatan Masjid</h2>
-      <p>Daftar kegiatan rutin masjid, diperbarui langsung oleh takmir.</p>
-    </div>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
 
-    <div class="keg-grid" id="kegiatanGrid">
-      <div class="keg-card">
-        <div>
-          <div class="keg-tag">Memuat</div>
-          <h3>Mengambil data kegiatan…</h3>
-          <p>Mohon tunggu sebentar.</p>
-        </div>
-      </div>
-    </div>
+  <body>
+    <!-- =========================
+     HEADER / NAVBAR
+========================= -->
 
-    <div class="keg-placeholder-note" id="kegiatanNote" style="display:none;">
-      Belum ada kegiatan yang ditambahkan oleh takmir. Bagian ini akan otomatis terisi begitu data dimasukkan.
-    </div>
-  </div>
-</section>
+    <header class="site-header">
+      <div class="nav">
+        <!-- BRAND -->
+        <a href="#" class="brand">
+          <svg
+            class="brand-mark"
+            viewBox="0 0 48 48"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M24 4 L34 16 L14 16 Z" fill="#B8874B" />
 
-<section id="infaq" class="section-bg-infaq">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Dukung Masjid</div>
-      <h2>Infaq &amp; Sedekah</h2>
-      <p>Setiap sumbangan menjadi bentuk nyata kepedulian untuk menjaga keberlangsungan ibadah, pendidikan, dan kesejahteraan warga.</p>
-    </div>
+            <rect x="18" y="16" width="12" height="22" fill="#0F3D3E" />
 
-    <div class="infaq-box">
-      <div class="infaq-left">
-        <span class="soon-badge">Baitul Maal</span>
-        <h3 style="margin-top:16px;">Salurkan Infaq, Sedekah, dan Dana Sosial untuk Masjid Noor Islam</h3>
-        <p>Baitul Maal adalah wadah pengelolaan harta amanah yang diarahkan untuk kebutuhan operasional masjid, program sosial, pendidikan anak, dan bantuan darurat warga. Semua dana dikelola transparan dan sesuai kebutuhan jamaah.</p>
+            <path d="M12 38 L18 38 L18 22 L12 28 Z" fill="#0F3D3E" />
 
-        <ul class="infaq-list">
-          <li>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 16.7 19 6.9"/></svg>
-            Perawatan masjid, kebersihan, dan kebutuhan ibadah
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 16.7 19 6.9"/></svg>
-            Bantuan ekonomi, santunan, dan kebutuhan sosial warga
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 16.7 19 6.9"/></svg>
-            Pendidikan anak dan kegiatan keagamaan jamaah
-          </li>
-        </ul>
-      </div>
+            <path d="M36 38 L30 38 L30 22 L36 28 Z" fill="#0F3D3E" />
 
-      <div class="infaq-right">
-        <div class="qr-card">
-          <div class="qr-header">
-            <span class="lab">QRIS Donasi</span>
-            <span class="chip">Aktif</span>
+            <rect x="10" y="38" width="28" height="4" fill="#0A2B2C" />
+          </svg>
+
+          <div class="brand-text">
+            <div class="name">Masjid Noor Islam</div>
+
+            <div class="place">Semaki Kulon</div>
           </div>
-          <div class="qris-placeholder">
-            <svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true">
-              <rect x="8" y="8" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-              <rect x="38" y="8" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-              <rect x="8" y="38" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-              <rect x="20" y="20" width="8" height="8" rx="2" fill="currentColor"/>
-              <rect x="36" y="20" width="8" height="8" rx="2" fill="currentColor"/>
-              <rect x="20" y="36" width="8" height="8" rx="2" fill="currentColor"/>
-              <rect x="36" y="36" width="8" height="8" rx="2" fill="currentColor"/>
-              <rect x="44" y="30" width="8" height="8" rx="2" fill="currentColor"/>
-              <rect x="30" y="44" width="8" height="8" rx="2" fill="currentColor"/>
+        </a>
+
+        <!-- HAMBURGER MOBILE -->
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Buka menu navigasi"
+          aria-expanded="false"
+          aria-controls="navLinks"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- NAVIGATION -->
+        <nav class="links" id="navLinks" aria-label="Navigasi utama">
+          <a href="#jadwal"> Jadwal Sholat </a>
+
+          <a href="#kegiatan"> Kegiatan </a>
+
+          <a href="Infaq/infaq.html"> Infaq </a>
+
+          <a href="#lokasi"> Lokasi </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- =========================
+     HERO
+========================= -->
+
+    <main>
+      <section class="hero">
+        <div class="hero-bg"></div>
+
+        <div class="hero-orbs">
+          <span class="orb orb-1"></span>
+          <span class="orb orb-2"></span>
+          <span class="orb orb-3"></span>
+        </div>
+
+        <div class="hero-inner">
+          <!-- HERO TEXT -->
+          <div class="hero-content">
+            <div class="eyebrow">Kampung Semaki Kulon</div>
+
+            <h1>
+              Rumah ibadah,
+              <br />
+              <em>rumah warga.</em>
+            </h1>
+
+            <p class="lede">
+              Masjid Noor Islam melayani jamaah Kampung Semaki Kulon dengan
+              sholat lima waktu, kegiatan rutin, dan ruang bagi warga untuk
+              saling menopang.
+            </p>
+
+            <p class="hero-note">
+              ✦ Website informasi Masjid Noor Islam Semaki Kulon
+            </p>
+
+            <div class="hero-cta">
+              <a href="#jadwal" class="btn btn-primary">
+                Lihat Jadwal Sholat
+              </a>
+
+              <a href="#lokasi" class="btn btn-ghost"> Lokasi Masjid </a>
+            </div>
+          </div>
+
+          <!-- HERO ILLUSTRATION -->
+          <div class="hero-art">
+            <div class="hero-art-glow"></div>
+
+            <svg
+              class="mosque-float"
+              viewBox="0 0 420 340"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#D9B577" stop-opacity="0.35" />
+
+                  <stop offset="100%" stop-color="#D9B577" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+
+              <ellipse
+                cx="230"
+                cy="120"
+                rx="170"
+                ry="150"
+                fill="url(#skyfade)"
+              />
+
+              <g fill="#F6F1E4" opacity="0.95">
+                <polygon points="150,150 210,110 270,150" />
+
+                <polygon points="160,170 210,138 260,170" />
+
+                <polygon points="170,190 210,164 250,190" />
+
+                <rect x="185" y="190" width="50" height="70" />
+
+                <rect x="150" y="230" width="18" height="30" />
+
+                <polygon points="150,230 159,214 168,230" />
+
+                <rect x="252" y="230" width="18" height="30" />
+
+                <polygon points="252,230 261,214 270,230" />
+
+                <rect x="100" y="255" width="30" height="45" />
+
+                <polygon points="98,255 115,238 132,255" />
+
+                <rect x="290" y="255" width="30" height="45" />
+
+                <polygon points="288,255 305,238 322,255" />
+
+                <rect x="0" y="298" width="420" height="4" />
+              </g>
+
+              <g stroke="#B8874B" stroke-width="1.4" opacity="0.7">
+                <line x1="60" y1="300" x2="60" y2="270" />
+
+                <line x1="360" y1="300" x2="360" y2="275" />
+              </g>
             </svg>
           </div>
-          <div class="rek-line">
-            <span class="lab">Rekening</span>
-            Nomor rekening akan ditambahkan oleh takmir
+        </div>
+      </section>
+
+      <!-- =========================
+     COUNTDOWN SHOLAT
+========================= -->
+
+      <section class="pc-wrap">
+        <div class="wrap">
+          <div class="pc-card">
+            <div class="pc-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+
+                <path d="M12 7v5l3.2 2" />
+              </svg>
+            </div>
+
+            <div class="pc-body">
+              <div class="pc-label">
+                Waktu Menuju
+
+                <span id="pcNextName"> Sholat </span>
+              </div>
+
+              <div class="pc-timer" id="pcTimer">--:--:--</div>
+
+              <div class="pc-sub">
+                Insya Allah
+
+                <span id="pcTime"> --:-- </span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <div class="infaq-feature-grid">
-      <article class="feature-card feature-emerald">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg>
-        </div>
-        <h4>Infaq</h4>
-        <p>Donasi rutin untuk pemeliharaan masjid, kebutuhan ibadah, dan fasilitas jamaah.</p>
-      </article>
+      <!-- =========================
+     JADWAL SHOLAT
+========================= -->
 
-      <article class="feature-card feature-gold">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 4.2 2.8 8.1 8 10 5.2-1.9 8-5.8 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <section id="jadwal" class="section-bg-jadwal">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">Bersumber Kemenag</div>
+            <h2>Jadwal Sholat Hari Ini</h2>
+            <p>
+              Waktu sholat untuk wilayah Kota Yogyakarta, diambil otomatis dari
+              data Kementerian Agama Republik Indonesia.
+            </p>
+          </div>
+          <div class="jadwal-grid" id="jadwalGrid">
+            <div class="jcard">
+              <div class="jname">Imsak</div>
+              <div class="jtime">--:--</div>
+            </div>
+            <div class="jcard">
+              <div class="jname">Subuh</div>
+              <div class="jtime">--:--</div>
+            </div>
+            <div class="jcard">
+              <div class="jname">Dzuhur</div>
+              <div class="jtime">--:--</div>
+            </div>
+            <div class="jcard">
+              <div class="jname">Ashar</div>
+              <div class="jtime">--:--</div>
+            </div>
+            <div class="jcard">
+              <div class="jname">Maghrib</div>
+              <div class="jtime">--:--</div>
+            </div>
+            <div class="jcard">
+              <div class="jname">Isya</div>
+              <div class="jtime">--:--</div>
+            </div>
+          </div>
+          <div class="jadwal-meta">
+            <span id="jadwalTanggal"> Memuat tanggal… </span>
+            <span id="jadwalSumber"> Sumber: Kemenag RI </span>
+          </div>
+          <div class="jadwal-status" id="jadwalStatus"></div>
         </div>
-        <h4>Sedekah</h4>
-        <p>Amal yang ditujukan untuk meringankan beban sesama, mendukung warga, dan menebar kebermanfaatan.</p>
-      </article>
+      </section>
 
-      <article class="feature-card feature-ivory">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z"/><path d="M8 9h8M8 13h5"/></svg>
-        </div>
-        <h4>Baitul Maal</h4>
-        <p>Program pengelolaan dana sosial yang fokus pada kebutuhan masjid, dakwah, dan kesejahteraan umat.</p>
-      </article>
-    </div>
+      <!-- =========================
+     KEGIATAN
+========================= -->
 
-    <div class="info-band">
-      <div class="info-callout">
-        <div class="info-icon">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg>
+      <section id="kegiatan" class="section-bg-kegiatan">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">Warga & Jamaah</div>
+            <h2>Kegiatan Masjid</h2>
+            <p>
+              Informasi kegiatan Masjid Noor Islam yang diperbarui oleh pengurus
+              masjid.
+            </p>
+          </div>
+          <div class="keg-grid" id="kegiatanGrid">
+            <div class="keg-card">
+              <div>
+                <div class="keg-tag">Memuat</div>
+                <h3>Mengambil data kegiatan…</h3>
+                <p>Mohon tunggu sebentar.</p>
+              </div>
+            </div>
+          </div>
+          <div class="keg-placeholder-note" id="kegiatanNote" hidden>
+            Belum ada kegiatan yang ditambahkan oleh takmir.
+          </div>
         </div>
+      </section>
+      <!-- =========================
+     LOKASI
+========================= -->
+      <section id="lokasi" class="section-bg-lokasi">
+        <div class="wrap">
+          <div class="sec-head">
+            <div class="eyebrow">Temukan Kami</div>
+            <h2>Lokasi Masjid</h2>
+            <p>
+              Masjid Noor Islam berada di Kampung Semaki Kulon, Kecamatan
+              Umbulharjo, Kota Yogyakarta.
+            </p>
+          </div>
+          <div class="loc-grid">
+            <!-- ADDRESS -->
+            <div class="loc-card">
+              <h3>Masjid Noor Islam</h3>
+              <div class="loc-item">
+                <div class="lab">Alamat</div>
+                <div class="val">
+                  Kampung Semaki Kulon, Umbulharjo, Kota Yogyakarta, Daerah
+                  Istimewa Yogyakarta
+                </div>
+              </div>
+              <div class="loc-item">
+                <div class="lab">Petunjuk Arah</div>
+                <div class="val">
+                  <a
+                    class="map-link"
+                    href="https://www.google.com/maps/search/?api=1&query=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Buka di Google Maps →
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- GOOGLE MAP -->
+            <div class="map-frame">
+              <iframe
+                src="https://www.google.com/maps?q=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+                title="Lokasi Masjid Noor Islam"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="foot-inner">
         <div>
-          <strong>Tujuan pengelolaan</strong>
-          <p>Semua dana Baitul Maal dikelola amanah, terbuka, dan diarahkan untuk kepentingan ibadah, pendidikan, serta bantuan sosial yang tepat sasaran.</p>
+          <div class="foot-name">Masjid Noor Islam</div>
+          <div class="foot-location">Kampung Semaki Kulon · Yogyakarta</div>
+        </div>
+        <div class="foot-links">
+          <a href="#jadwal"> Jadwal Sholat </a>
+          <a href="#kegiatan"> Kegiatan </a>
+          <a href="noor-islam-donasi/index.html"> Infaq </a>
+          <a href="#lokasi"> Lokasi </a>
         </div>
       </div>
-
-      <div class="stat-grid">
-        <div class="stat-item">
-          <span class="stat-number">01</span>
-          <span class="stat-label">Operasional</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">02</span>
-          <span class="stat-label">Sosial</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">03</span>
-          <span class="stat-label">Pendidikan</span>
-        </div>
+      <div class="foot-copy">
+        © <span id="footerYear"></span>
+        Masjid Noor Islam · Semaki Kulon
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="wrap"><div class="motif motif-brass" style="opacity:0.5"></div></div>
-
-<section id="lokasi" style="background:var(--plaster-dim);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Temukan Kami</div>
-      <h2>Lokasi Masjid</h2>
-      <p>Masjid Noor Islam berada di tengah Kampung Semaki Kulon, mudah dijangkau dari sekitar wilayah Umbulharjo, Yogyakarta.</p>
-    </div>
-
-    <div class="loc-grid">
-      <div class="loc-card">
-        <h3>Masjid Noor Islam</h3>
-        <div class="loc-item">
-          <div class="lab">Alamat</div>
-          <div class="val">Kampung Semaki Kulon, Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta</div>
-        </div>
-        <div class="loc-item">
-          <div class="lab">Petunjuk arah</div>
-          <div class="val"><a href="https://www.google.com/maps/search/?api=1&query=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta" target="_blank" rel="noopener">Buka di Google Maps →</a></div>
-        </div>
-      </div>
-      <div class="map-frame">
-        <iframe
-          src="https://www.google.com/maps?q=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="foot-inner">
-    <div class="name">Masjid Noor Islam</div>
-    <div>Kampung Semaki Kulon · Halaman profil masjid</div>
-  </div>
-</footer>
-
-<script src="Landing Page.js"></script>
-
-</body>
+    </footer>
+    <!-- JAVASCRIPT -->
+    <script src="Landing Page.js"></script>
+  </body>
 </html>

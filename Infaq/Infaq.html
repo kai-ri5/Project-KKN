@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#073d36" />
+  <meta name="description" content="Halaman infak, sedekah, dan Baitul Maal Masjid Noor Islam." />
+  <title>Infak & Sedekah | Masjid Noor Islam</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="infaq.css" />
+</head>
+<body>
+  <main class="donation-page">
+    <div class="back-wrap container">
+      <a href="../Landing Page.html" class="back-button">
+        ← Kembali ke Beranda
+      </a>
+    </div>
+    <section class="hero container" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> Dukung Masjid</p>
+        <h1 id="page-title">Infak &amp; Sedekah</h1>
+        <p class="lead">
+          Partisipasi Anda sangat berarti untuk operasional masjid,
+          program dakwah, dan kegiatan sosial kemasyarakatan.
+        </p>
+      </div>
+
+      <article class="qris-card card">
+        <div class="qris-placeholder" aria-label="Placeholder QRIS">
+          <div class="qr-grid" aria-hidden="true"></div>
+          <strong>QRIS</strong>
+        </div>
+        <div class="qris-info">
+          <h2>Scan untuk berdonasi melalui QRIS</h2>
+          <p>Masjid Noor Islam<br />NMID: ID2023242342423<br />A01</p>
+          <a href="#cara-donasi" class="text-link">Cara berdonasi <span>→</span></a>
+        </div>
+      </article>
+    </section>
+
+    <section class="content-grid container" aria-label="Pilihan donasi">
+      <article class="featured-card card">
+        <span class="pill">Baitul Maal</span>
+        <h2>Salurkan Infak, Sedekah, dan Dana Sosial untuk Masjid Noor Islam</h2>
+        <p>
+          Bantuan Anda akan dikelola secara amanah untuk kebutuhan operasional masjid,
+          pendidikan, dan kegiatan sosial.
+        </p>
+        <ul>
+          <li>Operasional masjid &amp; perawatan fasilitas</li>
+          <li>Program pendidikan &amp; kegiatan dakwah</li>
+          <li>Bantuan sosial untuk masyarakat sekitar</li>
+        </ul>
+      </article>
+
+      <div class="donation-options">
+        <article class="option-card card">
+          <div class="icon" aria-hidden="true">✦</div>
+          <h2>Infak</h2>
+          <p>Donasi rutin untuk pemeliharaan masjid dan fasilitas ibadah.</p>
+          <button class="text-link js-donate" type="button" data-type="Infak">Donasi Sekarang <span>→</span></button>
+        </article>
+
+        <article class="option-card card">
+          <div class="icon" aria-hidden="true">♡</div>
+          <h2>Sedekah</h2>
+          <p>Amal jariyah yang pahalanya terus mengalir untuk kebaikan bersama.</p>
+          <button class="text-link js-donate" type="button" data-type="Sedekah">Donasi Sekarang <span>→</span></button>
+        </article>
+
+        <article class="option-card card">
+          <div class="icon" aria-hidden="true">▣</div>
+          <h2>Baitul Maal</h2>
+          <p>Program penyaluran dana sosial untuk masyarakat yang membutuhkan.</p>
+          <a href="#tujuan" class="text-link">Selengkapnya <span>→</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section id="tujuan" class="impact-card card container">
+      <div class="impact-copy">
+        <div class="impact-icon" aria-hidden="true">✥</div>
+        <div>
+          <h2>Tujuan Pengelolaan Dana</h2>
+          <p>
+            Semua dana Baitul Maal dikelola amanah, terbuka, dan disalurkan untuk
+            kepentingan ibadah, pendidikan, serta sosial kemasyarakatan sesuai syariah.
+          </p>
+        </div>
+      </div>
+
+      <div class="stats" aria-label="Statistik program">
+        <div><strong>01</strong><span>Program Aktif</span></div>
+        <div><strong>12</strong><span>Relawan</span></div>
+        <div><strong>356+</strong><span>Penerima Manfaat</span></div>
+      </div>
+    </section>
+
+    <section id="cara-donasi" class="donation-note container" aria-label="Cara berdonasi">
+      <h2>Cara berdonasi</h2>
+      <p>Pilih jenis donasi, scan QRIS, lalu simpan bukti transaksi jika diperlukan.</p>
+    </section>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite" aria-hidden="true">
+    <span class="toast-title">Donasi</span>
+    <span class="toast-message">Silakan scan QRIS untuk melanjutkan.</span>
+  </div>
+
+  <script src="infaq.js"></script>
+</body>
+</html>

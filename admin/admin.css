@@ -1,0 +1,584 @@
+:root {
+  --deep-green: #0a2b2c;
+
+  --green: #0f3d3e;
+
+  --cream: #f6f1e4;
+
+  --cream-dark: #efe8d6;
+
+  --gold: #b8874b;
+
+  --gold-light: #d9b577;
+
+  --danger: #a9473b;
+
+  --charcoal: #1c2321;
+
+  --line: rgba(15, 61, 62, 0.15);
+
+  --shadow: 0 20px 55px -28px rgba(10, 43, 44, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  color: var(--charcoal);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* =========================
+   BODY
+========================= */
+
+.admin-body {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(217, 181, 119, 0.15),
+      transparent 30%
+    ),
+    linear-gradient(135deg, var(--cream), var(--cream-dark));
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-wrapper {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 24px;
+}
+
+.login-card {
+  width: min(100%, 450px);
+
+  padding: 34px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border: 1px solid var(--line);
+
+  border-radius: 18px;
+
+  box-shadow: var(--shadow);
+}
+
+.back-link {
+  display: inline-block;
+
+  margin-bottom: 28px;
+
+  color: var(--green);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--gold);
+}
+
+.login-label,
+.admin-small-title {
+  color: var(--gold);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+}
+
+.login-card h1 {
+  margin: 7px 0 0;
+
+  font-family: "Amiri", serif;
+
+  font-size: 38px;
+
+  color: var(--deep-green);
+}
+
+.login-description {
+  margin: 7px 0 0;
+
+  color: rgba(28, 35, 33, 0.62);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* =========================
+   FORM
+========================= */
+
+#loginForm {
+  margin-top: 25px;
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: var(--deep-green);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  padding: 12px 13px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: white;
+
+  color: var(--charcoal);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+
+  box-shadow: 0 0 0 3px rgba(184, 135, 75, 0.13);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  min-height: 44px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 17px;
+
+  border-radius: 9px;
+
+  font-weight: 700;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  border: none;
+
+  background: var(--deep-green);
+
+  color: white;
+}
+
+.login-card .btn-primary {
+  width: 100%;
+}
+
+.btn-secondary {
+  border: 1px solid var(--line);
+
+  color: var(--deep-green);
+
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-danger {
+  border: none;
+
+  background: var(--danger);
+
+  color: white;
+}
+
+.form-message {
+  margin: 12px 0 0;
+
+  min-height: 18px;
+
+  font-size: 12px;
+}
+
+.form-message.error {
+  color: var(--danger);
+}
+
+.form-message.success {
+  color: #2f7355;
+}
+
+/* =========================
+   HEADER ADMIN
+========================= */
+
+.admin-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
+
+  background: rgba(246, 241, 228, 0.94);
+
+  border-bottom: 1px solid var(--line);
+
+  backdrop-filter: blur(12px);
+}
+
+.admin-header-inner {
+  width: min(100% - 40px, 1120px);
+
+  min-height: 78px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.admin-brand {
+  margin-top: 3px;
+
+  font-family: "Amiri", serif;
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  color: var(--deep-green);
+}
+
+.admin-header-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-container {
+  width: min(100% - 40px, 1120px);
+
+  margin: 34px auto 60px;
+
+  display: grid;
+
+  gap: 24px;
+}
+
+.admin-panel {
+  padding: 28px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 17px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  box-shadow: var(--shadow);
+}
+
+.panel-header {
+  margin-bottom: 23px;
+}
+
+.panel-header h1,
+.panel-header h2 {
+  margin: 5px 0 0;
+
+  font-family: "Amiri", serif;
+
+  color: var(--deep-green);
+}
+
+.panel-header h1 {
+  font-size: 34px;
+}
+
+.panel-header h2 {
+  font-size: 29px;
+}
+
+.panel-header p {
+  margin: 6px 0 0;
+
+  color: rgba(28, 35, 33, 0.6);
+
+  font-size: 13px;
+}
+
+.panel-header-flex {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.kegiatan-form {
+  display: grid;
+
+  grid-template-columns: 2fr 1fr 1fr;
+
+  gap: 0 16px;
+}
+
+.form-full {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+/* =========================
+   LIST KEGIATAN
+========================= */
+
+.activity-list {
+  display: grid;
+
+  gap: 13px;
+}
+
+.activity-item {
+  padding: 18px;
+
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+
+  gap: 20px;
+
+  align-items: flex-start;
+
+  border: 1px solid var(--line);
+
+  border-radius: 12px;
+
+  background: white;
+}
+
+.activity-item h3 {
+  margin: 0;
+
+  font-family: "Amiri", serif;
+
+  font-size: 21px;
+
+  color: var(--deep-green);
+}
+
+.activity-meta {
+  margin-top: 4px;
+
+  color: var(--gold);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+.activity-description {
+  margin: 8px 0 0;
+
+  color: rgba(28, 35, 33, 0.65);
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.activity-buttons {
+  display: flex;
+
+  gap: 8px;
+}
+
+.activity-buttons button {
+  min-height: 38px;
+
+  padding: 8px 12px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 8px;
+
+  background: white;
+
+  font-weight: 700;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.edit-button {
+  color: var(--deep-green);
+}
+
+.delete-button {
+  color: var(--danger);
+}
+
+.empty-state {
+  padding: 25px;
+
+  text-align: center;
+
+  border: 1px dashed var(--line);
+
+  border-radius: 12px;
+
+  color: rgba(28, 35, 33, 0.55);
+
+  font-size: 13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+  .kegiatan-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-full {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .login-card {
+    padding: 27px 20px;
+  }
+
+  .admin-header-inner {
+    width: min(100% - 28px, 1120px);
+
+    padding: 13px 0;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .admin-header-actions {
+    width: 100%;
+  }
+
+  .admin-header-actions a,
+  .admin-header-actions button {
+    flex: 1;
+  }
+
+  .dashboard-container {
+    width: min(100% - 28px, 1120px);
+
+    margin-top: 20px;
+  }
+
+  .admin-panel {
+    padding: 20px;
+  }
+
+  .panel-header-flex {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .activity-item {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-buttons {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard Admin - Masjid Noor Islam</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="admin.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body class="admin-body">
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <div>
+          <div class="admin-small-title">MASJID NOOR ISLAM</div>
+
+          <div class="admin-brand">Dashboard Admin</div>
+        </div>
+
+        <div class="admin-header-actions">
+          <a href="../Landing Page.html" class="btn-secondary">
+            Lihat Website
+          </a>
+
+          <button id="logoutButton" class="btn-danger" type="button">
+            Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-container">
+      <!-- FORM KEGIATAN -->
+
+      <section class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <div class="admin-small-title">KELOLA KONTEN</div>
+
+            <h1>Kegiatan Masjid</h1>
+
+            <p>Tambah dan ubah kegiatan Masjid Noor Islam.</p>
+          </div>
+        </div>
+
+        <form id="kegiatanForm" class="kegiatan-form">
+          <input type="hidden" id="editId" />
+
+          <div class="form-group">
+            <label for="namaKegiatan"> Nama Kegiatan </label>
+
+            <input
+              type="text"
+              id="namaKegiatan"
+              placeholder="Contoh: Kajian Rutin"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="hari"> Hari </label>
+
+            <input type="text" id="hari" placeholder="Contoh: Jumat" />
+          </div>
+
+          <div class="form-group">
+            <label for="jam"> Jam </label>
+
+            <input type="time" id="jam" />
+          </div>
+
+          <div class="form-group form-full">
+            <label for="deskripsi"> Deskripsi </label>
+
+            <textarea
+              id="deskripsi"
+              rows="4"
+              placeholder="Tuliskan deskripsi kegiatan"
+            ></textarea>
+          </div>
+
+          <div class="form-actions form-full">
+            <button type="submit" id="submitButton" class="btn-primary">
+              Tambah Kegiatan
+            </button>
+
+            <button
+              type="button"
+              id="cancelEditButton"
+              class="btn-secondary"
+              hidden
+            >
+              Batal Edit
+            </button>
+          </div>
+
+          <p id="formMessage" class="form-message form-full"></p>
+        </form>
+      </section>
+
+      <!-- DAFTAR KEGIATAN -->
+
+      <section class="admin-panel">
+        <div class="panel-header panel-header-flex">
+          <div>
+            <div class="admin-small-title">DATA SUPABASE</div>
+
+            <h2>Daftar Kegiatan</h2>
+          </div>
+
+          <button type="button" id="refreshButton" class="btn-secondary">
+            Refresh
+          </button>
+        </div>
+
+        <div id="adminKegiatanList" class="activity-list">
+          <div class="empty-state">Memuat kegiatan...</div>
+        </div>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
