@@ -125,8 +125,8 @@
             </p>
 
             <div class="hero-cta">
-              <a href="#jadwal" class="btn btn-primary">
-                Lihat Jadwal Sholat
+              <a href="Infaq/infaq.html" class="btn btn-primary">
+                Donasi
               </a>
 
               <a href="#lokasi" class="btn btn-ghost"> Lokasi Masjid </a>
@@ -200,92 +200,87 @@
       </section>
 
       <!-- =========================
-     COUNTDOWN SHOLAT
+     COUNTDOWN + JADWAL SHOLAT (DIGABUNG)
 ========================= -->
 
-      <section class="pc-wrap">
+      <section id="jadwal" class="pc-wrap">
         <div class="wrap">
           <div class="pc-card">
-            <div class="pc-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="9" />
+            <!-- KIRI: Countdown besar -->
+            <div class="pc-main">
+              <div class="pc-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
 
-                <path d="M12 7v5l3.2 2" />
-              </svg>
-            </div>
-
-            <div class="pc-body">
-              <div class="pc-label">
-                Waktu Menuju
-
-                <span id="pcNextName"> Sholat </span>
+                  <path d="M12 7v5l3.2 2" />
+                </svg>
               </div>
 
-              <div class="pc-timer" id="pcTimer">--:--:--</div>
+              <div class="pc-body">
+                <div class="pc-label">
+                  Waktu Menuju
 
-              <div class="pc-sub">
-                Insya Allah
+                  <span id="pcNextName"> Sholat </span>
+                </div>
 
-                <span id="pcTime"> --:-- </span>
+                <div class="pc-timer" id="pcTimer">--:--:--</div>
+
+                <div class="pc-sub">
+                  Insya Allah
+
+                  <span id="pcTime"> --:-- </span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- =========================
-     JADWAL SHOLAT
-========================= -->
+            <div class="pc-divider"></div>
 
-      <section id="jadwal" class="section-bg-jadwal">
-        <div class="wrap">
-          <div class="sec-head">
-            <div class="eyebrow">Bersumber Kemenag</div>
-            <h2>Jadwal Sholat Hari Ini</h2>
-            <p>
-              Waktu sholat untuk wilayah Kota Yogyakarta, diambil otomatis dari
-              data Kementerian Agama Republik Indonesia.
-            </p>
+            <!-- KANAN: Jadwal sholat versi ringkas -->
+            <div class="pc-jadwal">
+              <div class="pc-jadwal-eyebrow">Bersumber Kemenag</div>
+
+              <div class="jadwal-grid" id="jadwalGrid">
+                <div class="jcard">
+                  <div class="jname">Imsak</div>
+                  <div class="jtime">--:--</div>
+                </div>
+                <div class="jcard">
+                  <div class="jname">Subuh</div>
+                  <div class="jtime">--:--</div>
+                </div>
+                <div class="jcard">
+                  <div class="jname">Dzuhur</div>
+                  <div class="jtime">--:--</div>
+                </div>
+                <div class="jcard">
+                  <div class="jname">Ashar</div>
+                  <div class="jtime">--:--</div>
+                </div>
+                <div class="jcard">
+                  <div class="jname">Maghrib</div>
+                  <div class="jtime">--:--</div>
+                </div>
+                <div class="jcard">
+                  <div class="jname">Isya</div>
+                  <div class="jtime">--:--</div>
+                </div>
+              </div>
+
+              <div class="jadwal-meta">
+                <span id="jadwalTanggal"> Memuat tanggal… </span>
+                <span id="jadwalSumber"> Sumber: Kemenag RI </span>
+              </div>
+              <div class="jadwal-status" id="jadwalStatus"></div>
+            </div>
           </div>
-          <div class="jadwal-grid" id="jadwalGrid">
-            <div class="jcard">
-              <div class="jname">Imsak</div>
-              <div class="jtime">--:--</div>
-            </div>
-            <div class="jcard">
-              <div class="jname">Subuh</div>
-              <div class="jtime">--:--</div>
-            </div>
-            <div class="jcard">
-              <div class="jname">Dzuhur</div>
-              <div class="jtime">--:--</div>
-            </div>
-            <div class="jcard">
-              <div class="jname">Ashar</div>
-              <div class="jtime">--:--</div>
-            </div>
-            <div class="jcard">
-              <div class="jname">Maghrib</div>
-              <div class="jtime">--:--</div>
-            </div>
-            <div class="jcard">
-              <div class="jname">Isya</div>
-              <div class="jtime">--:--</div>
-            </div>
-          </div>
-          <div class="jadwal-meta">
-            <span id="jadwalTanggal"> Memuat tanggal… </span>
-            <span id="jadwalSumber"> Sumber: Kemenag RI </span>
-          </div>
-          <div class="jadwal-status" id="jadwalStatus"></div>
         </div>
       </section>
 

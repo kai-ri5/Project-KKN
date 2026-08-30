@@ -572,11 +572,11 @@ nav.links a:hover::after {
 }
 
 /* ======================================================
-   COUNTDOWN
+   COUNTDOWN + JADWAL SHOLAT (DIGABUNG)
 ====================================================== */
 
 .pc-wrap {
-  padding: 34px 0;
+  padding: 40px 0;
 
   background: var(--ink-deep);
 
@@ -584,17 +584,19 @@ nav.links a:hover::after {
 }
 
 .pc-card {
-  max-width: 560px;
+  max-width: 980px;
 
   margin: auto;
 
-  padding: 25px 30px;
+  padding: 28px 32px;
 
   display: flex;
 
   align-items: center;
 
-  gap: 24px;
+  gap: 32px;
+
+  flex-wrap: wrap;
 
   color: white;
 
@@ -605,6 +607,18 @@ nav.links a:hover::after {
   background: rgba(255, 255, 255, 0.04);
 
   box-shadow: var(--shadow);
+}
+
+/* --- Kiri: countdown besar --- */
+
+.pc-main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-shrink: 0;
 }
 
 .pc-icon {
@@ -649,7 +663,7 @@ nav.links a:hover::after {
 
   font-family: "Amiri", serif;
 
-  font-size: clamp(31px, 5vw, 42px);
+  font-size: clamp(28px, 3.6vw, 38px);
 
   font-weight: 700;
 
@@ -662,6 +676,144 @@ nav.links a:hover::after {
   font-size: 12px;
 
   color: rgba(246, 241, 228, 0.65);
+}
+
+/* --- Pemisah --- */
+
+.pc-divider {
+  width: 1px;
+
+  align-self: stretch;
+
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* --- Kanan: jadwal sholat versi ringkas --- */
+
+.pc-jadwal {
+  flex: 1;
+
+  min-width: 300px;
+}
+
+.pc-jadwal-eyebrow {
+  margin-bottom: 12px;
+
+  color: var(--brass-light);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+}
+
+.jadwal-grid {
+  display: grid;
+
+  grid-template-columns: repeat(6, 1fr);
+
+  gap: 8px;
+}
+
+.jcard {
+  padding: 10px 6px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.jcard:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(217, 181, 119, 0.4);
+}
+
+.jcard-icon {
+  width: 16px;
+  height: 16px;
+
+  margin: 0 auto 6px;
+
+  color: var(--brass-light);
+}
+
+.jname {
+  color: rgba(246, 241, 228, 0.6);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+.jtime {
+  margin-top: 4px;
+
+  color: white;
+
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.jcard.active {
+  background: var(--brass);
+
+  border-color: var(--brass);
+
+  transform: translateY(-2px);
+}
+
+.jcard.active .jname {
+  color: rgba(10, 43, 44, 0.75);
+}
+
+.jcard.active .jtime {
+  color: var(--ink-deep);
+}
+
+.jcard.active .jcard-icon {
+  color: var(--ink-deep);
+}
+
+.jadwal-meta {
+  margin-top: 12px;
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  color: rgba(246, 241, 228, 0.5);
+
+  font-size: 10.5px;
+}
+
+.jadwal-status {
+  margin-top: 6px;
+
+  color: rgba(246, 241, 228, 0.5);
+
+  font-size: 11px;
 }
 
 /* ======================================================
@@ -692,131 +844,6 @@ section {
   font-size: 14px;
 
   line-height: 1.7;
-}
-
-/* ======================================================
-   JADWAL
-====================================================== */
-
-.section-bg-jadwal {
-  position: relative;
-
-  background: var(--plaster);
-}
-
-.jadwal-grid {
-  display: grid;
-
-  grid-template-columns: repeat(6, 1fr);
-
-  gap: 12px;
-}
-
-.jcard {
-  padding: 21px 12px;
-
-  text-align: center;
-
-  border: 1px solid var(--line);
-
-  border-radius: 12px;
-
-  background: rgba(255, 255, 255, 0.72);
-
-  transition:
-    transform 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    background 0.22s ease;
-}
-
-.jcard:hover {
-  transform: translateY(-3px);
-
-  border-color: rgba(184, 135, 75, 0.4);
-
-  box-shadow: var(--shadow-soft);
-}
-
-.jcard-icon {
-  width: 25px;
-  height: 25px;
-
-  margin: 0 auto 10px;
-
-  color: var(--brass);
-}
-
-.jname {
-  color: var(--brass);
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.08em;
-}
-
-.jtime {
-  margin-top: 7px;
-
-  color: var(--ink-deep);
-
-  font-family: "Amiri", serif;
-
-  font-size: 27px;
-
-  font-weight: 700;
-}
-
-.jcard.active {
-  color: white;
-
-  background: var(--ink-deep);
-
-  border-color: var(--ink-deep);
-
-  transform: translateY(-4px);
-
-  box-shadow: var(--shadow);
-}
-
-.jcard.active .jname {
-  color: var(--brass-light);
-}
-
-.jcard.active .jtime {
-  color: white;
-}
-
-.jcard.active .jcard-icon {
-  color: var(--brass-light);
-}
-
-.jadwal-meta {
-  margin-top: 18px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 12px;
-
-  flex-wrap: wrap;
-
-  color: rgba(28, 35, 33, 0.55);
-
-  font-size: 12px;
-}
-
-.jadwal-status {
-  margin-top: 7px;
-
-  color: rgba(28, 35, 33, 0.55);
-
-  font-size: 13px;
 }
 
 /* ======================================================
@@ -1099,8 +1126,8 @@ footer {
     height: 260px;
   }
 
-  .jadwal-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .pc-card {
+    justify-content: center;
   }
 
   .keg-grid {
@@ -1298,13 +1325,21 @@ footer {
   }
 
   .pc-wrap {
-    padding: 26px 0;
+    padding: 28px 0;
   }
 
   .pc-card {
-    padding: 21px 18px;
+    flex-direction: column;
 
-    gap: 16px;
+    align-items: stretch;
+
+    padding: 22px 18px;
+
+    gap: 18px;
+  }
+
+  .pc-main {
+    justify-content: center;
   }
 
   .pc-icon {
@@ -1316,26 +1351,46 @@ footer {
     width: 22px;
   }
 
+  .pc-divider {
+    width: 100%;
+
+    height: 1px;
+  }
+
+  .pc-jadwal {
+    min-width: 0;
+  }
+
+  .pc-jadwal-eyebrow {
+    text-align: center;
+  }
+
+  .jadwal-grid {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+  }
+
+  .jcard {
+    padding: 8px 4px;
+  }
+
+  .jtime {
+    font-size: 13px;
+  }
+
+  .jadwal-meta {
+    justify-content: center;
+
+    text-align: center;
+  }
+
   .sec-head {
     margin-bottom: 30px;
   }
 
   .sec-head h2 {
     font-size: 31px;
-  }
-
-  .jadwal-grid {
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 10px;
-  }
-
-  .jcard {
-    padding: 18px 10px;
-  }
-
-  .jtime {
-    font-size: 24px;
   }
 
   .keg-grid {
@@ -1399,7 +1454,11 @@ footer {
   }
 
   .jadwal-grid {
-    gap: 8px;
+    gap: 6px;
+  }
+
+  .jname {
+    font-size: 8px;
   }
 }
 

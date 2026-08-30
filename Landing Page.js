@@ -456,6 +456,7 @@
 
   if (window.supabase && window.supabase.createClient) {
     supabaseClient = window.supabase.createClient(
+
       SUPABASE_URL,
 
       SUPABASE_KEY,
@@ -580,6 +581,7 @@
 
       .catch(function (error) {
         console.error(
+
           "Kesalahan Supabase:",
 
           error,
