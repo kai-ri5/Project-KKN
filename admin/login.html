@@ -1,75 +1,136 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Login Admin - Masjid Noor Islam</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>
+    Login Admin | Masjid Noor Islam
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="admin.css">
+
+  <link
+    rel="stylesheet"
+    href="admin.css"
+  >
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
-<body class="admin-body">
-  <main class="login-wrapper">
-    <div class="login-card">
-      <a
-        href="../Landing Page.html"
-        class="back-link"
-      >
-        ← Kembali ke Beranda
-      </a>
-      <div class="login-label">
-        MASJID NOOR ISLAM
-      </div>
-      <h1>Login Admin</h1>
-      <p class="login-description">
-        Masuk menggunakan akun pengurus untuk mengelola kegiatan masjid.
-      </p>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="email">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="admin@noorislam.com"
-            autocomplete="email"
-            required
-          >
-        </div>
-        <div class="form-group">
-          <label for="password">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Masukkan password"
-            autocomplete="current-password"
-            required
-          >
-        </div>
-        <button
-          type="submit"
-          class="btn-primary"
-        >
-          Masuk
-        </button>
-        <p
-          id="loginMessage"
-          class="form-message"
-        ></p>
-      </form>
+
+
+<body class="login-body">
+
+  <main class="login-card">
+
+    <div class="login-logo">
+      ☾
     </div>
+
+
+    <div class="login-heading">
+
+      <span>
+        Admin Masjid
+      </span>
+
+      <h1>
+        Masjid Noor Islam
+      </h1>
+
+      <p>
+        Masuk untuk mengelola kegiatan
+        dan campaign donasi.
+      </p>
+
+    </div>
+
+
+    <form id="loginForm">
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="admin@masjid.com"
+          autocomplete="email"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Masukkan password"
+          autocomplete="current-password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="primary-button login-button"
+      >
+        Login
+      </button>
+
+
+      <div
+        class="form-message"
+        id="loginMessage"
+      ></div>
+
+    </form>
+
+
+    <a
+      href="../Landing Page.html"
+      class="back-link"
+    >
+      ← Kembali ke website
+    </a>
+
   </main>
+
+
   <script src="admin.js"></script>
+
 </body>
+
 </html>

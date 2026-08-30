@@ -1,263 +1,687 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Infak & Sedekah | Masjid Noor Islam</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#0A2B2C" />
 
     <meta
       name="description"
-      content="Informasi Infak, Sedekah, dan Baitul Maal Masjid Noor Islam."
+      content="Program donasi, infaq, dan sedekah Masjid Noor Islam Semaki Kulon."
     />
 
-    <!-- Google Fonts -->
+    <title>Infaq & Donasi — Masjid Noor Islam</title>
+
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
     <!-- CSS -->
     <link rel="stylesheet" href="infaq.css" />
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
 
   <body>
-    <main class="infaq-page">
-      <div class="container">
-        <!-- =========================
-             HERO
-        ========================== -->
+    <!-- ==================================================
+         HEADER
+    =================================================== -->
 
-        <section class="infaq-hero">
-          <!-- KIRI -->
-          <div class="hero-copy">
-            <!-- Karena Landing Page.html berada di luar folder Infaq -->
-            <a href="../Landing Page.html" class="back-link">
-              <span aria-hidden="true">←</span>
-              Kembali ke Beranda
-            </a>
+    <header class="site-header">
+      <div class="nav">
+        <a
+          href="../Landing Page.html"
+          class="brand"
+          aria-label="Kembali ke halaman utama Masjid Noor Islam"
+        >
+         <img
+            src="qr/Logo Masjid.jpeg"
+            alt="Logo Masjid Noor Islam"
+            class="brand-mark"
+          />
 
-            <div class="eyebrow">
-              <span>DUKUNG MASJID</span>
+          <div class="brand-text">
+            <div class="brand-name">
+              Masjid Noor Islam
             </div>
 
-            <h1>Infak &amp; Sedekah</h1>
+            <div class="brand-place">
+              Semaki Kulon
+            </div>
+          </div>
+        </a>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Buka menu navigasi"
+          aria-expanded="false"
+          aria-controls="navLinks"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav
+          class="nav-links"
+          id="navLinks"
+          aria-label="Navigasi utama"
+        >
+          <a href="../Landing Page.html">
+            Beranda
+          </a>
+
+          <a href="#campaign">
+            Campaign
+          </a>
+
+          <a href="#qris">
+            QRIS
+          </a>
+
+          <a href="../Landing Page.html#lokasi">
+            Lokasi
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ==================================================
+           HERO
+      =================================================== -->
+
+      <section class="donation-hero">
+        <div class="hero-decoration hero-decoration-1"></div>
+        <div class="hero-decoration hero-decoration-2"></div>
+
+        <div class="wrap hero-inner">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              Peluang Kebaikan
+            </div>
+
+            <h1>
+              Program Kebaikan
+              <br />
+              <span>Masjid Noor Islam</span>
+            </h1>
 
             <p>
-              Partisipasi Anda sangat berarti untuk operasional masjid, program
-              dakwah, dan kegiatan sosial kemasyarakatan.
+              Mari ambil bagian dalam program infaq dan sedekah
+              Masjid Noor Islam. Setiap kontribusi membantu
+              kegiatan jamaah, operasional masjid, serta berbagai
+              program sosial untuk masyarakat.
             </p>
+
+            <a
+              href="#campaign"
+              class="btn btn-primary"
+            >
+              Lihat Campaign
+              <span>↓</span>
+            </a>
           </div>
 
-          <!-- KANAN / QRIS -->
-          <article class="qris-card card">
-            <div class="qris-placeholder">
-              <img
-                src="qr/qris-noor-islam.png"
-                alt="QRIS Masjid Noor Islam"
-                class="qris-image"
-              />
+          <!-- STATISTIK -->
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <div
+                class="stat-value"
+                id="statCampaign"
+              >
+                0
+              </div>
+
+              <div class="stat-label">
+                Campaign Aktif
+              </div>
             </div>
 
-            <div class="qris-info">
-              <h2>Scan untuk berdonasi melalui QRIS</h2>
+            <div class="stat-card">
+              <div
+                class="stat-value"
+                id="statPrioritas"
+              >
+                0
+              </div>
+
+              <div class="stat-label">
+                Prioritas
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div
+                class="stat-value stat-money"
+                id="statTerkumpul"
+              >
+                Rp 0
+              </div>
+
+              <div class="stat-label">
+                Dana Terkumpul
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           FEATURED / PRIORITAS
+      =================================================== -->
+
+      <section class="featured-section">
+        <div class="wrap">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">
+                Pilihan Utama
+              </div>
+
+              <h2>
+                Campaign Prioritas
+              </h2>
 
               <p>
-                Masjid Noor Islam<br />
-                NMID: ID2023242342423<br />
-                A01
+                Program yang saat ini membutuhkan dukungan lebih dahulu.
               </p>
-
-              <a href="#cara-donasi" class="text-link">
-                Cara berdonasi
-                <span aria-hidden="true">→</span>
-              </a>
             </div>
-          </article>
-        </section>
+          </div>
 
-        <!-- =========================
-             CARD DONASI
-        ========================== -->
+          <div
+            class="featured-list"
+            id="featuredCampaigns"
+          >
+            <div class="loading-box">
+              Memuat campaign prioritas…
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <section class="infaq-grid">
-          <!-- BAITUL MAAL UTAMA -->
-          <article class="feature-card card">
-            <span class="badge">BAITUL MAAL</span>
+      <!-- ==================================================
+           SEMUA CAMPAIGN
+      =================================================== -->
+
+      <section
+        class="campaign-section"
+        id="campaign"
+      >
+        <div class="wrap">
+          <div class="campaign-title">
+            <div class="eyebrow">
+              Infaq & Sedekah
+            </div>
 
             <h2>
-              Salurkan Infak, Sedekah, dan Dana Sosial untuk Masjid Noor Islam
+              Semua Campaign
             </h2>
 
             <p>
-              Bantuan Anda akan dikelola secara amanah untuk kebutuhan
-              operasional masjid, pendidikan, dan kegiatan sosial.
-            </p>
-
-            <ul class="feature-list">
-              <li>Operasional masjid &amp; perawatan fasilitas</li>
-              <li>Program pendidikan &amp; kegiatan dakwah</li>
-              <li>Bantuan sosial untuk masyarakat sekitar</li>
-            </ul>
-          </article>
-
-          <!-- INFAK -->
-          <article class="info-card card">
-            <div class="icon-box" aria-hidden="true">✦</div>
-
-            <h3>Infak</h3>
-
-            <p>
-              Donasi rutin untuk pemeliharaan masjid dan fasilitas ibadah.
-            </p>
-
-            <a href="#cara-donasi" class="text-link">
-              Donasi Sekarang
-              <span aria-hidden="true">→</span>
-            </a>
-          </article>
-
-          <!-- SEDEKAH -->
-          <article class="info-card card">
-            <div class="icon-box" aria-hidden="true">♡</div>
-
-            <h3>Sedekah</h3>
-
-            <p>
-              Amal jariyah yang pahalanya terus mengalir untuk kebaikan bersama.
-            </p>
-
-            <a href="#cara-donasi" class="text-link">
-              Donasi Sekarang
-              <span aria-hidden="true">→</span>
-            </a>
-          </article>
-
-          <!-- BAITUL MAAL -->
-          <article class="info-card card">
-            <div class="icon-box" aria-hidden="true">▣</div>
-
-            <h3>Baitul Maal</h3>
-
-            <p>
-              Program penyaluran dana sosial untuk masyarakat yang membutuhkan.
-            </p>
-
-            <a href="#cara-donasi" class="text-link">
-              Selengkapnya
-              <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        </section>
-
-        <!-- =========================
-             TUJUAN PENGELOLAAN
-        ========================== -->
-
-        <section class="fund-purpose card">
-          <div class="purpose-icon" aria-hidden="true">♧</div>
-
-          <div class="purpose-copy">
-            <h3>Tujuan Pengelolaan Dana</h3>
-
-            <p>
-              Semua dana Baitul Maal dikelola amanah, terbuka, dan disalurkan
-              untuk kepentingan ibadah, pendidikan, serta sosial kemasyarakatan
-              sesuai syariah.
+              Pilih program yang ingin kamu dukung.
             </p>
           </div>
 
-          <div class="stats">
-            <div class="stat">
-              <strong>01</strong>
-              <span>Program Aktif</span>
+          <!-- SEARCH & FILTER -->
+
+          <div class="campaign-toolbar">
+            <div class="search-box">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                ></circle>
+
+                <path
+                  d="m20 20-3.4-3.4"
+                ></path>
+              </svg>
+
+              <input
+                type="search"
+                id="campaignSearch"
+                placeholder="Cari program donasi..."
+                autocomplete="off"
+              />
             </div>
 
-            <div class="stat">
-              <strong>12</strong>
-              <span>Relawan</span>
-            </div>
+            <div
+              class="filter-list"
+              id="categoryFilters"
+            >
+              <button
+                class="filter-btn active"
+                type="button"
+                data-filter="semua"
+              >
+                Semua
+              </button>
 
-            <div class="stat">
-              <strong>356+</strong>
-              <span>Penerima Manfaat</span>
+              <button
+                class="filter-btn"
+                type="button"
+                data-filter="INFAQ"
+              >
+                Infaq
+              </button>
+
+              <button
+                class="filter-btn"
+                type="button"
+                data-filter="SEDEKAH"
+              >
+                Sedekah
+              </button>
+
+              <button
+                class="filter-btn"
+                type="button"
+                data-filter="SOSIAL"
+              >
+                Sosial
+              </button>
+
+              <button
+                class="filter-btn"
+                type="button"
+                data-filter="PEMBANGUNAN"
+              >
+                Pembangunan
+              </button>
+
+              <button
+                class="filter-btn"
+                type="button"
+                data-filter="prioritas"
+              >
+                ★ Prioritas
+              </button>
             </div>
           </div>
-        </section>
 
-        <!-- =========================
-             CARA DONASI
-        ========================== -->
+          <div class="campaign-result-info">
+            Menampilkan
+            <strong id="campaignResultCount">
+              0
+            </strong>
+            campaign.
+          </div>
 
-        <section class="donation-guide card" id="cara-donasi">
-          <div class="guide-heading">
-            <span class="guide-label">CARA BERDONASI</span>
+          <div
+            class="campaign-grid"
+            id="campaignGrid"
+          >
+            <div class="loading-box grid-loading">
+              Memuat campaign donasi…
+            </div>
+          </div>
 
-            <h2>Salurkan kebaikan melalui QRIS</h2>
+          <div
+            class="campaign-empty"
+            id="campaignEmpty"
+            hidden
+          >
+            <div class="empty-icon">
+              ♡
+            </div>
+
+            <h3>
+              Campaign tidak ditemukan
+            </h3>
 
             <p>
-              Donasi dapat dilakukan dengan memindai QRIS Masjid Noor Islam
-              melalui aplikasi perbankan atau dompet digital yang mendukung
-              pembayaran QRIS.
+              Coba gunakan kata pencarian atau kategori lainnya.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div class="guide-steps">
-            <div class="guide-step">
-              <span class="step-number">01</span>
+      <!-- ==================================================
+           QRIS DONASI
+      =================================================== -->
 
-              <div>
-                <h3>Buka aplikasi pembayaran</h3>
-                <p>
-                  Gunakan mobile banking atau dompet digital yang mendukung
-                  QRIS.
-                </p>
+      <section
+        class="qris-section"
+        id="qris"
+      >
+        <div class="wrap">
+          <div class="qris-shell">
+            <div class="qris-copy">
+              <div class="eyebrow">
+                Donasi Langsung
+              </div>
+
+              <h2>
+                Salurkan Infaq melalui QRIS
+              </h2>
+
+              <p>
+                Scan QRIS Masjid Noor Islam melalui aplikasi
+                mobile banking atau dompet digital yang mendukung QRIS.
+              </p>
+
+              <!-- CAMPAIGN YANG DIPILIH -->
+
+              <div
+                class="selected-campaign"
+                id="selectedCampaign"
+                hidden
+              >
+                <div class="selected-label">
+                  Campaign yang dipilih
+                </div>
+
+                <div
+                  class="selected-title"
+                  id="selectedCampaignTitle"
+                >
+                  -
+                </div>
+
+                <button
+                  type="button"
+                  class="selected-remove"
+                  id="selectedCampaignRemove"
+                >
+                  Hapus pilihan
+                </button>
+              </div>
+
+              <div class="qris-steps">
+                <div class="qris-step">
+                  <span>1</span>
+
+                  <div>
+                    <strong>
+                      Buka aplikasi pembayaran
+                    </strong>
+
+                    <p>
+                      Gunakan mobile banking atau e-wallet.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="qris-step">
+                  <span>2</span>
+
+                  <div>
+                    <strong>
+                      Scan QRIS
+                    </strong>
+
+                    <p>
+                      Arahkan kamera ke kode QR di samping.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="qris-step">
+                  <span>3</span>
+
+                  <div>
+                    <strong>
+                      Masukkan nominal
+                    </strong>
+
+                    <p>
+                      Tentukan nominal infaq sesuai kemampuan.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="qris-note">
+                <strong>
+                  Catatan:
+                </strong>
+                Website saat ini belum membaca nominal transaksi QRIS
+                secara otomatis. Dana terkumpul diperbarui oleh pengurus
+                masjid melalui dashboard admin.
               </div>
             </div>
 
-            <div class="guide-step">
-              <span class="step-number">02</span>
+            <div class="qris-card">
+              <div class="qris-card-header">
+                <div>
+                  <span>
+                    QRIS
+                  </span>
 
-              <div>
-                <h3>Scan QRIS</h3>
-                <p>
-                  Arahkan kamera ke QRIS Masjid Noor Islam yang tersedia di
-                  halaman ini.
-                </p>
+                  <strong>
+                    Masjid Noor Islam
+                  </strong>
+                </div>
+
+                <div class="qris-badge">
+                  Scan untuk Donasi
+                </div>
               </div>
-            </div>
 
-            <div class="guide-step">
-              <span class="step-number">03</span>
-
-              <div>
-                <h3>Masukkan nominal</h3>
-                <p>
-                  Tentukan jumlah infak atau sedekah yang ingin Anda salurkan.
-                </p>
+              <div class="qris-image-box">
+                <img
+                  src="images/qris-noor-islam.png"
+                  alt="QRIS Masjid Noor Islam"
+                  class="qris-image"
+                />
               </div>
-            </div>
 
-            <div class="guide-step">
-              <span class="step-number">04</span>
-
-              <div>
-                <h3>Konfirmasi pembayaran</h3>
-                <p>
-                  Pastikan informasi penerima sudah benar sebelum menyelesaikan
-                  transaksi.
-                </p>
+              <div class="qris-card-footer">
+                Semaki Kulon · Yogyakarta
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+           TRUST
+      =================================================== -->
+
+      <section class="trust-section">
+        <div class="wrap">
+          <div class="trust-grid">
+            <article class="trust-card">
+              <div class="trust-icon">
+                ✓
+              </div>
+
+              <h3>
+                Amanah
+              </h3>
+
+              <p>
+                Dana dikelola oleh pengurus Masjid Noor Islam
+                untuk program yang telah ditentukan.
+              </p>
+            </article>
+
+            <article class="trust-card">
+              <div class="trust-icon">
+                ↻
+              </div>
+
+              <h3>
+                Transparan
+              </h3>
+
+              <p>
+                Perkembangan dana campaign dapat diperbarui dan
+                ditampilkan secara terbuka melalui website.
+              </p>
+            </article>
+
+            <article class="trust-card">
+              <div class="trust-icon">
+                ♡
+              </div>
+
+              <h3>
+                Mudah
+              </h3>
+
+              <p>
+                Jamaah dapat memilih program dan berdonasi
+                melalui QRIS dengan mudah.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- JS -->
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-row">
+            <svg
+              class="footer-logo"
+              viewBox="0 0 48 48"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M24 4 L34 16 L14 16 Z"
+                fill="#D9B577"
+              />
+
+              <rect
+                x="18"
+                y="16"
+                width="12"
+                height="22"
+                fill="#F6F1E4"
+              />
+
+              <path
+                d="M12 38 L18 38 L18 22 L12 28 Z"
+                fill="#F6F1E4"
+              />
+
+              <path
+                d="M36 38 L30 38 L30 22 L36 28 Z"
+                fill="#F6F1E4"
+              />
+
+              <rect
+                x="10"
+                y="38"
+                width="28"
+                height="4"
+                fill="#D9B577"
+              />
+            </svg>
+
+            <div>
+              <div class="footer-name">
+                Masjid Noor Islam
+              </div>
+
+              <div class="footer-place">
+                Semaki Kulon
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Website informasi, kegiatan dan layanan donasi
+            Masjid Noor Islam Semaki Kulon.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h3>
+            Navigasi
+          </h3>
+
+          <a href="../Landing Page.html">
+            Beranda
+          </a>
+
+          <a href="#campaign">
+            Campaign
+          </a>
+
+          <a href="#qris">
+            Donasi
+          </a>
+
+          <a href="../Landing Page.html#lokasi">
+            Lokasi
+          </a>
+        </div>
+
+        <div class="footer-column">
+          <h3>
+            Program
+          </h3>
+
+          <a href="#campaign">
+            Infaq
+          </a>
+
+          <a href="#campaign">
+            Sedekah
+          </a>
+
+          <a href="#campaign">
+            Program Sosial
+          </a>
+        </div>
+
+        <div class="footer-column">
+          <h3>
+            Masjid
+          </h3>
+
+          <p>
+            Kampung Semaki Kulon,
+            Umbulharjo, Kota Yogyakarta.
+          </p>
+
+          <a
+            href="../Landing Page.html#lokasi"
+          >
+            Lihat Lokasi →
+          </a>
+        </div>
+      </div>
+
+      <div class="wrap footer-bottom">
+        ©
+        <span id="footerYear"></span>
+        Masjid Noor Islam · Semaki Kulon
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
     <script src="infaq.js"></script>
   </body>
 </html>

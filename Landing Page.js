@@ -6,7 +6,6 @@
   ===================================================== */
 
   var menuToggle = document.getElementById("menuToggle");
-
   var navLinks = document.getElementById("navLinks");
 
   function closeMobileMenu() {
@@ -15,11 +14,8 @@
     }
 
     navLinks.classList.remove("active");
-
     menuToggle.classList.remove("active");
-
     menuToggle.setAttribute("aria-expanded", "false");
-
     document.body.classList.remove("menu-open");
   }
 
@@ -31,7 +27,10 @@
 
       menuToggle.classList.toggle("active", isOpen);
 
-      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      menuToggle.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+      );
     });
 
     navLinks.querySelectorAll("a").forEach(function (link) {
@@ -74,20 +73,22 @@
      PRAYER CONFIGURATION
   ===================================================== */
 
-  var PRAYER_ORDER = ["imsak", "subuh", "dzuhur", "ashar", "maghrib", "isya"];
+  var PRAYER_ORDER = [
+    "imsak",
+    "subuh",
+    "dzuhur",
+    "ashar",
+    "maghrib",
+    "isya"
+  ];
 
   var PRAYER_LABEL = {
     imsak: "Imsak",
-
     subuh: "Subuh",
-
     dzuhur: "Dzuhur",
-
     ashar: "Ashar",
-
     maghrib: "Maghrib",
-
-    isya: "Isya",
+    isya: "Isya"
   };
 
   var PRAYER_ICON = {
@@ -122,7 +123,7 @@
     isya:
       '<svg class="jcard-icon icon-anim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">' +
       '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>' +
-      "</svg>",
+      "</svg>"
   };
 
   var FALLBACK_KOTA_ID = "1219";
@@ -134,7 +135,9 @@
   ===================================================== */
 
   function pad(number) {
-    return number < 10 ? "0" + number : String(number);
+    return number < 10
+      ? "0" + number
+      : String(number);
   }
 
   function toMinutes(hhmm) {
@@ -144,17 +147,26 @@
 
     var parts = hhmm.split(":");
 
-    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    return (
+      parseInt(parts[0], 10) * 60 +
+      parseInt(parts[1], 10)
+    );
   }
 
   /* =====================================================
      RENDER PRAYER SCHEDULE
   ===================================================== */
 
-  function renderJadwal(jadwal, lokasiLabel, tanggalLabel) {
+  function renderJadwal(
+    jadwal,
+    lokasiLabel,
+    tanggalLabel
+  ) {
     jadwalData = jadwal;
 
-    var grid = document.getElementById("jadwalGrid");
+    var grid = document.getElementById(
+      "jadwalGrid"
+    );
 
     if (!grid) {
       return;
@@ -179,22 +191,35 @@
 
     grid.innerHTML = cardsHtml;
 
-    var tanggalElement = document.getElementById("jadwalTanggal");
+    var tanggalElement =
+      document.getElementById(
+        "jadwalTanggal"
+      );
 
     if (tanggalElement) {
-      tanggalElement.textContent = tanggalLabel || "";
+      tanggalElement.textContent =
+        tanggalLabel || "";
     }
 
-    var sumberElement = document.getElementById("jadwalSumber");
+    var sumberElement =
+      document.getElementById(
+        "jadwalSumber"
+      );
 
     if (sumberElement) {
       sumberElement.textContent =
         "Wilayah: " +
-        (lokasiLabel || "Kota Yogyakarta") +
+        (
+          lokasiLabel ||
+          "Kota Yogyakarta"
+        ) +
         " · Sumber: Kemenag RI";
     }
 
-    var statusElement = document.getElementById("jadwalStatus");
+    var statusElement =
+      document.getElementById(
+        "jadwalStatus"
+      );
 
     if (statusElement) {
       statusElement.textContent = "";
@@ -204,7 +229,7 @@
   }
 
   /* =====================================================
-     NEXT PRAYER
+     NEXT PRAYER + COUNTDOWN
   ===================================================== */
 
   function highlightNextPrayer() {
@@ -214,9 +239,14 @@
 
     var now = new Date();
 
-    var nowMinutes = now.getHours() * 60 + now.getMinutes();
+    var nowMinutes =
+      now.getHours() * 60 +
+      now.getMinutes();
 
-    var cards = document.querySelectorAll("#jadwalGrid .jcard");
+    var cards =
+      document.querySelectorAll(
+        "#jadwalGrid .jcard"
+      );
 
     cards.forEach(function (card) {
       card.classList.remove("active");
@@ -224,14 +254,17 @@
 
     var upcoming = null;
 
-    for (var i = 0; i < PRAYER_ORDER.length; i++) {
+    for (
+      var i = 0;
+      i < PRAYER_ORDER.length;
+      i++
+    ) {
       var key = PRAYER_ORDER[i];
 
       /*
         Imsak tidak dihitung
-        sebagai sholat wajib berikutnya
+        sebagai sholat wajib berikutnya.
       */
-
       if (key === "imsak") {
         continue;
       }
@@ -240,21 +273,32 @@
         continue;
       }
 
-      if (toMinutes(jadwalData[key]) > nowMinutes) {
+      if (
+        toMinutes(
+          jadwalData[key]
+        ) > nowMinutes
+      ) {
         upcoming = key;
-
         break;
       }
     }
 
-    var pcName = document.getElementById("pcNextName");
+    var pcName =
+      document.getElementById(
+        "pcNextName"
+      );
 
-    var pcTime = document.getElementById("pcTime");
+    var pcTime =
+      document.getElementById(
+        "pcTime"
+      );
 
-    var pcTimer = document.getElementById("pcTimer");
+    var pcTimer =
+      document.getElementById(
+        "pcTimer"
+      );
 
     var targetKey;
-
     var targetHHMM;
 
     var isTomorrow = false;
@@ -262,93 +306,154 @@
     if (upcoming) {
       targetKey = upcoming;
 
-      targetHHMM = jadwalData[upcoming];
+      targetHHMM =
+        jadwalData[upcoming];
 
-      var activeCard = document.querySelector(
-        '#jadwalGrid .jcard[data-key="' + upcoming + '"]',
-      );
+      var activeCard =
+        document.querySelector(
+          '#jadwalGrid .jcard[data-key="' +
+          upcoming +
+          '"]'
+        );
 
       if (activeCard) {
-        activeCard.classList.add("active");
+        activeCard.classList.add(
+          "active"
+        );
       }
     } else {
+      /*
+        Semua jadwal hari ini sudah lewat,
+        arahkan countdown ke Subuh besok.
+      */
+
       targetKey = "subuh";
 
-      targetHHMM = jadwalData.subuh;
+      targetHHMM =
+        jadwalData.subuh;
 
       isTomorrow = true;
 
-      var subuhCard = document.querySelector(
-        '#jadwalGrid .jcard[data-key="subuh"]',
-      );
+      var subuhCard =
+        document.querySelector(
+          '#jadwalGrid .jcard[data-key="subuh"]'
+        );
 
       if (subuhCard) {
-        subuhCard.classList.add("active");
+        subuhCard.classList.add(
+          "active"
+        );
       }
     }
 
     if (pcName) {
-      pcName.textContent = PRAYER_LABEL[targetKey] || "Sholat";
+      pcName.textContent =
+        PRAYER_LABEL[targetKey] ||
+        "Sholat";
     }
 
     if (pcTime) {
-      pcTime.textContent = targetHHMM || "--:--";
+      pcTime.textContent =
+        targetHHMM ||
+        "--:--";
     }
 
-    if (pcTimer && targetHHMM) {
-      var timeParts = targetHHMM.split(":");
+    if (
+      pcTimer &&
+      targetHHMM
+    ) {
+      var timeParts =
+        targetHHMM.split(":");
 
-      var targetDate = new Date(
-        now.getFullYear(),
+      var targetDate =
+        new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+          parseInt(
+            timeParts[0],
+            10
+          ),
+          parseInt(
+            timeParts[1],
+            10
+          ),
+          0
+        );
 
-        now.getMonth(),
-
-        now.getDate(),
-
-        parseInt(timeParts[0], 10),
-
-        parseInt(timeParts[1], 10),
-
-        0,
-      );
-
-      if (isTomorrow || targetDate.getTime() <= now.getTime()) {
-        targetDate.setDate(targetDate.getDate() + 1);
+      if (
+        isTomorrow ||
+        targetDate.getTime() <=
+          now.getTime()
+      ) {
+        targetDate.setDate(
+          targetDate.getDate() + 1
+        );
       }
 
-      var difference = targetDate.getTime() - now.getTime();
+      var difference =
+        targetDate.getTime() -
+        now.getTime();
 
-      var totalSeconds = Math.max(
-        0,
+      var totalSeconds =
+        Math.max(
+          0,
+          Math.floor(
+            difference / 1000
+          )
+        );
 
-        Math.floor(difference / 1000),
-      );
+      var hours =
+        Math.floor(
+          totalSeconds / 3600
+        );
 
-      var hours = Math.floor(totalSeconds / 3600);
+      var minutes =
+        Math.floor(
+          (
+            totalSeconds % 3600
+          ) / 60
+        );
 
-      var minutes = Math.floor((totalSeconds % 3600) / 60);
-
-      var seconds = totalSeconds % 60;
+      var seconds =
+        totalSeconds % 60;
 
       pcTimer.textContent =
-        pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+        pad(hours) +
+        ":" +
+        pad(minutes) +
+        ":" +
+        pad(seconds);
     }
   }
 
-  setInterval(highlightNextPrayer, 1000);
+  setInterval(
+    highlightNextPrayer,
+    1000
+  );
 
   /* =====================================================
      FETCH PRAYER API
   ===================================================== */
 
-  function fetchJadwalById(kotaId, lokasiLabel) {
+  function fetchJadwalById(
+    kotaId,
+    lokasiLabel
+  ) {
     var now = new Date();
 
-    var year = now.getFullYear();
+    var year =
+      now.getFullYear();
 
-    var month = pad(now.getMonth() + 1);
+    var month =
+      pad(
+        now.getMonth() + 1
+      );
 
-    var day = pad(now.getDate());
+    var day =
+      pad(
+        now.getDate()
+      );
 
     var url =
       "https://api.myquran.com/v2/sholat/jadwal/" +
@@ -363,27 +468,37 @@
     return fetch(url)
       .then(function (response) {
         if (!response.ok) {
-          throw new Error("Gagal mengambil jadwal");
+          throw new Error(
+            "Gagal mengambil jadwal"
+          );
         }
 
         return response.json();
       })
 
       .then(function (result) {
-        if (!result || !result.status || !result.data || !result.data.jadwal) {
-          throw new Error("Format data tidak sesuai");
+        if (
+          !result ||
+          !result.status ||
+          !result.data ||
+          !result.data.jadwal
+        ) {
+          throw new Error(
+            "Format data tidak sesuai"
+          );
         }
 
-        var jadwal = result.data.jadwal;
+        var jadwal =
+          result.data.jadwal;
 
-        var label = result.data.lokasi || lokasiLabel;
+        var label =
+          result.data.lokasi ||
+          lokasiLabel;
 
         renderJadwal(
           jadwal,
-
           label,
-
-          jadwal.tanggal || "",
+          jadwal.tanggal || ""
         );
       });
   }
@@ -393,26 +508,45 @@
   ===================================================== */
 
   function loadJadwal() {
-    var status = document.getElementById("jadwalStatus");
+    var status =
+      document.getElementById(
+        "jadwalStatus"
+      );
 
     if (status) {
-      status.textContent = "Memuat jadwal sholat…";
+      status.textContent =
+        "Memuat jadwal sholat…";
     }
 
-    fetch("https://api.myquran.com/v2/sholat/kota/cari/yogyakarta")
+    fetch(
+      "https://api.myquran.com/v2/sholat/kota/cari/yogyakarta"
+    )
       .then(function (response) {
         return response.json();
       })
 
       .then(function (result) {
-        var kotaId = FALLBACK_KOTA_ID;
+        var kotaId =
+          FALLBACK_KOTA_ID;
 
-        var label = "Kota Yogyakarta";
+        var label =
+          "Kota Yogyakarta";
 
-        if (result && result.status && Array.isArray(result.data)) {
-          var match = result.data.find(function (kota) {
-            return /kota yogyakarta/i.test(kota.lokasi || "");
-          });
+        if (
+          result &&
+          result.status &&
+          Array.isArray(
+            result.data
+          )
+        ) {
+          var match =
+            result.data.find(
+              function (kota) {
+                return /kota yogyakarta/i.test(
+                  kota.lokasi || ""
+                );
+              }
+            );
 
           if (match) {
             kotaId = match.id;
@@ -421,46 +555,56 @@
           }
         }
 
-        return fetchJadwalById(kotaId, label);
+        return fetchJadwalById(
+          kotaId,
+          label
+        );
       })
 
       .catch(function () {
         fetchJadwalById(
           FALLBACK_KOTA_ID,
-
-          "Kota Yogyakarta",
+          "Kota Yogyakarta"
         ).catch(function () {
           if (status) {
             status.textContent =
               "Jadwal sholat belum dapat dimuat. Silakan coba beberapa saat lagi.";
           }
 
-          var timer = document.getElementById("pcTimer");
+          var timer =
+            document.getElementById(
+              "pcTimer"
+            );
 
           if (timer) {
-            timer.textContent = "--:--:--";
+            timer.textContent =
+              "--:--:--";
           }
         });
       });
   }
 
   /* =====================================================
-     SUPABASE KEGIATAN
+     SUPABASE
   ===================================================== */
 
-  var SUPABASE_URL = "https://ljgedntbohlgdtkphqex.supabase.co";
+  var SUPABASE_URL =
+    "https://ljgedntbohlgdtkphqex.supabase.co";
 
-  var SUPABASE_KEY = "sb_publishable_j06auKDeW4sdrJGBoIqkXg_F3dQSjV9";
+  var SUPABASE_KEY =
+    "sb_publishable_j06auKDeW4sdrJGBoIqkXg_F3dQSjV9";
 
   var supabaseClient = null;
 
-  if (window.supabase && window.supabase.createClient) {
-    supabaseClient = window.supabase.createClient(
-
-      SUPABASE_URL,
-
-      SUPABASE_KEY,
-    );
+  if (
+    window.supabase &&
+    window.supabase.createClient
+  ) {
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
   }
 
   /* =====================================================
@@ -468,20 +612,328 @@
   ===================================================== */
 
   function escapeHtml(value) {
-    if (value === null || value === undefined) {
+    if (
+      value === null ||
+      value === undefined
+    ) {
       return "";
     }
 
     return String(value)
-      .replace(/&/g, "&amp;")
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+  }
 
-      .replace(/</g, "&lt;")
+  /* =====================================================
+     FORMAT RUPIAH
+  ===================================================== */
 
-      .replace(/>/g, "&gt;")
+  function formatRupiah(value) {
+    var number =
+      Number(value) || 0;
 
-      .replace(/"/g, "&quot;")
+    return new Intl.NumberFormat(
+      "id-ID",
+      {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }
+    ).format(number);
+  }
 
-      .replace(/'/g, "&#039;");
+  /* =====================================================
+     CAMPAIGN DONASI
+  ===================================================== */
+
+  function renderCampaign(list) {
+    var grid =
+      document.getElementById(
+        "campaignGrid"
+      );
+
+    var note =
+      document.getElementById(
+        "campaignNote"
+      );
+
+    if (!grid) {
+      return;
+    }
+
+    if (
+      !list ||
+      list.length === 0
+    ) {
+      grid.innerHTML = "";
+
+      if (note) {
+        note.hidden = false;
+
+        note.textContent =
+          "Belum ada campaign donasi aktif.";
+      }
+
+      return;
+    }
+
+    if (note) {
+      note.hidden = true;
+    }
+
+    var html = "";
+
+    list.forEach(function (campaign) {
+      var target =
+        Number(
+          campaign.target
+        ) || 0;
+
+      var terkumpul =
+        Number(
+          campaign.terkumpul
+        ) || 0;
+
+      var percentage =
+        target > 0
+          ? Math.min(
+              Math.round(
+                (
+                  terkumpul /
+                  target
+                ) * 100
+              ),
+              100
+            )
+          : 0;
+
+      var gambarHtml = "";
+
+      if (campaign.gambar_url) {
+        gambarHtml =
+          '<img ' +
+          'class="campaign-image" ' +
+          'src="' +
+          escapeHtml(
+            campaign.gambar_url
+          ) +
+          '" ' +
+          'alt="' +
+          escapeHtml(
+            campaign.judul ||
+            "Campaign Donasi"
+          ) +
+          '" ' +
+          'loading="lazy" ' +
+          '/>';
+      } else {
+        gambarHtml =
+          '<div class="campaign-image-placeholder">' +
+          "Masjid Noor Islam" +
+          "</div>";
+      }
+
+      var priorityBadge = "";
+
+      if (campaign.prioritas) {
+        priorityBadge =
+          '<span class="campaign-priority">' +
+          "Prioritas" +
+          "</span>";
+      }
+
+      var kategori =
+        campaign.kategori ||
+        "INFAQ";
+
+      html +=
+        '<article class="campaign-card">' +
+
+          '<div class="campaign-image-wrap">' +
+
+            gambarHtml +
+
+            '<div class="campaign-badges">' +
+
+              priorityBadge +
+
+              '<span class="campaign-category">' +
+                escapeHtml(
+                  kategori
+                ) +
+              "</span>" +
+
+            "</div>" +
+
+          "</div>" +
+
+          '<div class="campaign-content">' +
+
+            "<h3>" +
+              escapeHtml(
+                campaign.judul ||
+                "Campaign Donasi"
+              ) +
+            "</h3>" +
+
+            '<p class="campaign-description">' +
+              escapeHtml(
+                campaign.deskripsi ||
+                "Mari bersama mendukung program kebaikan Masjid Noor Islam."
+              ) +
+            "</p>" +
+
+            '<div class="campaign-progress-info">' +
+
+              "<div>" +
+
+                '<span class="campaign-percent-label">' +
+                  "Terkumpul" +
+                "</span>" +
+
+                '<div class="campaign-percentage">' +
+                  percentage +
+                  "%" +
+                "</div>" +
+
+              "</div>" +
+
+              '<div class="campaign-target">' +
+
+                "Target" +
+
+                "<strong>" +
+                  formatRupiah(
+                    target
+                  ) +
+                "</strong>" +
+
+              "</div>" +
+
+            "</div>" +
+
+            '<div class="campaign-progress-track">' +
+
+              '<div ' +
+                'class="campaign-progress-bar" ' +
+                'style="width:' +
+                percentage +
+                '%">' +
+              "</div>" +
+
+            "</div>" +
+
+            '<div class="campaign-footer">' +
+
+              "<div>" +
+
+                '<span class="campaign-collected-label">' +
+                  "Dana terkumpul" +
+                "</span>" +
+
+                '<div class="campaign-collected-value">' +
+                  formatRupiah(
+                    terkumpul
+                  ) +
+                "</div>" +
+
+              "</div>" +
+
+              '<a ' +
+                'class="campaign-donate" ' +
+                'href="Infaq/infaq.html?campaign=' +
+                encodeURIComponent(
+                  campaign.id
+                ) +
+                '">' +
+                "Donasi →" +
+              "</a>" +
+
+            "</div>" +
+
+          "</div>" +
+
+        "</article>";
+    });
+
+    grid.innerHTML = html;
+  }
+
+  /* =====================================================
+     LOAD CAMPAIGN
+  ===================================================== */
+
+  function loadCampaign() {
+    if (!supabaseClient) {
+      renderCampaign([]);
+      return;
+    }
+
+    supabaseClient
+      .from("campaign_donasi")
+      .select("*")
+      .eq(
+        "aktif",
+        true
+      )
+      .order(
+        "prioritas",
+        {
+          ascending: false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(3)
+
+      .then(function (result) {
+        if (result.error) {
+          console.error(
+            "Gagal mengambil campaign donasi:",
+            result.error
+          );
+
+          renderCampaign([]);
+
+          return;
+        }
+
+        renderCampaign(
+          result.data
+        );
+      })
+
+      .catch(function (error) {
+        console.error(
+          "Kesalahan campaign Supabase:",
+          error
+        );
+
+        renderCampaign([]);
+      });
   }
 
   /* =====================================================
@@ -489,15 +941,24 @@
   ===================================================== */
 
   function renderKegiatan(list) {
-    var grid = document.getElementById("kegiatanGrid");
+    var grid =
+      document.getElementById(
+        "kegiatanGrid"
+      );
 
-    var note = document.getElementById("kegiatanNote");
+    var note =
+      document.getElementById(
+        "kegiatanNote"
+      );
 
     if (!grid) {
       return;
     }
 
-    if (!list || list.length === 0) {
+    if (
+      !list ||
+      list.length === 0
+    ) {
       grid.innerHTML = "";
 
       if (note) {
@@ -517,25 +978,47 @@
     var html = "";
 
     list.forEach(function (kegiatan) {
-      var jadwalText = [kegiatan.hari, kegiatan.jam]
-
+      var jadwalText = [
+        kegiatan.hari,
+        kegiatan.jam
+      ]
         .filter(Boolean)
-
         .join(" · ");
 
       html +=
         '<article class="keg-card">' +
-        "<div>" +
-        (jadwalText
-          ? '<div class="keg-tag">' + escapeHtml(jadwalText) + "</div>"
-          : "") +
-        "<h3>" +
-        escapeHtml(kegiatan.nama_kegiatan || "Kegiatan") +
-        "</h3>" +
-        (kegiatan.deskripsi
-          ? "<p>" + escapeHtml(kegiatan.deskripsi) + "</p>"
-          : "") +
-        "</div>" +
+
+          "<div>" +
+
+            (
+              jadwalText
+                ? '<div class="keg-tag">' +
+                  escapeHtml(
+                    jadwalText
+                  ) +
+                  "</div>"
+                : ""
+            ) +
+
+            "<h3>" +
+              escapeHtml(
+                kegiatan.nama_kegiatan ||
+                "Kegiatan"
+              ) +
+            "</h3>" +
+
+            (
+              kegiatan.deskripsi
+                ? "<p>" +
+                  escapeHtml(
+                    kegiatan.deskripsi
+                  ) +
+                  "</p>"
+                : ""
+            ) +
+
+          "</div>" +
+
         "</article>";
     });
 
@@ -549,26 +1032,24 @@
   function loadKegiatan() {
     if (!supabaseClient) {
       renderKegiatan([]);
-
       return;
     }
 
     supabaseClient
-
       .from("kegiatan")
-
       .select("*")
-
-      .order("id", {
-        ascending: true,
-      })
+      .order(
+        "id",
+        {
+          ascending: true
+        }
+      )
 
       .then(function (result) {
         if (result.error) {
           console.error(
             "Gagal mengambil kegiatan:",
-
-            result.error,
+            result.error
           );
 
           renderKegiatan([]);
@@ -576,15 +1057,15 @@
           return;
         }
 
-        renderKegiatan(result.data);
+        renderKegiatan(
+          result.data
+        );
       })
 
       .catch(function (error) {
         console.error(
-
           "Kesalahan Supabase:",
-
-          error,
+          error
         );
 
         renderKegiatan([]);
@@ -597,5 +1078,8 @@
 
   loadJadwal();
 
+  loadCampaign();
+
   loadKegiatan();
+
 })();
