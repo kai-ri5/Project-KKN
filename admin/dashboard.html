@@ -1,14 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="id">
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
+  <meta
+    name="theme-color"
+    content="#0a2b2c"
+  />
 
   <title>
     Dashboard Admin | Masjid Noor Islam
@@ -17,23 +23,23 @@
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
-  >
+  />
 
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
     crossorigin
-  >
+  />
 
   <link
     href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
-  >
+  />
 
   <link
     rel="stylesheet"
     href="admin.css"
-  >
+  />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -43,143 +49,639 @@
 <body class="dashboard-body">
 
 
-<!-- =========================
-     HEADER
-========================= -->
+  <!-- ===================================================
+       SIDEBAR
+  ==================================================== -->
 
-<header class="admin-header">
+  <aside
+    class="sidebar"
+    id="sidebar"
+  >
 
-  <div class="admin-header-inner">
+    <div class="sidebar-brand">
 
-    <div>
+      <div class="sidebar-logo-wrap">
 
-      <div class="admin-brand">
-        Masjid Noor Islam
+        <img
+          src="../Infaq/qr/Logo Masjid.png"
+          alt="Logo Masjid Noor Islam"
+          class="sidebar-logo"
+        />
+
       </div>
 
-      <div class="admin-subtitle">
-        Dashboard Takmir / Marbot
+
+      <div>
+
+        <div class="sidebar-brand-name">
+          Masjid Noor Islam
+        </div>
+
+        <div class="sidebar-brand-sub">
+          Portal Pengurus
+        </div>
+
       </div>
 
     </div>
 
 
-    <div class="header-actions">
-
-      <a
-        href="../Landing Page.html"
-        class="outline-button"
-        target="_blank"
-      >
-        Lihat Website
-      </a>
+    <nav class="sidebar-menu">
 
       <button
+        class="sidebar-link active"
         type="button"
+        data-section="overview"
+      >
+        <span>⌂</span>
+        Dashboard
+      </button>
+
+
+      <button
+        class="sidebar-link"
+        type="button"
+        data-section="kegiatan"
+      >
+        <span>◫</span>
+        Kegiatan
+      </button>
+
+
+      <button
+        class="sidebar-link"
+        type="button"
+        data-section="campaign"
+      >
+        <span>♡</span>
+        ZIS & Donasi
+      </button>
+
+
+      <button
+        class="sidebar-link"
+        type="button"
+        data-section="qurban"
+      >
+        <span>☾</span>
+        Qurban
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+      <a
+        href="../index.html"
+        class="sidebar-site-link"
+        target="_blank"
+      >
+        Lihat Website ↗
+      </a>
+
+
+      <button
         id="logoutButton"
         class="logout-button"
+        type="button"
       >
         Keluar
       </button>
 
     </div>
 
-  </div>
-
-</header>
+  </aside>
 
 
 
-<main class="admin-main">
+  <!-- ===================================================
+       MAIN
+  ==================================================== -->
+
+  <main class="dashboard-main">
 
 
-<!-- =========================
-     INTRO
-========================= -->
+    <!-- TOPBAR -->
 
-<section class="admin-intro">
+    <header class="dashboard-topbar">
 
-  <span class="admin-eyebrow">
-    Dashboard Admin
-  </span>
+      <div>
 
-  <h1>
-    Kelola Informasi Masjid
-  </h1>
-
-  <p>
-    Tambah kegiatan dan campaign donasi
-    yang akan ditampilkan kepada jamaah.
-  </p>
-
-</section>
+        <button
+          class="mobile-sidebar-button"
+          id="mobileSidebarButton"
+          type="button"
+        >
+          ☰
+        </button>
 
 
+        <div class="topbar-eyebrow">
+          Masjid Noor Islam · Yogyakarta
+        </div>
 
-<!-- =========================
-     TABS
-========================= -->
 
-<div class="admin-tabs">
+        <h1 id="pageTitle">
+          Dashboard
+        </h1>
 
-  <button
-    type="button"
-    class="admin-tab active"
-    data-tab="kegiatan"
+      </div>
+
+
+      <div class="admin-profile">
+
+        <div class="admin-avatar">
+          A
+        </div>
+
+
+        <div class="admin-profile-text">
+
+          <strong>
+            Admin
+          </strong>
+
+          <span id="adminEmail">
+            Memuat...
+          </span>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+
+    <div class="dashboard-content">
+
+
+      <!-- =================================================
+           OVERVIEW
+      ================================================== -->
+
+      <section
+        class="dashboard-section active"
+        id="section-overview"
+      >
+
+        <div class="welcome-card">
+
+          <div>
+
+            <div class="welcome-label">
+              Assalamu'alaikum
+            </div>
+
+            <h2>
+              Selamat datang di Portal Pengurus
+            </h2>
+
+            <p>
+              Kelola agenda kegiatan dan program ZIS serta
+              donasi Masjid Noor Islam dari satu dashboard.
+            </p>
+
+          </div>
+
+
+          <div class="welcome-decoration">
+            ☾
+          </div>
+
+        </div>
+
+
+
+        <div class="stat-cards">
+
+
+          <article class="stat-card">
+
+            <div class="stat-icon">
+              ◫
+            </div>
+
+            <div>
+
+              <span>
+                Total Kegiatan
+              </span>
+
+              <strong id="statKegiatan">
+                0
+              </strong>
+
+            </div>
+
+          </article>
+
+
+
+          <article class="stat-card">
+
+            <div class="stat-icon">
+              ♡
+            </div>
+
+            <div>
+
+              <span>
+                Campaign Aktif
+              </span>
+
+              <strong id="statCampaign">
+                0
+              </strong>
+
+            </div>
+
+          </article>
+
+
+
+          <article class="stat-card">
+
+            <div class="stat-icon">
+              Rp
+            </div>
+
+            <div>
+
+              <span>
+                Dana Terkumpul
+              </span>
+
+              <strong
+                id="statTerkumpul"
+                class="stat-money"
+              >
+                Rp0
+              </strong>
+
+            </div>
+
+          </article>
+
+
+
+          <article class="stat-card">
+
+            <div class="stat-icon">
+              ★
+            </div>
+
+            <div>
+
+              <span>
+                Campaign Prioritas
+              </span>
+
+              <strong id="statPrioritas">
+                0
+              </strong>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+
+        <div class="dashboard-card">
+
+          <div class="card-heading">
+
+            <div>
+
+              <div class="section-label">
+                Ringkasan
+              </div>
+
+              <h2>
+                Program Terbaru
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="overview-list"
+            id="overviewCampaignList"
+          >
+            Memuat data...
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           KEGIATAN
+      ================================================== -->
+
+      <section
+        class="dashboard-section"
+        id="section-kegiatan"
+      >
+
+        <div class="section-toolbar">
+
+          <div>
+
+            <div class="section-label">
+              Agenda Masjid
+            </div>
+
+            <h2>
+              Kelola Kegiatan
+            </h2>
+
+            <p>
+              Kegiatan yang ditambahkan akan langsung
+              ditampilkan pada website.
+            </p>
+
+          </div>
+
+
+          <button
+            class="btn-primary"
+            id="addKegiatanButton"
+            type="button"
+          >
+            + Tambah Kegiatan
+          </button>
+
+        </div>
+
+
+
+        <div class="dashboard-card">
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+
+                <tr>
+
+                  <th>Foto</th>
+
+                  <th>Kegiatan</th>
+
+                  <th>Hari</th>
+
+                  <th>Jam</th>
+
+                  <th>Deskripsi</th>
+
+                  <th>Aksi</th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody id="kegiatanTableBody">
+
+                <tr>
+
+                  <td colspan="6">
+                    Memuat data...
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           CAMPAIGN
+      ================================================== -->
+
+      <section
+        class="dashboard-section"
+        id="section-campaign"
+      >
+
+        <div class="section-toolbar">
+
+          <div>
+
+            <div class="section-label">
+              ZIS & Donasi
+            </div>
+
+            <h2>
+              Kelola Campaign
+            </h2>
+
+            <p>
+              Buat program Zakat, Donasi, Pembangunan,
+              Pendidikan dan program sosial lainnya.
+            </p>
+
+          </div>
+
+
+          <button
+            class="btn-primary"
+            id="addCampaignButton"
+            type="button"
+          >
+            + Tambah Campaign
+          </button>
+
+        </div>
+
+
+
+        <div class="filter-bar">
+
+          <button
+            class="filter-button active"
+            type="button"
+            data-campaign-filter="ALL"
+          >
+            Semua
+          </button>
+
+
+          <button
+            class="filter-button"
+            type="button"
+            data-campaign-filter="ZAKAT"
+          >
+            Zakat
+          </button>
+
+
+          <button
+            class="filter-button"
+            type="button"
+            data-campaign-filter="DONASI"
+          >
+            Donasi
+          </button>
+
+
+          <button
+            class="filter-button"
+            type="button"
+            data-campaign-filter="PEMBANGUNAN"
+          >
+            Pembangunan
+          </button>
+
+
+          <button
+            class="filter-button"
+            type="button"
+            data-campaign-filter="SOSIAL"
+          >
+            Sosial
+          </button>
+
+        </div>
+
+
+
+        <div
+          class="admin-campaign-grid"
+          id="adminCampaignGrid"
+        >
+
+          <div class="empty-state">
+            Memuat campaign...
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           QURBAN
+      ================================================== -->
+
+      <section
+        class="dashboard-section"
+        id="section-qurban"
+      >
+
+        <div class="section-toolbar">
+
+          <div>
+
+            <div class="section-label">
+              Program Qurban
+            </div>
+
+            <h2>
+              Kelola Qurban
+            </h2>
+
+            <p>
+              Kelola informasi dan pendaftaran qurban secara terpisah
+              dari campaign ZIS & Donasi.
+            </p>
+
+          </div>
+
+          <button
+            class="btn-primary"
+            id="addQurbanButton"
+            type="button"
+          >
+            + Tambah Qurban
+          </button>
+
+        </div>
+
+        <div
+          class="admin-campaign-grid"
+          id="adminQurbanGrid"
+        >
+
+          <div class="empty-state">
+            Memuat program qurban...
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       MODAL KEGIATAN
+  ====================================================== -->
+
+  <div
+    class="modal-backdrop"
+    id="kegiatanModal"
+    hidden
   >
-    Kegiatan
-  </button>
 
-  <button
-    type="button"
-    class="admin-tab"
-    data-tab="campaign"
-  >
-    Campaign Donasi
-  </button>
+    <div class="modal modal-large">
 
-</div>
+      <div class="modal-header">
 
+        <div>
 
+          <div class="section-label">
+            Agenda
+          </div>
 
-<!-- =====================================================
-     KEGIATAN
-===================================================== -->
+          <h2 id="kegiatanModalTitle">
+            Tambah Kegiatan
+          </h2>
 
-<section
-  class="tab-content active"
-  id="tab-kegiatan"
->
-
-  <div class="dashboard-grid">
+        </div>
 
 
-    <!-- FORM -->
-
-    <div class="admin-panel">
-
-      <div class="panel-heading">
-
-        <span class="panel-label">
-          Kegiatan
-        </span>
-
-        <h2>
-          Tambah Kegiatan
-        </h2>
+        <button
+          class="modal-close"
+          type="button"
+          data-close-modal="kegiatanModal"
+        >
+          ×
+        </button>
 
       </div>
 
 
       <form id="kegiatanForm">
 
+
         <input
           type="hidden"
-          id="editId"
-        >
+          id="kegiatanId"
+        />
 
 
-        <div class="form-group">
+        <div class="field">
 
           <label for="namaKegiatan">
             Nama Kegiatan
@@ -188,54 +690,89 @@
           <input
             type="text"
             id="namaKegiatan"
-            placeholder="Contoh: TPA"
+            placeholder="Contoh: Kajian Ahad Pagi"
             required
-          >
+          />
 
         </div>
 
 
-        <div class="form-row">
 
-          <div class="form-group">
+        <div class="form-grid">
 
-            <label for="hari">
+          <div class="field">
+
+            <label for="hariKegiatan">
               Hari
             </label>
 
             <input
               type="text"
-              id="hari"
-              placeholder="Jumat"
-            >
+              id="hariKegiatan"
+              placeholder="Contoh: Ahad"
+              required
+            />
 
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
 
-            <label for="jam">
+            <label for="jamKegiatan">
               Jam
             </label>
 
             <input
-              type="time"
-              id="jam"
-            >
+              type="text"
+              id="jamKegiatan"
+              placeholder="Contoh: 07.00 WIB"
+              required
+            />
 
           </div>
 
         </div>
 
 
-        <div class="form-group">
 
-          <label for="deskripsi">
+        <!-- FOTO KEGIATAN -->
+
+        <div class="field">
+
+          <label for="kegiatanImage">
+            Foto Kegiatan
+          </label>
+
+          <input
+            type="file"
+            id="kegiatanImage"
+            accept="image/jpeg,image/png,image/webp"
+          />
+
+          <small class="field-help">
+            Format JPG, PNG atau WebP. Maksimal disarankan 5 MB.
+          </small>
+
+        </div>
+
+
+
+        <div
+          id="kegiatanCurrentImage"
+          class="current-image-wrap"
+          hidden
+        ></div>
+
+
+
+        <div class="field">
+
+          <label for="deskripsiKegiatan">
             Deskripsi
           </label>
 
           <textarea
-            id="deskripsi"
+            id="deskripsiKegiatan"
             rows="5"
             placeholder="Deskripsi kegiatan..."
           ></textarea>
@@ -243,137 +780,90 @@
         </div>
 
 
-        <div class="form-actions">
 
-          <button
-            type="submit"
-            id="submitButton"
-            class="primary-button"
-          >
-            Tambah Kegiatan
-          </button>
+        <div
+          class="form-message"
+          id="kegiatanMessage"
+        ></div>
+
+
+
+        <div class="modal-actions">
 
           <button
             type="button"
-            id="cancelEditButton"
-            class="secondary-button"
-            hidden
+            class="btn-secondary"
+            data-close-modal="kegiatanModal"
           >
             Batal
           </button>
 
+
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Simpan Kegiatan
+          </button>
+
         </div>
-
-
-        <div
-          class="form-message"
-          id="formMessage"
-        ></div>
 
       </form>
 
     </div>
 
+  </div>
 
 
-    <!-- LIST -->
 
-    <div class="admin-panel">
+  <!-- =====================================================
+       MODAL CAMPAIGN
+  ====================================================== -->
 
-      <div class="panel-heading-row">
+  <div
+    class="modal-backdrop"
+    id="campaignModal"
+    hidden
+  >
+
+    <div class="modal modal-large">
+
+      <div class="modal-header">
 
         <div>
 
-          <span class="panel-label">
-            Data
-          </span>
+          <div class="section-label">
+            ZIS & Donasi
+          </div>
 
-          <h2>
-            Daftar Kegiatan
+          <h2 id="campaignModalTitle">
+            Tambah Campaign
           </h2>
 
         </div>
 
 
         <button
+          class="modal-close"
           type="button"
-          id="refreshButton"
-          class="small-button"
+          data-close-modal="campaignModal"
         >
-          Refresh
+          ×
         </button>
 
       </div>
 
-
-      <div
-        class="admin-list"
-        id="adminKegiatanList"
-      >
-
-        <div class="empty-state">
-          Memuat kegiatan...
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     CAMPAIGN DONASI
-===================================================== -->
-
-<section
-  class="tab-content"
-  id="tab-campaign"
->
-
-  <div class="dashboard-grid">
-
-
-    <!-- CAMPAIGN FORM -->
-
-    <div class="admin-panel">
-
-      <div class="panel-heading">
-
-        <span class="panel-label">
-          Donasi
-        </span>
-
-        <h2>
-          Tambah Campaign
-        </h2>
-
-        <p>
-          Campaign aktif akan muncul
-          otomatis di landing page.
-        </p>
-
-      </div>
 
 
       <form id="campaignForm">
 
         <input
           type="hidden"
-          id="campaignEditId"
-        >
+          id="campaignId"
+        />
 
 
-        <input
-          type="hidden"
-          id="existingImageUrl"
-        >
-
-
-        <div class="form-group">
+        <div class="field">
 
           <label for="campaignJudul">
             Judul Campaign
@@ -382,49 +872,117 @@
           <input
             type="text"
             id="campaignJudul"
-            placeholder="Contoh: Renovasi Tempat Wudhu"
+            placeholder="Contoh: Pembangunan Tempat Wudhu"
             required
-          >
+          />
 
         </div>
 
 
-        <div class="form-group">
 
-          <label for="campaignKategori">
-            Kategori
-          </label>
+        <div class="form-grid">
 
-          <select
-            id="campaignKategori"
-          >
+          <div class="field">
 
-            <option value="INFAQ">
-              Infaq
-            </option>
+            <label for="campaignKategori">
+              Kategori
+            </label>
 
-            <option value="SEDEKAH">
-              Sedekah
-            </option>
+            <select
+              id="campaignKategori"
+              required
+            >
 
-            <option value="BAITUL MAAL">
-              Baitul Maal
-            </option>
+              <option value="">
+                Pilih kategori
+              </option>
 
-            <option value="PEMBANGUNAN">
-              Pembangunan
-            </option>
+              <option value="ZAKAT">
+                Zakat
+              </option>
 
-            <option value="SOSIAL">
-              Sosial
-            </option>
+              <option value="DONASI">
+                Donasi
+              </option>
 
-          </select>
+              <option value="PEMBANGUNAN">
+                Pembangunan Masjid
+              </option>
+
+              <option value="SOSIAL">
+                Sosial
+              </option>
+
+              <option value="PENDIDIKAN">
+                Pendidikan
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <div class="field">
+
+            <label for="campaignTarget">
+              Target Dana
+            </label>
+
+            <input
+              type="number"
+              id="campaignTarget"
+              min="0"
+              step="1000"
+              placeholder="10000000"
+              required
+            />
+
+          </div>
 
         </div>
 
 
-        <div class="form-group">
+
+        <div class="form-grid">
+
+          <div class="field">
+
+            <label for="campaignTerkumpul">
+              Dana Terkumpul
+            </label>
+
+            <input
+              type="number"
+              id="campaignTerkumpul"
+              min="0"
+              step="1000"
+              value="0"
+            />
+
+          </div>
+
+
+
+          <div class="field">
+
+            <label for="campaignImage">
+              Gambar
+            </label>
+
+            <input
+              type="file"
+              id="campaignImage"
+              accept="image/jpeg,image/png,image/webp"
+            />
+
+          </div>
+
+        </div>
+
+
+
+        <div class="field">
 
           <label for="campaignDeskripsi">
             Deskripsi
@@ -434,99 +992,45 @@
             id="campaignDeskripsi"
             rows="5"
             placeholder="Jelaskan tujuan campaign..."
+            required
           ></textarea>
 
         </div>
 
 
-        <div class="form-row">
 
-          <div class="form-group">
+        <div class="toggle-grid">
 
-            <label for="campaignTarget">
-              Target Donasi
-            </label>
+          <label class="toggle-row">
 
             <input
-              type="number"
-              id="campaignTarget"
-              placeholder="10000000"
-              min="1"
-              required
-            >
+              type="checkbox"
+              id="campaignAktif"
+              checked
+            />
 
-            <small>
-              Contoh: 10000000 =
-              Rp10.000.000
-            </small>
+            <span>
 
-          </div>
+              <strong>
+                Campaign Aktif
+              </strong>
 
+              <small>
+                Tampilkan campaign di website.
+              </small>
 
-          <div class="form-group">
+            </span>
 
-            <label for="campaignTerkumpul">
-              Dana Terkumpul
-            </label>
-
-            <input
-              type="number"
-              id="campaignTerkumpul"
-              value="0"
-              min="0"
-            >
-
-          </div>
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label for="campaignImage">
-            Gambar Campaign
           </label>
 
-          <input
-            type="file"
-            id="campaignImage"
-            accept="image/jpeg,image/png,image/webp"
-          >
-
-          <small>
-            JPG, PNG atau WebP.
-            Maksimal disarankan 2 MB.
-          </small>
-
-        </div>
 
 
-        <div
-          class="image-preview-wrapper"
-          id="imagePreviewWrapper"
-          hidden
-        >
-
-          <span>
-            Preview gambar
-          </span>
-
-          <img
-            id="imagePreview"
-            alt="Preview gambar campaign"
-          >
-
-        </div>
-
-
-        <div class="checkbox-grid">
-
-          <label class="checkbox-item">
+          <label class="toggle-row">
 
             <input
               type="checkbox"
               id="campaignPrioritas"
-            >
+            />
 
             <span>
 
@@ -535,30 +1039,7 @@
               </strong>
 
               <small>
-                Tampilkan lebih dahulu.
-              </small>
-
-            </span>
-
-          </label>
-
-
-          <label class="checkbox-item">
-
-            <input
-              type="checkbox"
-              id="campaignAktif"
-              checked
-            >
-
-            <span>
-
-              <strong>
-                Aktif
-              </strong>
-
-              <small>
-                Tampilkan di website.
+                Beri label prioritas.
               </small>
 
             </span>
@@ -568,26 +1049,13 @@
         </div>
 
 
-        <div class="form-actions">
 
-          <button
-            type="submit"
-            id="campaignSubmitButton"
-            class="primary-button"
-          >
-            Tambah Campaign
-          </button>
+        <div
+          id="campaignCurrentImage"
+          class="current-image-wrap"
+          hidden
+        ></div>
 
-          <button
-            type="button"
-            id="campaignCancelButton"
-            class="secondary-button"
-            hidden
-          >
-            Batal
-          </button>
-
-        </div>
 
 
         <div
@@ -595,50 +1063,249 @@
           id="campaignMessage"
         ></div>
 
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn-secondary"
+            data-close-modal="campaignModal"
+          >
+            Batal
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Simpan Campaign
+          </button>
+
+        </div>
+
       </form>
 
     </div>
 
+  </div>
 
 
-    <!-- CAMPAIGN LIST -->
 
-    <div class="admin-panel">
+  <!-- =====================================================
+       MODAL QURBAN
+  ====================================================== -->
 
-      <div class="panel-heading-row">
+  <div
+    class="modal-backdrop"
+    id="qurbanModal"
+    hidden
+  >
+
+    <div class="modal modal-large">
+
+      <div class="modal-header">
 
         <div>
 
-          <span class="panel-label">
-            Campaign
-          </span>
+          <div class="section-label">
+            Program Qurban
+          </div>
 
-          <h2>
-            Daftar Campaign
+          <h2 id="qurbanModalTitle">
+            Tambah Qurban
           </h2>
 
         </div>
 
-
         <button
+          class="modal-close"
           type="button"
-          id="refreshCampaignButton"
-          class="small-button"
+          data-close-modal="qurbanModal"
         >
-          Refresh
+          ×
         </button>
 
       </div>
 
+      <form id="qurbanForm">
 
-      <div
-        class="admin-list"
-        id="adminCampaignList"
-      >
+        <input type="hidden" id="qurbanId" />
 
-        <div class="empty-state">
-          Memuat campaign...
+        <div class="field">
+          <label for="qurbanJudul">Nama Program</label>
+          <input
+            type="text"
+            id="qurbanJudul"
+            placeholder="Contoh: Qurban Idul Adha 1448 H"
+            required
+          />
         </div>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="qurbanJenis">Jenis / Paket Hewan</label>
+            <input
+              type="text"
+              id="qurbanJenis"
+              placeholder="Contoh: Sapi - 1/7 Bagian"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="qurbanHarga">Harga</label>
+            <input
+              type="number"
+              id="qurbanHarga"
+              min="0"
+              step="1000"
+              placeholder="3500000"
+              required
+            />
+          </div>
+
+        </div>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="qurbanPeriode">Periode Pendaftaran</label>
+            <input
+              type="text"
+              id="qurbanPeriode"
+              placeholder="Contoh: 1 Mei - 5 Juni 2027"
+            />
+          </div>
+
+          <div class="field">
+            <label for="qurbanKontak">WhatsApp Panitia</label>
+            <input
+              type="text"
+              id="qurbanKontak"
+              placeholder="Contoh: 628123456789"
+              required
+            />
+            <small class="field-help">
+              Gunakan format 62 tanpa tanda +, spasi, atau tanda hubung.
+            </small>
+          </div>
+
+        </div>
+
+        <div class="field">
+          <label for="qurbanImage">Foto Qurban</label>
+          <input
+            type="file"
+            id="qurbanImage"
+            accept="image/jpeg,image/png,image/webp"
+          />
+          <small class="field-help">
+            Format JPG, PNG atau WebP. Maksimal disarankan 5 MB.
+          </small>
+        </div>
+
+        <div
+          id="qurbanCurrentImage"
+          class="current-image-wrap"
+          hidden
+        ></div>
+
+        <div class="field">
+          <label for="qurbanDeskripsi">Deskripsi</label>
+          <textarea
+            id="qurbanDeskripsi"
+            rows="5"
+            placeholder="Informasi program qurban..."
+          ></textarea>
+        </div>
+
+        <div class="toggle-grid">
+
+          <label class="toggle-row">
+            <input type="checkbox" id="qurbanAktif" checked />
+            <span>
+              <strong>Program Aktif</strong>
+              <small>Tampilkan program di website.</small>
+            </span>
+          </label>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="qurbanPrioritas" />
+            <span>
+              <strong>Prioritas</strong>
+              <small>Tampilkan program lebih dahulu.</small>
+            </span>
+          </label>
+
+        </div>
+
+        <div class="form-message" id="qurbanMessage"></div>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn-secondary"
+            data-close-modal="qurbanModal"
+          >
+            Batal
+          </button>
+
+          <button type="submit" class="btn-primary">
+            Simpan Qurban
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       CONFIRM DELETE
+  ====================================================== -->
+
+  <div
+    class="modal-backdrop"
+    id="confirmModal"
+    hidden
+  >
+
+    <div class="modal modal-confirm">
+
+      <h2 id="confirmTitle">
+        Hapus Data?
+      </h2>
+
+      <p id="confirmText">
+        Data yang sudah dihapus tidak dapat dikembalikan.
+      </p>
+
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="btn-secondary"
+          id="cancelConfirm"
+        >
+          Batal
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-danger"
+          id="confirmDelete"
+        >
+          Hapus
+        </button>
 
       </div>
 
@@ -646,13 +1313,18 @@
 
   </div>
 
-</section>
 
 
-</main>
+  <div
+    class="toast"
+    id="toast"
+  >
+    Berhasil
+  </div>
 
 
-<script src="admin.js"></script>
+
+  <script src="admin.js"></script>
 
 </body>
 

@@ -1,531 +1,836 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
 
-    <meta name="theme-color" content="#0A2B2C" />
+  <meta name="theme-color" content="#0A2B2C" />
 
-    <title>Masjid Noor Islam — Semaki Kulon</title>
+  <meta
+    name="description"
+    content="Portal Informasi Resmi Masjid Noor Islam Yogyakarta."
+  />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <title>Masjid Noor Islam — Yogyakarta</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="Landing Page.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="Landing Page.css" />
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  </head>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 
-  <body>
-    <!-- =========================
-     HEADER / NAVBAR
-========================= -->
+<body>
 
-    <header class="site-header">
-      <div class="nav">
-        <!-- BRAND -->
-        <a href="#" class="brand">
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+  <header class="site-header">
+    <div class="nav">
+
+      <!-- BRAND -->
+      <a href="#" class="brand">
+
+        <div class="brand-logo-wrap">
           <img
             src="Infaq/qr/Logo Masjid.png"
             alt="Logo Masjid Noor Islam"
             class="brand-mark"
-/>
-          <div class="brand-text">
-            <div class="name">Masjid Noor Islam</div>
+          />
+        </div>
 
-            <div class="place">Semaki Kulon</div>
-          </div>
+        <div class="brand-text">
+          <div class="name">Masjid Noor Islam</div>
+          <div class="place">Yogyakarta</div>
+        </div>
+
+      </a>
+
+      <!-- MOBILE MENU -->
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Buka menu navigasi"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- NAVIGATION -->
+      <nav class="links" id="navLinks" aria-label="Navigasi utama">
+
+        <a href="#jadwal">
+          Jadwal Sholat
         </a>
 
-        <!-- HAMBURGER MOBILE -->
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Buka menu navigasi"
-          aria-expanded="false"
-          aria-controls="navLinks"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <a href="#kegiatan">
+          Kegiatan
+        </a>
 
-        <!-- NAVIGATION -->
-        <nav class="links" id="navLinks" aria-label="Navigasi utama">
-          <a href="#jadwal"> Jadwal Sholat </a>
+        <!-- INFAQ DIPISAH -->
+        <a href="#infaq">
+          Infaq
+        </a>
 
-          <a href="#kegiatan"> Kegiatan </a>
+        <!-- ZIS / DONASI DIPISAH -->
+        <a href="#zis">
+          ZIS & Donasi
+        </a>
 
-          <a href="Infaq/infaq.html"> Infaq </a>
+        <a href="#lokasi">
+          Lokasi
+        </a>
 
-          <a href="#lokasi"> Lokasi </a>
-        </nav>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+    <section class="hero">
+
+      <div class="hero-bg"></div>
+
+      <div class="hero-orbs">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
       </div>
-    </header>
 
-    <!-- =========================
-     HERO
-========================= -->
+      <div class="hero-inner">
 
-    <main>
-      <section class="hero">
-        <div class="hero-bg"></div>
+        <!-- HERO TEXT -->
+        <div class="hero-content">
 
-        <div class="hero-orbs">
-          <span class="orb orb-1"></span>
-          <span class="orb orb-2"></span>
-          <span class="orb orb-3"></span>
-        </div>
-
-        <div class="hero-inner">
-          <!-- HERO TEXT -->
-          <div class="hero-content">
-            <div class="eyebrow">Kampung Semaki Kulon</div>
-
-            <h1>
-              Rumah ibadah,
-              <br />
-              <em>rumah warga.</em>
-            </h1>
-
-            <p class="lede">
-              Masjid Noor Islam melayani jamaah Kampung Semaki Kulon dengan
-              sholat lima waktu, kegiatan rutin, dan ruang bagi warga untuk
-              saling menopang.
-            </p>
-
-            <p class="hero-note">
-              ✦ Website informasi Masjid Noor Islam Semaki Kulon
-            </p>
-
-            <div class="hero-cta">
-              <a href="Infaq/infaq.html" class="btn btn-primary">
-                Donasi
-              </a>
-
-              <a href="#lokasi" class="btn btn-ghost">
-                Lokasi Masjid
-              </a>
-            </div>
+          <div class="eyebrow">
+            Masjid Noor Islam · Yogyakarta
           </div>
 
-          <!-- HERO ILLUSTRATION -->
-          <div class="hero-art">
-            <div class="hero-art-glow"></div>
+          <h1>
+            Digitalisasi Layanan untuk
+            <em>Keberlanjutan Ummat</em>
+          </h1>
 
-              <div class="hero-logo">
-              <div class="hero-logo-glow"></div>
+          <p class="lede">
+            Platform ini hadir untuk memudahkan jamaah Masjid Noor Islam
+            dalam mengakses jadwal sholat, agenda kegiatan, serta laporan
+            infaq yang transparan dan akuntabel.
+          </p>
 
-              <img
-                src="Infaq/qr/Logo Masjid().png"
-                alt="Logo Masjid Noor Islam"
-                class="hero-logo-image"
-              />
-            </div>            
+          <p class="hero-note">
+            Portal Informasi Resmi Masjid Noor Islam
+          </p>
+
+          <div class="hero-cta">
+
+            <a href="#infaq" class="btn btn-primary">
+              Infaq
+            </a>
+
+            <a href="#zis" class="btn btn-ghost">
+              ZIS & Donasi
+            </a>
+
           </div>
         </div>
-      </section>
 
-      <!-- =========================
-     COUNTDOWN + JADWAL SHOLAT (DIGABUNG)
-========================= -->
 
-      <section id="jadwal" class="pc-wrap">
-        <div class="wrap">
-          <div class="pc-card">
-            <!-- KIRI: Countdown besar -->
-            <div class="pc-main">
-              <div class="pc-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="9"
-                  />
+        <!-- HERO LOGO -->
+        <div class="hero-art">
 
-                  <path d="M12 7v5l3.2 2" />
-                </svg>
-              </div>
+          <div class="hero-art-glow"></div>
 
-              <div class="pc-body">
-                <div class="pc-label">
-                  Waktu Menuju
+          <div class="hero-logo-wrap">
+            <img
+              src="Infaq/qr/Logo Masjid().png"
+              alt="Logo Masjid Noor Islam"
+              class="hero-logo"
+            />
+          </div>
 
-                  <span id="pcNextName">
-                    Sholat
-                  </span>
-                </div>
+        </div>
+      </div>
 
-                <div
-                  class="pc-timer"
-                  id="pcTimer"
-                >
-                  --:--:--
-                </div>
+    </section>
 
-                <div class="pc-sub">
-                  Insya Allah
 
-                  <span id="pcTime">
-                    --:--
-                  </span>
-                </div>
-              </div>
-            </div>
+    <!-- =====================================================
+         COUNTDOWN + JADWAL SHOLAT
+         JANGAN DIUBAH STRUKTURNYA
+    ====================================================== -->
+    <section id="jadwal" class="pc-wrap">
 
-            <div class="pc-divider"></div>
+      <div class="wrap">
 
-            <!-- KANAN: Jadwal sholat versi ringkas -->
-            <div class="pc-jadwal">
-              <div class="pc-jadwal-eyebrow">
-                Bersumber Kemenag
-              </div>
+        <div class="pc-card">
 
-              <div
-                class="jadwal-grid"
-                id="jadwalGrid"
+          <!-- COUNTDOWN -->
+          <div class="pc-main">
+
+            <div class="pc-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
               >
-                <div class="jcard">
-                  <div class="jname">
-                    Imsak
-                  </div>
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3.2 2" />
+              </svg>
+            </div>
 
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
+            <div class="pc-body">
 
-                <div class="jcard">
-                  <div class="jname">
-                    Subuh
-                  </div>
-
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
-
-                <div class="jcard">
-                  <div class="jname">
-                    Dzuhur
-                  </div>
-
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
-
-                <div class="jcard">
-                  <div class="jname">
-                    Ashar
-                  </div>
-
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
-
-                <div class="jcard">
-                  <div class="jname">
-                    Maghrib
-                  </div>
-
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
-
-                <div class="jcard">
-                  <div class="jname">
-                    Isya
-                  </div>
-
-                  <div class="jtime">
-                    --:--
-                  </div>
-                </div>
+              <div class="pc-label">
+                Waktu Menuju
+                <span id="pcNextName">Sholat</span>
               </div>
 
-              <div class="jadwal-meta">
-                <span id="jadwalTanggal">
-                  Memuat tanggal…
-                </span>
-
-                <span id="jadwalSumber">
-                  Sumber: Kemenag RI
-                </span>
+              <div class="pc-timer" id="pcTimer">
+                --:--:--
               </div>
 
-              <div
-                class="jadwal-status"
-                id="jadwalStatus"
-              ></div>
+              <div class="pc-sub">
+                Insya Allah
+                <span id="pcTime">--:--</span>
+              </div>
+
             </div>
           </div>
-        </div>
-      </section>
 
-      </section>
 
-      <!-- =========================
-     CAMPAIGN DONASI
-========================= -->
+          <div class="pc-divider"></div>
 
-      <section id="donasi" class="section-donasi">
-        <div class="wrap">
 
-          <div class="donasi-header">
+          <!-- JADWAL SHOLAT -->
+          <div class="pc-jadwal">
 
-            <div class="sec-head donasi-sec-head">
-              <div class="eyebrow">
-                Infaq & Sedekah
+            <div class="pc-jadwal-eyebrow">
+              Bersumber Kemenag
+            </div>
+
+            <div class="jadwal-grid" id="jadwalGrid">
+
+              <div class="jcard">
+                <div class="jname">Imsak</div>
+                <div class="jtime">--:--</div>
               </div>
 
-              <h2>
-                Campaign Donasi Aktif
-              </h2>
+              <div class="jcard">
+                <div class="jname">Subuh</div>
+                <div class="jtime">--:--</div>
+              </div>
 
-              <p>
-                Mari bersama mendukung program kebaikan dan kebutuhan
-                Masjid Noor Islam. Setiap campaign diperbarui langsung
-                oleh pengurus masjid.
-              </p>
+              <div class="jcard">
+                <div class="jname">Dzuhur</div>
+                <div class="jtime">--:--</div>
+              </div>
+
+              <div class="jcard">
+                <div class="jname">Ashar</div>
+                <div class="jtime">--:--</div>
+              </div>
+
+              <div class="jcard">
+                <div class="jname">Maghrib</div>
+                <div class="jtime">--:--</div>
+              </div>
+
+              <div class="jcard">
+                <div class="jname">Isya</div>
+                <div class="jtime">--:--</div>
+              </div>
+
+            </div>
+
+            <div class="jadwal-meta">
+              <span id="jadwalTanggal">
+                Memuat tanggal…
+              </span>
+
+              <span id="jadwalSumber">
+                Sumber: Kemenag RI
+              </span>
+            </div>
+
+            <div
+              class="jadwal-status"
+              id="jadwalStatus"
+            ></div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ZIS & DONASI
+    ====================================================== -->
+    <section id="zis" class="section-zis">
+
+      <div class="wrap">
+
+        <div class="sec-head sec-head-center">
+
+          <div class="eyebrow">
+            ZIS & Donasi
+          </div>
+
+          <h2>
+            Salurkan Kebaikan Bersama
+          </h2>
+
+          <p>
+            Pilih layanan ZIS atau program donasi Masjid Noor Islam
+            sesuai tujuan penyaluran yang diinginkan.
+          </p>
+
+        </div>
+
+
+        <!-- LAYANAN -->
+        <div class="zis-services">
+
+          <!-- ZAKAT -->
+          <article class="zis-service-card">
+
+            <div class="zis-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+              >
+                <path d="M12 3v18" />
+                <path d="M5 8h14" />
+                <path d="M7 8c0 3-2 5-4 5 0-2 1-4 4-5Z" />
+                <path d="M17 8c0 3 2 5 4 5 0-2-1-4-4-5Z" />
+              </svg>
+            </div>
+
+            <div class="zis-type">
+              ZIS
+            </div>
+
+            <h3>Zakat</h3>
+
+            <p>
+              Informasi dan penyaluran zakat melalui
+              Masjid Noor Islam secara tertib dan amanah.
+            </p>
+
+            <button
+              class="service-filter"
+              type="button"
+              data-filter="ZAKAT"
+            >
+              Lihat Program Zakat →
+            </button>
+
+          </article>
+
+
+          <!-- QURBAN -->
+          <article class="zis-service-card">
+
+            <div class="zis-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+              >
+                <path d="M5 11c0-4 3-7 7-7s7 3 7 7v4" />
+                <path d="M7 15v5" />
+                <path d="M17 15v5" />
+                <path d="M4 12h16" />
+              </svg>
+            </div>
+
+            <div class="zis-type">
+              Program
+            </div>
+
+            <h3>Qurban</h3>
+
+            <p>
+              Informasi program dan pelaksanaan qurban
+              Masjid Noor Islam bagi jamaah dan masyarakat.
+            </p>
+
+            <button
+              class="qurban-link"
+              type="button"
+              onclick="document.getElementById('qurban').scrollIntoView({ behavior: 'smooth' })"
+            >
+              Lihat Program Qurban →
+            </button>
+
+          </article>
+
+
+          <!-- DONASI -->
+          <article class="zis-service-card">
+
+            <div class="zis-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+              >
+                <path
+                  d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10Z"
+                />
+              </svg>
+            </div>
+
+            <div class="zis-type">
+              Program
+            </div>
+
+            <h3>Donasi</h3>
+
+            <p>
+              Berkontribusi untuk program pembangunan,
+              sosial, pendidikan, dan kebutuhan umat.
+            </p>
+
+            <button
+              class="service-filter"
+              type="button"
+              data-filter="DONASI"
+            >
+              Lihat Campaign →
+            </button>
+
+          </article>
+
+        </div>
+
+
+        <!-- =================================================
+             CAMPAIGN
+        ================================================== -->
+        <div class="campaign-head">
+
+          <div>
+
+            <div class="campaign-eyebrow">
+              Program Berjalan
+            </div>
+
+            <h3>Campaign ZIS & Donasi</h3>
+
+          </div>
+
+          <button
+            class="campaign-reset"
+            id="campaignReset"
+            type="button"
+          >
+            Lihat Semua
+          </button>
+
+        </div>
+
+
+        <div
+          class="campaign-grid"
+          id="campaignGrid"
+        >
+
+          <div class="campaign-loading">
+            Memuat campaign…
+          </div>
+
+        </div>
+
+
+        <div
+          class="campaign-empty"
+          id="campaignEmpty"
+          hidden
+        >
+          Belum ada campaign aktif pada kategori ini.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QURBAN
+         TERPISAH DARI DONASI / ZIS
+    ====================================================== -->
+    <section id="qurban" class="section-qurban">
+
+      <div class="wrap">
+
+        <div class="qurban-head">
+
+          <div>
+
+            <div class="campaign-eyebrow">
+              Program Qurban
+            </div>
+
+            <h2>
+              Qurban Masjid Noor Islam
+            </h2>
+
+            <p>
+              Informasi pendaftaran program qurban bagi jamaah dan masyarakat.
+              Pendaftaran qurban dikelola terpisah dari donasi masjid dan
+              diarahkan langsung kepada panitia qurban.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="qurban-grid" id="qurbanGrid">
+
+          <div class="campaign-loading">
+            Memuat program qurban…
+          </div>
+
+        </div>
+
+        <div class="campaign-empty" id="qurbanEmpty" hidden>
+          Belum ada program qurban aktif.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INFAQ
+         DIPISAH DARI DONASI / ZIS
+    ====================================================== -->
+    <section id="infaq" class="section-infaq">
+
+      <div class="wrap">
+
+        <div class="infaq-panel">
+
+          <div class="infaq-content">
+
+            <div class="eyebrow">
+              Infaq Masjid
+            </div>
+
+            <h2>
+              Infaq untuk Operasional dan Kemakmuran Masjid
+            </h2>
+
+            <p>
+              Infaq Masjid Noor Islam dikelola untuk mendukung
+              kegiatan ibadah, operasional, perawatan fasilitas,
+              dakwah, pendidikan, serta pelayanan jamaah.
+            </p>
+
+            <div class="infaq-features">
+
+              <span>Operasional Masjid</span>
+              <span>Perawatan Fasilitas</span>
+              <span>Kegiatan Dakwah</span>
+              <span>Pendidikan</span>
+
             </div>
 
             <a
               href="Infaq/infaq.html"
-              class="donasi-see-all"
+              class="btn btn-infaq"
             >
-              Lihat Semua
-              <span>→</span>
+              Halaman Infaq
             </a>
 
           </div>
 
 
-          <!--
-            Campaign dari Supabase akan
-            otomatis masuk ke sini
-          -->
-          <div
-            class="campaign-grid"
-            id="campaignGrid"
-          >
-            <div class="campaign-loading">
-              Memuat campaign donasi…
+          <div class="infaq-visual">
+
+            <div class="infaq-visual-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M4 10h16v10H4z" />
+                <path d="M7 10V7h10v3" />
+                <path d="M9 4h6" />
+                <path d="M8 15h8" />
+              </svg>
+
             </div>
-          </div>
 
+            <strong>
+              Infaq
+            </strong>
 
-          <div
-            class="campaign-empty"
-            id="campaignNote"
-            hidden
-          >
-            Belum ada campaign donasi aktif.
+            <span>
+              Amanah · Transparan · Akuntabel
+            </span>
+
           </div>
 
         </div>
-      </section>
+
+      </div>
+
+    </section>
 
 
-     <!-- =========================
-     KEGIATAN
-========================= -->
+    <!-- =====================================================
+         KEGIATAN
+    ====================================================== -->
+    <section
+      id="kegiatan"
+      class="section-bg-kegiatan"
+    >
 
-      <section
-        id="kegiatan"
-        class="section-bg-kegiatan"
-      >
-        <div class="wrap">
-          <div class="sec-head">
-            <div class="eyebrow">
-              Warga & Jamaah
-            </div>
+      <div class="wrap">
 
-            <h2>
-              Kegiatan Masjid
-            </h2>
+        <div class="sec-head">
 
-            <p>
-              Informasi kegiatan Masjid Noor Islam yang
-              diperbarui oleh pengurus masjid.
-            </p>
+          <div class="eyebrow">
+            Warga & Jamaah
           </div>
 
-          <div
-            class="keg-grid"
-            id="kegiatanGrid"
-          >
-            <div class="keg-card">
-              <div>
-                <div class="keg-tag">
-                  Memuat
-                </div>
+          <h2>
+            Kegiatan Masjid
+          </h2>
 
-                <h3>
-                  Mengambil data kegiatan…
-                </h3>
+          <p>
+            Informasi kegiatan Masjid Noor Islam yang
+            diperbarui oleh pengurus masjid.
+          </p>
 
-                <p>
-                  Mohon tunggu sebentar.
-                </p>
+        </div>
+
+
+        <div
+          class="keg-grid"
+          id="kegiatanGrid"
+        >
+
+          <div class="keg-card">
+            <div>
+
+              <div class="keg-tag">
+                Memuat
               </div>
-            </div>
-          </div>
 
-          <div
-            class="keg-placeholder-note"
-            id="kegiatanNote"
-            hidden
-          >
-            Belum ada kegiatan yang ditambahkan oleh takmir.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================
-     LOKASI
-========================= -->
-
-      <section
-        id="lokasi"
-        class="section-bg-lokasi"
-      >
-        <div class="wrap">
-          <div class="sec-head">
-            <div class="eyebrow">
-              Temukan Kami
-            </div>
-
-            <h2>
-              Lokasi Masjid
-            </h2>
-
-            <p>
-              Masjid Noor Islam berada di Kampung Semaki Kulon,
-              Kecamatan Umbulharjo, Kota Yogyakarta.
-            </p>
-          </div>
-
-          <div class="loc-grid">
-            <!-- ADDRESS -->
-            <div class="loc-card">
               <h3>
-                Masjid Noor Islam
+                Mengambil data kegiatan…
               </h3>
 
-              <div class="loc-item">
-                <div class="lab">
-                  Alamat
-                </div>
+              <p>
+                Mohon tunggu sebentar.
+              </p>
 
-                <div class="val">
-                  Kampung Semaki Kulon,
-                  Umbulharjo,
-                  Kota Yogyakarta,
-                  Daerah Istimewa Yogyakarta
-                </div>
-              </div>
-
-              <div class="loc-item">
-                <div class="lab">
-                  Petunjuk Arah
-                </div>
-
-                <div class="val">
-                  <a
-                    class="map-link"
-                    href="https://www.google.com/maps/search/?api=1&query=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Buka di Google Maps →
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- GOOGLE MAP -->
-            <div class="map-frame">
-              <iframe
-                src="https://www.google.com/maps?q=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta&output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen
-                title="Lokasi Masjid Noor Islam"
-              ></iframe>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
 
-    <!-- =========================
-     FOOTER
-========================= -->
-
-    <footer>
-      <div class="foot-inner">
-        <div>
-          <div class="foot-name">
-            Masjid Noor Islam
-          </div>
-
-          <div class="foot-location">
-            Kampung Semaki Kulon · Yogyakarta
-          </div>
         </div>
 
-        <div class="foot-links">
-          <a href="#jadwal">
-            Jadwal Sholat
-          </a>
 
-          <a href="#kegiatan">
-            Kegiatan
-          </a>
-
-          <a href="Infaq/infaq.html">
-            Infaq
-          </a>
-
-          <a href="#lokasi">
-            Lokasi
-          </a>
+        <div
+          class="keg-placeholder-note"
+          id="kegiatanNote"
+          hidden
+        >
+          Belum ada kegiatan yang ditambahkan oleh takmir.
         </div>
+
       </div>
 
-      <div class="foot-copy">
-        ©
-        <span id="footerYear"></span>
-        Masjid Noor Islam · Semaki Kulon
-      </div>
-    </footer>
+    </section>
 
-    <!-- JAVASCRIPT -->
-    <script src="Landing Page.js"></script>
-  </body>
+
+    <!-- =====================================================
+         LOKASI
+    ====================================================== -->
+    <section
+      id="lokasi"
+      class="section-bg-lokasi"
+    >
+
+      <div class="wrap">
+
+        <div class="sec-head">
+
+          <div class="eyebrow">
+            Temukan Kami
+          </div>
+
+          <h2>
+            Lokasi Masjid
+          </h2>
+
+          <p>
+            Masjid Noor Islam berada di Kampung Semaki Kulon,
+            Kecamatan Umbulharjo, Kota Yogyakarta.
+          </p>
+
+        </div>
+
+
+        <div class="loc-grid">
+
+          <div class="loc-card">
+
+            <h3>
+              Masjid Noor Islam
+            </h3>
+
+            <div class="loc-item">
+
+              <div class="lab">
+                Alamat
+              </div>
+
+              <div class="val">
+                Kampung Semaki Kulon, Umbulharjo,
+                Kota Yogyakarta, Daerah Istimewa Yogyakarta
+              </div>
+
+            </div>
+
+
+            <div class="loc-item">
+
+              <div class="lab">
+                Petunjuk Arah
+              </div>
+
+              <div class="val">
+
+                <a
+                  class="map-link"
+                  href="https://www.google.com/maps/search/?api=1&query=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Buka di Google Maps →
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="map-frame">
+
+            <iframe
+              src="https://www.google.com/maps?q=Masjid+Noor+Islam+Semaki+Kulon+Yogyakarta&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              title="Lokasi Masjid Noor Islam"
+            ></iframe>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+
+    <div class="foot-inner">
+
+      <div>
+
+        <div class="foot-name">
+          Masjid Noor Islam
+        </div>
+
+        <div class="foot-location">
+          Kampung Semaki Kulon · Yogyakarta
+        </div>
+
+      </div>
+
+
+      <div class="foot-links">
+
+        <a href="#jadwal">
+          Jadwal Sholat
+        </a>
+
+        <a href="#kegiatan">
+          Kegiatan
+        </a>
+
+        <a href="#infaq">
+          Infaq
+        </a>
+
+        <a href="#zis">
+          ZIS & Donasi
+        </a>
+
+        <a href="#lokasi">
+          Lokasi
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="foot-copy">
+      © <span id="footerYear"></span>
+      Masjid Noor Islam · Yogyakarta
+    </div>
+
+  </footer>
+
+
+  <script src="Landing Page.js"></script>
+
+</body>
 </html>
