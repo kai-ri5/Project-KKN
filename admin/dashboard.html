@@ -57,13 +57,20 @@
     class="sidebar"
     id="sidebar"
   >
-
+    <button
+  type="button"
+  class="sidebar-close"
+  id="sidebarCloseButton"
+  aria-label="Tutup menu"
+>
+  &times;
+</button>
     <div class="sidebar-brand">
 
       <div class="sidebar-logo-wrap">
 
         <img
-          src="../Infaq/qr/Logo Masjid.png"
+          src="../Infaq/qr/Logo Masjid().png"
           alt="Logo Masjid Noor Islam"
           class="sidebar-logo"
         />
@@ -127,6 +134,15 @@
         Qurban
       </button>
 
+      <button
+        class="sidebar-link"
+        type="button"
+        data-section="payment"
+      >
+        <span>Rp</span>
+        Rekening
+      </button>
+
     </nav>
 
 
@@ -152,7 +168,10 @@
     </div>
 
   </aside>
-
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+    ></div>
 
 
   <!-- ===================================================
@@ -527,6 +546,14 @@
           <button
             class="filter-button"
             type="button"
+            data-campaign-filter="INFAQ"
+          >
+            Infaq
+          </button>
+
+          <button
+            class="filter-button"
+            type="button"
             data-campaign-filter="ZAKAT"
           >
             Zakat
@@ -627,6 +654,45 @@
         </div>
 
       </section>
+
+      <!-- =================================================
+           REKENING NON-INFAQ
+      ================================================== -->
+      <section class="dashboard-section" id="section-payment">
+        <div class="section-toolbar">
+          <div>
+            <div class="section-label">Pembayaran Non-Infaq</div>
+            <h2>Rekening Masjid</h2>
+            <p>Digunakan untuk Zakat, Donasi, Pembangunan, Sosial, dan Pendidikan. Infaq tetap menggunakan QRIS.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <form id="paymentSettingsForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="paymentBank">Nama Bank</label>
+                <input id="paymentBank" type="text" placeholder="Contoh: BSI" required />
+              </div>
+              <div class="field">
+                <label for="paymentAccountNumber">Nomor Rekening</label>
+                <input id="paymentAccountNumber" type="text" inputmode="numeric" placeholder="Contoh: 7123456789" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="paymentAccountName">Atas Nama</label>
+              <input id="paymentAccountName" type="text" placeholder="Masjid Noor Islam" required />
+            </div>
+            <div class="field">
+              <label for="paymentInstructions">Langkah Pembayaran</label>
+              <textarea id="paymentInstructions" rows="7" placeholder="Satu langkah per baris"></textarea>
+            </div>
+            <div class="form-message" id="paymentSettingsMessage"></div>
+            <button class="btn-primary" type="submit">Simpan Rekening</button>
+          </form>
+        </div>
+      </section>
+
 
     </div>
 
@@ -895,6 +961,10 @@
 
               <option value="">
                 Pilih kategori
+              </option>
+
+              <option value="INFAQ">
+                Infaq
               </option>
 
               <option value="ZAKAT">

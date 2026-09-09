@@ -1,94 +1,76 @@
 (function () {
   "use strict";
 
+  /* =========================================================
+     SUPABASE
+  ========================================================= */
+
   var SUPABASE_URL =
     "https://ljgedntbohlgdtkphqex.supabase.co";
 
   var SUPABASE_KEY =
     "sb_publishable_j06auKDeW4sdrJGBoIqkXg_F3dQSjV9";
 
-
   var db =
     window.supabase &&
     window.supabase.createClient
-
       ? window.supabase.createClient(
           SUPABASE_URL,
-          SUPABASE_KEY,
+          SUPABASE_KEY
         )
-
       : null;
 
 
+  /* =========================================================
+     STATE
+  ========================================================= */
+
   var kegiatanData = [];
-
   var campaignData = [];
-
   var qurbanData = [];
 
-  var campaignFilter =
-    "ALL";
+  var campaignFilter = "ALL";
 
-  var deleteCallback =
-    null;
+  var deleteCallback = null;
 
 
+  /* =========================================================
+     HELPERS
+  ========================================================= */
 
-  function esc(value) {
-
-    return String(
-      value ?? "",
-    )
-
-      .replace(
-        /&/g,
-        "&amp;",
-      )
-
-      .replace(
-        /</g,
-        "&lt;",
-      )
-
-      .replace(
-        />/g,
-        "&gt;",
-      )
-
-      .replace(
-        /"/g,
-        "&quot;",
-      )
-
-      .replace(
-        /'/g,
-        "&#039;",
-      );
+  function el(id) {
+    return document.getElementById(id);
   }
 
 
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
 
   function rupiah(value) {
-
     return new Intl.NumberFormat(
       "id-ID",
       {
         style: "currency",
         currency: "IDR",
-        maximumFractionDigits: 0,
-      },
+        maximumFractionDigits: 0
+      }
     ).format(
-      Number(value) || 0,
+      Number(value) || 0
     );
   }
 
 
-
   function pct(
     collected,
-    target,
+    target
   ) {
-
     collected =
       Number(collected) || 0;
 
@@ -106,33 +88,23 @@
       Math.max(
         0,
         Math.round(
-          collected /
-          target *
-          100,
-        ),
-      ),
+          (
+            collected /
+            target
+          ) * 100
+        )
+      )
     );
   }
-
-
-
-  function el(id) {
-    return document.getElementById(
-      id,
-    );
-  }
-
 
 
   function msg(
     id,
     text,
-    success,
+    success
   ) {
-
     var element =
       el(id);
-
 
     if (!element) {
       return;
@@ -150,12 +122,9 @@
   }
 
 
-
   function toast(text) {
-
     var element =
       el("toast");
-
 
     if (!element) {
       return;
@@ -167,29 +136,24 @@
 
 
     element.classList.add(
-      "show",
+      "show"
     );
 
 
     setTimeout(
       function () {
-
         element.classList.remove(
-          "show",
+          "show"
         );
-
       },
-      2500,
+      2500
     );
   }
 
 
-
   function openModal(id) {
-
     var element =
       el(id);
-
 
     if (!element) {
       return;
@@ -205,12 +169,9 @@
   }
 
 
-
   function closeModal(id) {
-
     var element =
       el(id);
-
 
     if (!element) {
       return;
@@ -226,17 +187,14 @@
   }
 
 
-
   function fileName(file) {
-
     var extension =
       (
         file.name
           .split(".")
           .pop() ||
         "jpg"
-      )
-        .toLowerCase();
+      ).toLowerCase();
 
 
     return (
@@ -251,13 +209,15 @@
   }
 
 
+  /* =========================================================
+     UPLOAD IMAGE
+  ========================================================= */
 
   async function upload(
     bucket,
     folder,
-    file,
+    file
   ) {
-
     if (!file) {
       return null;
     }
@@ -265,12 +225,11 @@
 
     if (
       !file.type.startsWith(
-        "image/",
+        "image/"
       )
     ) {
-
       throw new Error(
-        "File harus berupa gambar.",
+        "File harus berupa gambar."
       );
     }
 
@@ -279,9 +238,8 @@
       file.size >
       5 * 1024 * 1024
     ) {
-
       throw new Error(
-        "Ukuran gambar maksimal 5 MB.",
+        "Ukuran gambar maksimal 5 MB."
       );
     }
 
@@ -294,9 +252,7 @@
 
     var result =
       await db.storage
-
         .from(bucket)
-
         .upload(
           path,
           file,
@@ -305,8 +261,8 @@
               "3600",
 
             upsert:
-              false,
-          },
+              false
+          }
         );
 
 
@@ -316,34 +272,38 @@
 
 
     return db.storage
-
       .from(bucket)
-
       .getPublicUrl(path)
       .data
       .publicUrl;
   }
 
 
+  /* =========================================================
+     ADMIN CHECK
+  ========================================================= */
 
   async function isAdmin(uid) {
+    if (
+      !db ||
+      !uid
+    ) {
+      return false;
+    }
+
 
     var result =
       await db
-
         .from(
-          "admin_users",
+          "admin_users"
         )
-
         .select(
-          "user_id",
+          "user_id"
         )
-
         .eq(
           "user_id",
-          uid,
+          uid
         )
-
         .maybeSingle();
 
 
@@ -354,445 +314,669 @@
   }
 
 
-
-  /* =====================================================
+  /* =========================================================
      LOGIN
-  ===================================================== */
+  ========================================================= */
 
   var loginForm =
     el("loginForm");
 
 
   if (loginForm) {
-
-    (async function () {
-
-      if (!db) {
-        return;
-      }
+    checkExistingLogin();
 
 
+    loginForm.addEventListener(
+      "submit",
+      loginAdmin
+    );
+  }
+
+
+  async function checkExistingLogin() {
+    if (!db) {
+      return;
+    }
+
+
+    try {
       var result =
         await db.auth
           .getSession();
 
 
+      var session =
+        result.data.session;
+
+
       if (
-        result.data.session &&
+        session &&
         await isAdmin(
-          result.data.session.user.id,
+          session.user.id
         )
       ) {
-
-        location.href =
+        window.location.href =
           "dashboard.html";
       }
 
-    })();
-
-
-    loginForm.addEventListener(
-      "submit",
-      async function (event) {
-
-        event.preventDefault();
-
-
-        var button =
-          el("loginButton");
-
-
-        button.disabled =
-          true;
-
-
-        button.textContent =
-          "Memproses...";
-
-
-        msg(
-          "loginMessage",
-          "",
-        );
-
-
-        try {
-
-          var result =
-            await db.auth
-              .signInWithPassword({
-
-                email:
-                  el("loginEmail")
-                    .value
-                    .trim(),
-
-                password:
-                  el("loginPassword")
-                    .value,
-
-              });
-
-
-          if (result.error) {
-            throw result.error;
-          }
-
-
-          if (
-            !await isAdmin(
-              result.data.user.id,
-            )
-          ) {
-
-            await db.auth
-              .signOut();
-
-
-            throw new Error(
-              "Akun ini tidak memiliki akses admin.",
-            );
-          }
-
-
-          location.href =
-            "dashboard.html";
-
-        } catch (error) {
-
-          msg(
-            "loginMessage",
-            error.message ||
-              "Login gagal.",
-          );
-
-        } finally {
-
-          button.disabled =
-            false;
-
-
-          button.textContent =
-            "Masuk Dashboard";
-        }
-      },
-    );
+    } catch (error) {
+      console.error(
+        error
+      );
+    }
   }
 
 
+  async function loginAdmin(event) {
+    event.preventDefault();
 
-  /* =====================================================
+
+    if (!db) {
+      msg(
+        "loginMessage",
+        "Supabase tidak dapat dimuat."
+      );
+
+      return;
+    }
+
+
+    var button =
+      el("loginButton");
+
+
+    if (button) {
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Memproses...";
+    }
+
+
+    msg(
+      "loginMessage",
+      ""
+    );
+
+
+    try {
+      var email =
+        el("loginEmail")
+          .value
+          .trim();
+
+
+      var password =
+        el("loginPassword")
+          .value;
+
+
+      var result =
+        await db.auth
+          .signInWithPassword({
+            email:
+              email,
+
+            password:
+              password
+          });
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      if (
+        !await isAdmin(
+          result.data.user.id
+        )
+      ) {
+        await db.auth
+          .signOut();
+
+
+        throw new Error(
+          "Akun ini tidak memiliki akses admin."
+        );
+      }
+
+
+      window.location.href =
+        "dashboard.html";
+
+    } catch (error) {
+      console.error(
+        error
+      );
+
+
+      msg(
+        "loginMessage",
+        error.message ||
+        "Login gagal."
+      );
+
+    } finally {
+      if (button) {
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Masuk Dashboard";
+      }
+    }
+  }
+
+
+  /* =========================================================
      DASHBOARD INIT
-  ===================================================== */
+  ========================================================= */
 
   if (
     document.querySelector(
-      ".dashboard-main",
+      ".dashboard-main"
     )
   ) {
-
     initDashboard();
   }
 
 
-
   async function initDashboard() {
-
     if (!db) {
-
-      location.href =
+      window.location.href =
         "login.html";
 
       return;
     }
 
 
-    var result =
-      await db.auth
-        .getSession();
-
-
-    var session =
-      result.data.session;
-
-
-    if (
-      !session ||
-      !await isAdmin(
-        session.user.id,
-      )
-    ) {
-
-      if (session) {
-
+    try {
+      var result =
         await db.auth
-          .signOut();
+          .getSession();
+
+
+      var session =
+        result.data.session;
+
+
+      if (
+        !session ||
+        !await isAdmin(
+          session.user.id
+        )
+      ) {
+        if (session) {
+          await db.auth
+            .signOut();
+        }
+
+
+        window.location.href =
+          "login.html";
+
+        return;
       }
 
 
-      location.href =
-        "login.html";
-
-      return;
-    }
-
-
-    if (el("adminEmail")) {
-
-      el("adminEmail")
-        .textContent =
+      if (
+        el("adminEmail")
+      ) {
+        el("adminEmail")
+          .textContent =
           session.user.email ||
           "Admin";
+      }
+
+
+      setupNav();
+
+      setupModal();
+
+      setupForms();
+
+      setupFilters();
+
+
+      await Promise.all([
+        loadKegiatan(),
+        loadCampaign(),
+        loadQurban(),
+        loadPaymentSettings()
+      ]);
+
+
+      updateOverview();
+
+    } catch (error) {
+      console.error(
+        "Dashboard error:",
+        error
+      );
     }
-
-
-    setupNav();
-
-    setupModal();
-
-    setupForms();
-
-    setupFilters();
-
-
-    await Promise.all([
-      loadKegiatan(),
-      loadCampaign(),
-      loadQurban(),
-    ]);
-
-
-    updateOverview();
   }
 
 
+  /* =========================================================
+     LOGOUT
+  ========================================================= */
 
-  if (el("logoutButton")) {
-
+  if (
+    el("logoutButton")
+  ) {
     el("logoutButton")
       .addEventListener(
         "click",
         async function () {
-
           if (db) {
             await db.auth
               .signOut();
           }
 
 
-          location.href =
+          window.location.href =
             "login.html";
-        },
+        }
       );
   }
 
 
+  /* =========================================================
+     MOBILE SIDEBAR
+  ========================================================= */
 
-  /* =====================================================
-     NAVIGATION
-  ===================================================== */
-
-  function setupNav() {
-
-    document
-      .querySelectorAll(
-        ".sidebar-link",
-      )
-      .forEach(
-        function (button) {
-
-          button.addEventListener(
-            "click",
-            function () {
-
-              var section =
-                button.dataset
-                  .section;
-
-
-              document
-                .querySelectorAll(
-                  ".sidebar-link",
-                )
-                .forEach(
-                  function (item) {
-
-                    item.classList.remove(
-                      "active",
-                    );
-                  },
-                );
-
-
-              button.classList.add(
-                "active",
-              );
-
-
-              document
-                .querySelectorAll(
-                  ".dashboard-section",
-                )
-                .forEach(
-                  function (item) {
-
-                    item.classList.remove(
-                      "active",
-                    );
-                  },
-                );
-
-
-              var sectionElement =
-                el(
-                  "section-" +
-                  section,
-                );
-
-
-              if (sectionElement) {
-
-                sectionElement
-                  .classList
-                  .add("active");
-              }
-
-
-              var titles = {
-
-                overview:
-                  "Dashboard",
-
-                kegiatan:
-                  "Kegiatan",
-
-                campaign:
-                  "ZIS & Donasi",
-
-                qurban:
-                  "Qurban",
-
-              };
-
-
-              if (el("pageTitle")) {
-
-                el("pageTitle")
-                  .textContent =
-                    titles[section] ||
-                    "Dashboard";
-              }
-
-
-              if (el("sidebar")) {
-
-                el("sidebar")
-                  .classList
-                  .remove("open");
-              }
-            },
-          );
-        },
+  function getSidebarOverlay() {
+    var overlay =
+      el(
+        "sidebarOverlay"
       );
 
 
-    if (
-      el(
-        "mobileSidebarButton",
-      )
-    ) {
+    /*
+      Kalau HTML belum memiliki overlay,
+      JS otomatis membuatnya.
+    */
 
-      el(
-        "mobileSidebarButton",
-      )
-        .addEventListener(
-          "click",
-          function () {
-
-            if (el("sidebar")) {
-
-              el("sidebar")
-                .classList
-                .toggle("open");
-            }
-          },
+    if (!overlay) {
+      overlay =
+        document.createElement(
+          "div"
         );
+
+
+      overlay.id =
+        "sidebarOverlay";
+
+
+      overlay.className =
+        "sidebar-overlay";
+
+
+      document.body.appendChild(
+        overlay
+      );
+    }
+
+
+    return overlay;
+  }
+
+
+  function openMobileSidebar() {
+    var sidebar =
+      el("sidebar");
+
+
+    var overlay =
+      getSidebarOverlay();
+
+
+    if (!sidebar) {
+      return;
+    }
+
+
+    sidebar.classList.add(
+      "open"
+    );
+
+
+    overlay.classList.add(
+      "show"
+    );
+
+
+    document.body.style.overflow =
+      "hidden";
+  }
+
+
+  function closeMobileSidebar() {
+    var sidebar =
+      el("sidebar");
+
+
+    var overlay =
+      el(
+        "sidebarOverlay"
+      );
+
+
+    if (sidebar) {
+      sidebar.classList.remove(
+        "open"
+      );
+    }
+
+
+    if (overlay) {
+      overlay.classList.remove(
+        "show"
+      );
+    }
+
+
+    /*
+      Jangan mengaktifkan scroll jika
+      modal sedang terbuka.
+    */
+
+    var openModalElement =
+      document.querySelector(
+        ".modal-backdrop:not([hidden])"
+      );
+
+
+    if (!openModalElement) {
+      document.body.style.overflow =
+        "";
     }
   }
 
 
+  function toggleMobileSidebar() {
+    var sidebar =
+      el("sidebar");
 
-  /* =====================================================
+
+    if (!sidebar) {
+      return;
+    }
+
+
+    if (
+      sidebar.classList.contains(
+        "open"
+      )
+    ) {
+      closeMobileSidebar();
+
+    } else {
+      openMobileSidebar();
+    }
+  }
+
+
+  /* =========================================================
+     NAVIGATION
+  ========================================================= */
+
+  function setupNav() {
+    var buttons =
+      document.querySelectorAll(
+        ".sidebar-link"
+      );
+
+
+    buttons.forEach(
+      function (button) {
+        button.addEventListener(
+          "click",
+          function () {
+            var section =
+              button.dataset
+                .section;
+
+
+            buttons.forEach(
+              function (item) {
+                item.classList.remove(
+                  "active"
+                );
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            document
+              .querySelectorAll(
+                ".dashboard-section"
+              )
+              .forEach(
+                function (item) {
+                  item.classList.remove(
+                    "active"
+                  );
+                }
+              );
+
+
+            var sectionElement =
+              el(
+                "section-" +
+                section
+              );
+
+
+            if (sectionElement) {
+              sectionElement.classList
+                .add(
+                  "active"
+                );
+            }
+
+
+            var titles = {
+              overview:
+                "Dashboard",
+
+              kegiatan:
+                "Kegiatan",
+
+              campaign:
+                "ZIS & Donasi",
+
+              qurban:
+                "Qurban",
+
+              payment:
+                "Rekening"
+            };
+
+
+            if (
+              el("pageTitle")
+            ) {
+              el("pageTitle")
+                .textContent =
+                titles[section] ||
+                "Dashboard";
+            }
+
+
+            /*
+              Di mobile sidebar otomatis
+              tertutup setelah pilih menu.
+            */
+
+            closeMobileSidebar();
+
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+        );
+      }
+    );
+
+
+    /* HAMBURGER */
+
+    var mobileButton =
+      el(
+        "mobileSidebarButton"
+      );
+
+
+    if (mobileButton) {
+      mobileButton.addEventListener(
+        "click",
+        function (event) {
+          event.stopPropagation();
+
+          toggleMobileSidebar();
+        }
+      );
+    }
+
+
+    /* TOMBOL X SIDEBAR */
+
+    var sidebarCloseButton =
+      el("sidebarCloseButton");
+
+    if (sidebarCloseButton) {
+      sidebarCloseButton.addEventListener(
+        "click",
+        function () {
+          closeMobileSidebar();
+        }
+      );
+    }
+
+
+    /* OVERLAY */
+
+    var overlay =
+      getSidebarOverlay();
+
+
+    overlay.addEventListener(
+      "click",
+      closeMobileSidebar
+    );
+
+
+    /* ESC */
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          closeMobileSidebar();
+        }
+      }
+    );
+
+
+    /* KEMBALI KE DESKTOP */
+
+    window.addEventListener(
+      "resize",
+      function () {
+        if (
+          window.innerWidth >
+          760
+        ) {
+          closeMobileSidebar();
+        }
+      }
+    );
+  }
+
+
+  /* =========================================================
      MODALS
-  ===================================================== */
+  ========================================================= */
 
   function setupModal() {
-
     document
       .querySelectorAll(
-        "[data-close-modal]",
+        "[data-close-modal]"
       )
       .forEach(
         function (button) {
-
           button.addEventListener(
             "click",
             function () {
-
               closeModal(
                 button.dataset
-                  .closeModal,
+                  .closeModal
               );
-            },
+            }
           );
-        },
+        }
       );
 
 
     document
       .querySelectorAll(
-        ".modal-backdrop",
+        ".modal-backdrop"
       )
       .forEach(
         function (modal) {
-
           modal.addEventListener(
             "click",
             function (event) {
-
               if (
                 event.target ===
                   modal &&
                 modal.id !==
                   "confirmModal"
               ) {
-
                 closeModal(
-                  modal.id,
+                  modal.id
                 );
               }
-            },
+            }
           );
-        },
+        }
       );
   }
-
 
 
   function confirmDelete(
     title,
     text,
-    callback,
+    callback
   ) {
-
-    el("confirmTitle")
-      .textContent =
+    if (
+      el("confirmTitle")
+    ) {
+      el("confirmTitle")
+        .textContent =
         title;
+    }
 
 
-    el("confirmText")
-      .textContent =
+    if (
+      el("confirmText")
+    ) {
+      el("confirmText")
+        .textContent =
         text;
+    }
 
 
     deleteCallback =
@@ -800,142 +984,148 @@
 
 
     openModal(
-      "confirmModal",
+      "confirmModal"
     );
   }
 
 
-
-  /* =====================================================
+  /* =========================================================
      SETUP FORMS
-  ===================================================== */
+  ========================================================= */
 
   function setupForms() {
-
     if (
       el(
-        "addKegiatanButton",
+        "addKegiatanButton"
       )
     ) {
-
       el(
-        "addKegiatanButton",
-      )
-        .addEventListener(
-          "click",
-          function () {
+        "addKegiatanButton"
+      ).addEventListener(
+        "click",
+        function () {
+          resetKegiatan();
 
-            resetKegiatan();
-
-            openModal(
-              "kegiatanModal",
-            );
-          },
-        );
+          openModal(
+            "kegiatanModal"
+          );
+        }
+      );
     }
 
 
-    if (el("kegiatanForm")) {
-
+    if (
+      el("kegiatanForm")
+    ) {
       el("kegiatanForm")
         .addEventListener(
           "submit",
-          saveKegiatan,
+          saveKegiatan
         );
     }
 
 
     if (
       el(
-        "addCampaignButton",
+        "addCampaignButton"
       )
     ) {
-
       el(
-        "addCampaignButton",
-      )
-        .addEventListener(
-          "click",
-          function () {
+        "addCampaignButton"
+      ).addEventListener(
+        "click",
+        function () {
+          resetCampaign();
 
-            resetCampaign();
-
-            openModal(
-              "campaignModal",
-            );
-          },
-        );
+          openModal(
+            "campaignModal"
+          );
+        }
+      );
     }
 
 
-    if (el("campaignForm")) {
-
+    if (
+      el("campaignForm")
+    ) {
       el("campaignForm")
         .addEventListener(
           "submit",
-          saveCampaign,
+          saveCampaign
         );
     }
 
 
     if (
       el(
-        "addQurbanButton",
+        "addQurbanButton"
       )
     ) {
-
       el(
-        "addQurbanButton",
-      )
-        .addEventListener(
-          "click",
-          function () {
+        "addQurbanButton"
+      ).addEventListener(
+        "click",
+        function () {
+          resetQurban();
 
-            resetQurban();
-
-            openModal(
-              "qurbanModal",
-            );
-          },
-        );
+          openModal(
+            "qurbanModal"
+          );
+        }
+      );
     }
 
 
-    if (el("qurbanForm")) {
-
+    if (
+      el("qurbanForm")
+    ) {
       el("qurbanForm")
         .addEventListener(
           "submit",
-          saveQurban,
+          saveQurban
         );
     }
 
 
-    if (el("cancelConfirm")) {
+    if (
+      el(
+        "paymentSettingsForm"
+      )
+    ) {
+      el(
+        "paymentSettingsForm"
+      ).addEventListener(
+        "submit",
+        savePaymentSettings
+      );
+    }
 
+
+    if (
+      el("cancelConfirm")
+    ) {
       el("cancelConfirm")
         .addEventListener(
           "click",
           function () {
-
             deleteCallback =
               null;
 
             closeModal(
-              "confirmModal",
+              "confirmModal"
             );
-          },
+          }
         );
     }
 
 
-    if (el("confirmDelete")) {
-
+    if (
+      el("confirmDelete")
+    ) {
       el("confirmDelete")
         .addEventListener(
           "click",
           function () {
-
             var callback =
               deleteCallback;
 
@@ -945,99 +1135,91 @@
 
 
             closeModal(
-              "confirmModal",
+              "confirmModal"
             );
 
 
             if (callback) {
               callback();
             }
-          },
+          }
         );
     }
   }
 
 
+  /* =========================================================
+     CAMPAIGN FILTER
+  ========================================================= */
 
   function setupFilters() {
-
     document
       .querySelectorAll(
-        "[data-campaign-filter]",
+        "[data-campaign-filter]"
       )
       .forEach(
         function (button) {
-
           button.addEventListener(
             "click",
             function () {
-
               document
                 .querySelectorAll(
-                  "[data-campaign-filter]",
+                  "[data-campaign-filter]"
                 )
                 .forEach(
                   function (item) {
-
                     item.classList.remove(
-                      "active",
+                      "active"
                     );
-                  },
+                  }
                 );
 
 
               button.classList.add(
-                "active",
+                "active"
               );
 
 
               campaignFilter =
                 button.dataset
-                  .campaignFilter;
+                  .campaignFilter ||
+                "ALL";
 
 
               renderCampaign();
-            },
+            }
           );
-        },
+        }
       );
   }
 
 
-
-  /* =====================================================
+  /* =========================================================
      KEGIATAN
-  ===================================================== */
+  ========================================================= */
 
   async function loadKegiatan() {
-
     var result =
       await db
-
         .from("kegiatan")
-
         .select("*")
-
         .order(
           "id",
           {
-            ascending: false,
-          },
+            ascending: false
+          }
         );
 
 
     kegiatanData =
       result.error
         ? []
-        : (
-            result.data || []
-          );
+        : result.data || [];
 
 
     if (result.error) {
-
       console.error(
-        result.error,
+        result.error
       );
     }
 
@@ -1046,12 +1228,10 @@
   }
 
 
-
   function renderKegiatan() {
-
     var body =
       el(
-        "kegiatanTableBody",
+        "kegiatanTableBody"
       );
 
 
@@ -1063,7 +1243,6 @@
     if (
       !kegiatanData.length
     ) {
-
       body.innerHTML =
         '<tr><td colspan="6">Belum ada kegiatan.</td></tr>';
 
@@ -1073,20 +1252,22 @@
 
     body.innerHTML =
       kegiatanData
-
         .map(
           function (item) {
-
             var image =
               item.gambar_url
-
-                ? '<img class="table-kegiatan-image" src="' +
-                  esc(
-                    item.gambar_url,
-                  ) +
-                  '" alt="Foto kegiatan">'
-
-                : '<div class="table-image-empty">Tidak ada foto</div>';
+                ? (
+                    '<img class="table-kegiatan-image" src="' +
+                    esc(
+                      item.gambar_url
+                    ) +
+                    '" alt="Foto kegiatan">'
+                  )
+                : (
+                    '<div class="table-image-empty">' +
+                    "Tidak ada foto" +
+                    "</div>"
+                  );
 
 
             return (
@@ -1098,22 +1279,26 @@
 
               '<td class="table-title">' +
               esc(
-                item.nama_kegiatan,
+                item.nama_kegiatan
               ) +
               "</td>" +
 
               "<td>" +
-              esc(item.hari) +
+              esc(
+                item.hari
+              ) +
               "</td>" +
 
               "<td>" +
-              esc(item.jam) +
+              esc(
+                item.jam
+              ) +
               "</td>" +
 
               "<td>" +
               esc(
                 item.deskripsi ||
-                "-",
+                "-"
               ) +
               "</td>" +
 
@@ -1121,13 +1306,13 @@
 
               '<div class="table-actions">' +
 
-              '<button class="action-button" data-edit-kegiatan="' +
+              '<button type="button" class="action-button" data-edit-kegiatan="' +
               item.id +
               '">' +
               "Edit" +
               "</button>" +
 
-              '<button class="action-button delete" data-delete-kegiatan="' +
+              '<button type="button" class="action-button delete" data-delete-kegiatan="' +
               item.id +
               '">' +
               "Hapus" +
@@ -1139,110 +1324,119 @@
 
               "</tr>"
             );
-          },
+          }
         )
-
         .join("");
 
 
     body
       .querySelectorAll(
-        "[data-edit-kegiatan]",
+        "[data-edit-kegiatan]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               editKegiatan(
                 button.dataset
-                  .editKegiatan,
+                  .editKegiatan
               );
             };
-        },
+        }
       );
 
 
     body
       .querySelectorAll(
-        "[data-delete-kegiatan]",
+        "[data-delete-kegiatan]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               confirmDelete(
-
                 "Hapus Kegiatan?",
 
                 "Kegiatan ini akan dihapus dari website.",
 
                 function () {
-
                   deleteKegiatan(
                     button.dataset
-                      .deleteKegiatan,
+                      .deleteKegiatan
                   );
-                },
-
+                }
               );
             };
-        },
+        }
       );
   }
 
 
-
   function resetKegiatan() {
+    var form =
+      el("kegiatanForm");
 
-    el("kegiatanForm")
-      .reset();
+
+    if (!form) {
+      return;
+    }
 
 
-    el("kegiatanId")
-      .value =
+    form.reset();
+
+
+    if (
+      el("kegiatanId")
+    ) {
+      el("kegiatanId")
+        .value =
         "";
+    }
 
 
-    el("kegiatanModalTitle")
-      .textContent =
+    if (
+      el(
+        "kegiatanModalTitle"
+      )
+    ) {
+      el(
+        "kegiatanModalTitle"
+      ).textContent =
         "Tambah Kegiatan";
+    }
 
 
-    el(
-      "kegiatanCurrentImage",
-    ).hidden =
-      true;
+    var current =
+      el(
+        "kegiatanCurrentImage"
+      );
 
 
-    el(
-      "kegiatanCurrentImage",
-    ).innerHTML =
-      "";
+    if (current) {
+      current.hidden =
+        true;
+
+      current.innerHTML =
+        "";
+    }
 
 
     msg(
       "kegiatanMessage",
-      "",
+      ""
     );
   }
 
 
-
   function editKegiatan(id) {
-
     var item =
       kegiatanData.find(
         function (data) {
-
           return (
             String(data.id) ===
             String(id)
           );
-        },
+        }
       );
 
 
@@ -1253,92 +1447,93 @@
 
     el("kegiatanId")
       .value =
-        item.id;
+      item.id;
 
 
     el("namaKegiatan")
       .value =
-        item.nama_kegiatan ||
-        "";
+      item.nama_kegiatan ||
+      "";
 
 
     el("hariKegiatan")
       .value =
-        item.hari || "";
+      item.hari ||
+      "";
 
 
     el("jamKegiatan")
       .value =
-        item.jam || "";
+      item.jam ||
+      "";
 
 
     el("deskripsiKegiatan")
       .value =
-        item.deskripsi ||
-        "";
+      item.deskripsi ||
+      "";
 
 
     el("kegiatanModalTitle")
       .textContent =
-        "Edit Kegiatan";
+      "Edit Kegiatan";
 
 
     var current =
       el(
-        "kegiatanCurrentImage",
+        "kegiatanCurrentImage"
       );
 
 
-    if (item.gambar_url) {
+    if (current) {
+      if (
+        item.gambar_url
+      ) {
+        current.hidden =
+          false;
 
-      current.hidden =
-        false;
 
+        current.innerHTML =
+          '<div class="current-image-label">' +
+          "Foto saat ini" +
+          "</div>" +
 
-      current.innerHTML =
-        '<div class="current-image-label">' +
-        "Foto saat ini" +
-        "</div>" +
+          '<img src="' +
+          esc(
+            item.gambar_url
+          ) +
+          '" alt="Foto kegiatan">';
 
-        '<img src="' +
-        esc(
-          item.gambar_url,
-        ) +
-        '" alt="Foto kegiatan">';
+      } else {
+        current.hidden =
+          true;
 
-    } else {
-
-      current.hidden =
-        true;
-
-      current.innerHTML =
-        "";
+        current.innerHTML =
+          "";
+      }
     }
 
 
     openModal(
-      "kegiatanModal",
+      "kegiatanModal"
     );
   }
 
 
-
   async function saveKegiatan(
-    event,
+    event
   ) {
-
     event.preventDefault();
 
 
     msg(
       "kegiatanMessage",
       "Menyimpan...",
-      true,
+      true
     );
 
 
     try {
-
       var id =
         el("kegiatanId")
           .value;
@@ -1347,12 +1542,11 @@
       var old =
         kegiatanData.find(
           function (item) {
-
             return (
               String(item.id) ===
               String(id)
             );
-          },
+          }
         );
 
 
@@ -1362,24 +1556,30 @@
           : null;
 
 
+      var imageInput =
+        el(
+          "kegiatanImage"
+        );
+
+
       var file =
-        el("kegiatanImage")
-          .files[0];
+        imageInput &&
+        imageInput.files
+          ? imageInput.files[0]
+          : null;
 
 
       if (file) {
-
         url =
           await upload(
             "kegiatan-images",
             "kegiatan",
-            file,
+            file
           );
       }
 
 
       var data = {
-
         nama_kegiatan:
           el("namaKegiatan")
             .value
@@ -1401,8 +1601,7 @@
             .trim(),
 
         gambar_url:
-          url,
-
+          url
       };
 
 
@@ -1410,26 +1609,19 @@
 
 
       if (id) {
-
         result =
           await db
-
             .from("kegiatan")
-
             .update(data)
-
             .eq(
               "id",
-              id,
+              id
             );
 
       } else {
-
         result =
           await db
-
             .from("kegiatan")
-
             .insert(data);
       }
 
@@ -1440,14 +1632,14 @@
 
 
       closeModal(
-        "kegiatanModal",
+        "kegiatanModal"
       );
 
 
       toast(
         id
           ? "Kegiatan berhasil diperbarui."
-          : "Kegiatan berhasil ditambahkan.",
+          : "Kegiatan berhasil ditambahkan."
       );
 
 
@@ -1456,38 +1648,34 @@
       updateOverview();
 
     } catch (error) {
+      console.error(
+        error
+      );
+
 
       msg(
         "kegiatanMessage",
         error.message ||
-        "Kegiatan gagal disimpan.",
+        "Kegiatan gagal disimpan."
       );
     }
   }
 
 
-
-  async function deleteKegiatan(
-    id,
-  ) {
-
+  async function deleteKegiatan(id) {
     var result =
       await db
-
         .from("kegiatan")
-
         .delete()
-
         .eq(
           "id",
-          id,
+          id
         );
 
 
     if (result.error) {
-
       toast(
-        "Gagal menghapus kegiatan.",
+        "Gagal menghapus kegiatan."
       );
 
       return;
@@ -1495,7 +1683,7 @@
 
 
     toast(
-      "Kegiatan berhasil dihapus.",
+      "Kegiatan berhasil dihapus."
     );
 
 
@@ -1505,63 +1693,55 @@
   }
 
 
-
-  /* =====================================================
+  /* =========================================================
      CAMPAIGN
-  ===================================================== */
+  ========================================================= */
 
   async function loadCampaign() {
-
     var result =
       await db
-
         .from(
-          "campaign_donasi",
+          "campaign_donasi"
         )
-
         .select("*")
-
         .order(
           "prioritas",
           {
-            ascending: false,
-          },
+            ascending: false
+          }
         )
-
         .order(
           "created_at",
           {
-            ascending: false,
-          },
+            ascending: false
+          }
         );
 
 
     campaignData =
       result.error
-
         ? []
-
         : (
-            result.data || []
+            result.data ||
+            []
           ).filter(
             function (item) {
-
               return (
                 String(
                   item.kategori ||
-                  "",
+                  ""
                 )
+                  .trim()
                   .toUpperCase() !==
                 "QURBAN"
               );
-            },
+            }
           );
 
 
     if (result.error) {
-
       console.error(
-        result.error,
+        result.error
       );
     }
 
@@ -1570,12 +1750,10 @@
   }
 
 
-
   function renderCampaign() {
-
     var grid =
       el(
-        "adminCampaignGrid",
+        "adminCampaignGrid"
       );
 
 
@@ -1587,29 +1765,33 @@
     var list =
       campaignFilter ===
       "ALL"
-
         ? campaignData
-
-        : campaignData
-            .filter(
-              function (item) {
-
-                return (
-                  String(
-                    item.kategori ||
-                    "",
-                  )
-                    .toUpperCase() ===
+        : campaignData.filter(
+            function (item) {
+              return (
+                String(
+                  item.kategori ||
+                  ""
+                )
+                  .trim()
+                  .toUpperCase() ===
+                String(
                   campaignFilter
-                );
-              },
-            );
+                )
+                  .trim()
+                  .toUpperCase()
+              );
+            }
+          );
 
 
-    if (!list.length) {
-
+    if (
+      !list.length
+    ) {
       grid.innerHTML =
-        '<div class="empty-state">Belum ada campaign pada kategori ini.</div>';
+        '<div class="empty-state">' +
+        "Belum ada campaign pada kategori ini." +
+        "</div>";
 
       return;
     }
@@ -1617,29 +1799,33 @@
 
     grid.innerHTML =
       list
-
         .map(
           function (item) {
-
             var progress =
               pct(
                 item.terkumpul,
-                item.target,
+                item.target
               );
 
 
             var image =
               item.gambar_url
-
-                ? '<img src="' +
-                  esc(
-                    item.gambar_url,
-                  ) +
-                  '" alt="' +
-                  esc(item.judul) +
-                  '">'
-
-                : '<div class="admin-image-placeholder">Masjid Noor Islam</div>';
+                ? (
+                    '<img src="' +
+                    esc(
+                      item.gambar_url
+                    ) +
+                    '" alt="' +
+                    esc(
+                      item.judul
+                    ) +
+                    '">'
+                  )
+                : (
+                    '<div class="admin-image-placeholder">' +
+                    "Masjid Noor Islam" +
+                    "</div>"
+                  );
 
 
             return (
@@ -1652,30 +1838,39 @@
               '<span class="admin-category">' +
               esc(
                 item.kategori ||
-                "DONASI",
+                "DONASI"
               ) +
               "</span>" +
 
               (
                 item.prioritas
-                  ? '<span class="admin-priority">Prioritas</span>'
+                  ? (
+                      '<span class="admin-priority">' +
+                      "Prioritas" +
+                      "</span>"
+                    )
                   : ""
               ) +
 
               "</div>" +
 
+
               '<div class="admin-campaign-content">' +
 
               "<h3>" +
-              esc(item.judul) +
+              esc(
+                item.judul
+              ) +
               "</h3>" +
+
 
               '<p class="admin-campaign-description">' +
               esc(
                 item.deskripsi ||
-                "",
+                ""
               ) +
               "</p>" +
+
 
               '<div class="status-row">' +
 
@@ -1701,31 +1896,40 @@
 
               "</div>" +
 
+
               '<div class="admin-progress">' +
+
               '<span style="width:' +
               progress +
               '%"></span>' +
+
               "</div>" +
 
+
               '<div class="admin-campaign-money">' +
+
               rupiah(
-                item.terkumpul,
+                item.terkumpul
               ) +
+
               " / " +
+
               rupiah(
-                item.target,
+                item.target
               ) +
+
               "</div>" +
+
 
               '<div class="admin-campaign-actions">' +
 
-              '<button class="action-button" data-edit-campaign="' +
+              '<button type="button" class="action-button" data-edit-campaign="' +
               item.id +
               '">' +
               "Edit" +
               "</button>" +
 
-              '<button class="action-button delete" data-delete-campaign="' +
+              '<button type="button" class="action-button delete" data-delete-campaign="' +
               item.id +
               '">' +
               "Hapus" +
@@ -1737,120 +1941,136 @@
 
               "</article>"
             );
-          },
+          }
         )
-
         .join("");
 
 
     grid
       .querySelectorAll(
-        "[data-edit-campaign]",
+        "[data-edit-campaign]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               editCampaign(
                 button.dataset
-                  .editCampaign,
+                  .editCampaign
               );
             };
-        },
+        }
       );
 
 
     grid
       .querySelectorAll(
-        "[data-delete-campaign]",
+        "[data-delete-campaign]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               confirmDelete(
-
                 "Hapus Campaign?",
 
                 "Campaign akan dihapus dari website.",
 
                 function () {
-
                   deleteCampaign(
                     button.dataset
-                      .deleteCampaign,
+                      .deleteCampaign
                   );
-                },
-
+                }
               );
             };
-        },
+        }
       );
   }
 
 
-
   function resetCampaign() {
+    var form =
+      el(
+        "campaignForm"
+      );
 
-    el("campaignForm")
-      .reset();
+
+    if (!form) {
+      return;
+    }
+
+
+    form.reset();
 
 
     el("campaignId")
       .value =
-        "";
+      "";
 
 
     el("campaignTerkumpul")
       .value =
-        0;
+      0;
 
 
-    el("campaignAktif")
-      .checked =
+    if (
+      el("campaignAktif")
+    ) {
+      el("campaignAktif")
+        .checked =
         true;
+    }
+
+
+    if (
+      el(
+        "campaignPrioritas"
+      )
+    ) {
+      el(
+        "campaignPrioritas"
+      ).checked =
+        false;
+    }
 
 
     el("campaignModalTitle")
       .textContent =
-        "Tambah Campaign";
+      "Tambah Campaign";
 
 
-    el(
-      "campaignCurrentImage",
-    ).hidden =
-      true;
+    var current =
+      el(
+        "campaignCurrentImage"
+      );
 
 
-    el(
-      "campaignCurrentImage",
-    ).innerHTML =
-      "";
+    if (current) {
+      current.hidden =
+        true;
+
+      current.innerHTML =
+        "";
+    }
 
 
     msg(
       "campaignMessage",
-      "",
+      ""
     );
   }
 
 
-
   function editCampaign(id) {
-
     var item =
       campaignData.find(
         function (data) {
-
           return (
             String(data.id) ===
             String(id)
           );
-        },
+        }
       );
 
 
@@ -1861,109 +2081,111 @@
 
     el("campaignId")
       .value =
-        item.id;
+      item.id;
 
 
     el("campaignJudul")
       .value =
-        item.judul || "";
+      item.judul ||
+      "";
 
 
     el("campaignKategori")
       .value =
-        String(
-          item.kategori ||
-          "DONASI",
-        )
-          .toUpperCase();
+      String(
+        item.kategori ||
+        "DONASI"
+      ).toUpperCase();
 
 
     el("campaignTarget")
       .value =
-        item.target || 0;
+      item.target ||
+      0;
 
 
     el("campaignTerkumpul")
       .value =
-        item.terkumpul || 0;
+      item.terkumpul ||
+      0;
 
 
     el("campaignDeskripsi")
       .value =
-        item.deskripsi || "";
+      item.deskripsi ||
+      "";
 
 
     el("campaignAktif")
       .checked =
-        !!item.aktif;
+      !!item.aktif;
 
 
     el("campaignPrioritas")
       .checked =
-        !!item.prioritas;
+      !!item.prioritas;
 
 
     el("campaignModalTitle")
       .textContent =
-        "Edit Campaign";
+      "Edit Campaign";
 
 
     var current =
       el(
-        "campaignCurrentImage",
+        "campaignCurrentImage"
       );
 
 
-    if (item.gambar_url) {
+    if (current) {
+      if (
+        item.gambar_url
+      ) {
+        current.hidden =
+          false;
 
-      current.hidden =
-        false;
 
+        current.innerHTML =
+          '<div class="current-image-label">' +
+          "Gambar saat ini" +
+          "</div>" +
 
-      current.innerHTML =
-        '<div class="current-image-label">' +
-        "Gambar saat ini" +
-        "</div>" +
+          '<img src="' +
+          esc(
+            item.gambar_url
+          ) +
+          '" alt="Gambar campaign">';
 
-        '<img src="' +
-        esc(
-          item.gambar_url,
-        ) +
-        '" alt="Gambar campaign">';
+      } else {
+        current.hidden =
+          true;
 
-    } else {
-
-      current.hidden =
-        true;
-
-      current.innerHTML =
-        "";
+        current.innerHTML =
+          "";
+      }
     }
 
 
     openModal(
-      "campaignModal",
+      "campaignModal"
     );
   }
 
 
-
   async function saveCampaign(
-    event,
+    event
   ) {
-
     event.preventDefault();
 
 
     msg(
       "campaignMessage",
       "Menyimpan...",
-      true,
+      true
     );
 
 
     try {
-
       var id =
         el("campaignId")
           .value;
@@ -1972,12 +2194,11 @@
       var old =
         campaignData.find(
           function (item) {
-
             return (
               String(item.id) ===
               String(id)
             );
-          },
+          }
         );
 
 
@@ -1987,24 +2208,30 @@
           : null;
 
 
+      var input =
+        el(
+          "campaignImage"
+        );
+
+
       var file =
-        el("campaignImage")
-          .files[0];
+        input &&
+        input.files
+          ? input.files[0]
+          : null;
 
 
       if (file) {
-
         url =
           await upload(
             "campaign-images",
             "campaign",
-            file,
+            file
           );
       }
 
 
       var data = {
-
         judul:
           el("campaignJudul")
             .value
@@ -2012,18 +2239,20 @@
 
         kategori:
           el("campaignKategori")
-            .value,
+            .value
+            .trim()
+            .toUpperCase(),
 
         target:
           Number(
             el("campaignTarget")
-              .value,
+              .value
           ) || 0,
 
         terkumpul:
           Number(
             el("campaignTerkumpul")
-              .value,
+              .value
           ) || 0,
 
         deskripsi:
@@ -2040,8 +2269,7 @@
 
         prioritas:
           el("campaignPrioritas")
-            .checked,
-
+            .checked
       };
 
 
@@ -2049,30 +2277,23 @@
 
 
       if (id) {
-
         result =
           await db
-
             .from(
-              "campaign_donasi",
+              "campaign_donasi"
             )
-
             .update(data)
-
             .eq(
               "id",
-              id,
+              id
             );
 
       } else {
-
         result =
           await db
-
             .from(
-              "campaign_donasi",
+              "campaign_donasi"
             )
-
             .insert(data);
       }
 
@@ -2083,14 +2304,14 @@
 
 
       closeModal(
-        "campaignModal",
+        "campaignModal"
       );
 
 
       toast(
         id
           ? "Campaign berhasil diperbarui."
-          : "Campaign berhasil ditambahkan.",
+          : "Campaign berhasil ditambahkan."
       );
 
 
@@ -2099,40 +2320,36 @@
       updateOverview();
 
     } catch (error) {
+      console.error(
+        error
+      );
+
 
       msg(
         "campaignMessage",
         error.message ||
-        "Campaign gagal disimpan.",
+        "Campaign gagal disimpan."
       );
     }
   }
 
 
-
-  async function deleteCampaign(
-    id,
-  ) {
-
+  async function deleteCampaign(id) {
     var result =
       await db
-
         .from(
-          "campaign_donasi",
+          "campaign_donasi"
         )
-
         .delete()
-
         .eq(
           "id",
-          id,
+          id
         );
 
 
     if (result.error) {
-
       toast(
-        "Campaign gagal dihapus.",
+        "Campaign gagal dihapus."
       );
 
       return;
@@ -2140,7 +2357,7 @@
 
 
     toast(
-      "Campaign berhasil dihapus.",
+      "Campaign berhasil dihapus."
     );
 
 
@@ -2150,50 +2367,41 @@
   }
 
 
-
-  /* =====================================================
+  /* =========================================================
      QURBAN
-  ===================================================== */
+  ========================================================= */
 
   async function loadQurban() {
-
     var result =
       await db
-
         .from(
-          "program_qurban",
+          "program_qurban"
         )
-
         .select("*")
-
         .order(
           "prioritas",
           {
-            ascending: false,
-          },
+            ascending: false
+          }
         )
-
         .order(
           "created_at",
           {
-            ascending: false,
-          },
+            ascending: false
+          }
         );
 
 
     qurbanData =
       result.error
         ? []
-        : (
-            result.data || []
-          );
+        : result.data || [];
 
 
     if (result.error) {
-
       console.error(
         "Qurban:",
-        result.error,
+        result.error
       );
     }
 
@@ -2202,12 +2410,10 @@
   }
 
 
-
   function renderQurban() {
-
     var grid =
       el(
-        "adminQurbanGrid",
+        "adminQurbanGrid"
       );
 
 
@@ -2219,9 +2425,10 @@
     if (
       !qurbanData.length
     ) {
-
       grid.innerHTML =
-        '<div class="empty-state">Belum ada program qurban.</div>';
+        '<div class="empty-state">' +
+        "Belum ada program qurban." +
+        "</div>";
 
       return;
     }
@@ -2229,22 +2436,26 @@
 
     grid.innerHTML =
       qurbanData
-
         .map(
           function (item) {
-
             var image =
               item.gambar_url
-
-                ? '<img src="' +
-                  esc(
-                    item.gambar_url,
-                  ) +
-                  '" alt="' +
-                  esc(item.judul) +
-                  '">'
-
-                : '<div class="admin-image-placeholder">Qurban</div>';
+                ? (
+                    '<img src="' +
+                    esc(
+                      item.gambar_url
+                    ) +
+                    '" alt="' +
+                    esc(
+                      item.judul
+                    ) +
+                    '">'
+                  )
+                : (
+                    '<div class="admin-image-placeholder">' +
+                    "Qurban" +
+                    "</div>"
+                  );
 
 
             return (
@@ -2254,38 +2465,57 @@
 
               image +
 
-              '<span class="admin-category">QURBAN</span>' +
+              '<span class="admin-category">' +
+              "QURBAN" +
+              "</span>" +
 
               (
                 item.prioritas
-                  ? '<span class="admin-priority">Prioritas</span>'
+                  ? (
+                      '<span class="admin-priority">' +
+                      "Prioritas" +
+                      "</span>"
+                    )
                   : ""
               ) +
 
               "</div>" +
 
+
               '<div class="admin-campaign-content">' +
 
               "<h3>" +
-              esc(item.judul) +
+              esc(
+                item.judul
+              ) +
               "</h3>" +
 
-              '<p class="admin-campaign-description">' +
-              esc(
-                item.jenis_hewan,
-              ) +
-              " · " +
-              rupiah(
-                item.harga,
-              ) +
-              "</p>" +
 
               '<p class="admin-campaign-description">' +
+
+              esc(
+                item.jenis_hewan ||
+                ""
+              ) +
+
+              " · " +
+
+              rupiah(
+                item.harga
+              ) +
+
+              "</p>" +
+
+
+              '<p class="admin-campaign-description">' +
+
               esc(
                 item.periode ||
-                "",
+                ""
               ) +
+
               "</p>" +
+
 
               '<div class="status-row">' +
 
@@ -2307,15 +2537,16 @@
 
               "</div>" +
 
+
               '<div class="admin-campaign-actions">' +
 
-              '<button class="action-button" data-edit-qurban="' +
+              '<button type="button" class="action-button" data-edit-qurban="' +
               item.id +
               '">' +
               "Edit" +
               "</button>" +
 
-              '<button class="action-button delete" data-delete-qurban="' +
+              '<button type="button" class="action-button delete" data-delete-qurban="' +
               item.id +
               '">' +
               "Hapus" +
@@ -2327,115 +2558,131 @@
 
               "</article>"
             );
-          },
+          }
         )
-
         .join("");
 
 
     grid
       .querySelectorAll(
-        "[data-edit-qurban]",
+        "[data-edit-qurban]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               editQurban(
                 button.dataset
-                  .editQurban,
+                  .editQurban
               );
             };
-        },
+        }
       );
 
 
     grid
       .querySelectorAll(
-        "[data-delete-qurban]",
+        "[data-delete-qurban]"
       )
       .forEach(
         function (button) {
-
           button.onclick =
             function () {
-
               confirmDelete(
-
                 "Hapus Program Qurban?",
 
                 "Program qurban akan dihapus dari website.",
 
                 function () {
-
                   deleteQurban(
                     button.dataset
-                      .deleteQurban,
+                      .deleteQurban
                   );
-                },
-
+                }
               );
             };
-        },
+        }
       );
   }
 
 
-
   function resetQurban() {
+    var form =
+      el(
+        "qurbanForm"
+      );
 
-    el("qurbanForm")
-      .reset();
+
+    if (!form) {
+      return;
+    }
+
+
+    form.reset();
 
 
     el("qurbanId")
       .value =
-        "";
+      "";
 
 
-    el("qurbanAktif")
-      .checked =
+    if (
+      el("qurbanAktif")
+    ) {
+      el("qurbanAktif")
+        .checked =
         true;
+    }
+
+
+    if (
+      el(
+        "qurbanPrioritas"
+      )
+    ) {
+      el(
+        "qurbanPrioritas"
+      ).checked =
+        false;
+    }
 
 
     el("qurbanModalTitle")
       .textContent =
-        "Tambah Qurban";
+      "Tambah Qurban";
 
 
-    el(
-      "qurbanCurrentImage",
-    ).hidden =
-      true;
+    var current =
+      el(
+        "qurbanCurrentImage"
+      );
 
 
-    el(
-      "qurbanCurrentImage",
-    ).innerHTML =
-      "";
+    if (current) {
+      current.hidden =
+        true;
+
+      current.innerHTML =
+        "";
+    }
 
 
     msg(
       "qurbanMessage",
-      "",
+      ""
     );
   }
 
 
-
   function editQurban(id) {
-
     var item =
       qurbanData.find(
         function (data) {
-
           return (
             String(data.id) ===
             String(id)
           );
-        },
+        }
       );
 
 
@@ -2446,112 +2693,115 @@
 
     el("qurbanId")
       .value =
-        item.id;
+      item.id;
 
 
     el("qurbanJudul")
       .value =
-        item.judul || "";
+      item.judul ||
+      "";
 
 
     el("qurbanJenis")
       .value =
-        item.jenis_hewan ||
-        "";
+      item.jenis_hewan ||
+      "";
 
 
     el("qurbanHarga")
       .value =
-        item.harga || 0;
+      item.harga ||
+      0;
 
 
     el("qurbanPeriode")
       .value =
-        item.periode || "";
+      item.periode ||
+      "";
 
 
     el("qurbanKontak")
       .value =
-        item.kontak || "";
+      item.kontak ||
+      "";
 
 
     el("qurbanDeskripsi")
       .value =
-        item.deskripsi ||
-        "";
+      item.deskripsi ||
+      "";
 
 
     el("qurbanAktif")
       .checked =
-        !!item.aktif;
+      !!item.aktif;
 
 
     el("qurbanPrioritas")
       .checked =
-        !!item.prioritas;
+      !!item.prioritas;
 
 
     el("qurbanModalTitle")
       .textContent =
-        "Edit Qurban";
+      "Edit Qurban";
 
 
     var current =
       el(
-        "qurbanCurrentImage",
+        "qurbanCurrentImage"
       );
 
 
-    if (item.gambar_url) {
+    if (current) {
+      if (
+        item.gambar_url
+      ) {
+        current.hidden =
+          false;
 
-      current.hidden =
-        false;
 
+        current.innerHTML =
+          '<div class="current-image-label">' +
+          "Gambar saat ini" +
+          "</div>" +
 
-      current.innerHTML =
-        '<div class="current-image-label">' +
-        "Gambar saat ini" +
-        "</div>" +
+          '<img src="' +
+          esc(
+            item.gambar_url
+          ) +
+          '" alt="Foto qurban">';
 
-        '<img src="' +
-        esc(
-          item.gambar_url,
-        ) +
-        '" alt="Foto qurban">';
+      } else {
+        current.hidden =
+          true;
 
-    } else {
-
-      current.hidden =
-        true;
-
-      current.innerHTML =
-        "";
+        current.innerHTML =
+          "";
+      }
     }
 
 
     openModal(
-      "qurbanModal",
+      "qurbanModal"
     );
   }
 
 
-
   async function saveQurban(
-    event,
+    event
   ) {
-
     event.preventDefault();
 
 
     msg(
       "qurbanMessage",
       "Menyimpan...",
-      true,
+      true
     );
 
 
     try {
-
       var id =
         el("qurbanId")
           .value;
@@ -2560,12 +2810,11 @@
       var old =
         qurbanData.find(
           function (item) {
-
             return (
               String(item.id) ===
               String(id)
             );
-          },
+          }
         );
 
 
@@ -2575,18 +2824,25 @@
           : null;
 
 
+      var input =
+        el(
+          "qurbanImage"
+        );
+
+
       var file =
-        el("qurbanImage")
-          .files[0];
+        input &&
+        input.files
+          ? input.files[0]
+          : null;
 
 
       if (file) {
-
         url =
           await upload(
             "qurban-images",
             "qurban",
-            file,
+            file
           );
       }
 
@@ -2596,12 +2852,11 @@
           .value
           .replace(
             /\D/g,
-            "",
+            ""
           );
 
 
       var data = {
-
         judul:
           el("qurbanJudul")
             .value
@@ -2615,7 +2870,7 @@
         harga:
           Number(
             el("qurbanHarga")
-              .value,
+              .value
           ) || 0,
 
         periode:
@@ -2640,8 +2895,7 @@
 
         prioritas:
           el("qurbanPrioritas")
-            .checked,
-
+            .checked
       };
 
 
@@ -2649,30 +2903,23 @@
 
 
       if (id) {
-
         result =
           await db
-
             .from(
-              "program_qurban",
+              "program_qurban"
             )
-
             .update(data)
-
             .eq(
               "id",
-              id,
+              id
             );
 
       } else {
-
         result =
           await db
-
             .from(
-              "program_qurban",
+              "program_qurban"
             )
-
             .insert(data);
       }
 
@@ -2683,54 +2930,50 @@
 
 
       closeModal(
-        "qurbanModal",
+        "qurbanModal"
       );
 
 
       toast(
         id
           ? "Program qurban diperbarui."
-          : "Program qurban ditambahkan.",
+          : "Program qurban ditambahkan."
       );
 
 
       await loadQurban();
 
     } catch (error) {
+      console.error(
+        error
+      );
+
 
       msg(
         "qurbanMessage",
         error.message ||
-        "Program qurban gagal disimpan.",
+        "Program qurban gagal disimpan."
       );
     }
   }
 
 
-
-  async function deleteQurban(
-    id,
-  ) {
-
+  async function deleteQurban(id) {
     var result =
       await db
-
         .from(
-          "program_qurban",
+          "program_qurban"
         )
-
         .delete()
-
         .eq(
           "id",
-          id,
+          id
         );
 
 
     if (result.error) {
-
       toast(
-        "Program qurban gagal dihapus.",
+        "Program qurban gagal dihapus."
       );
 
       return;
@@ -2738,7 +2981,7 @@
 
 
     toast(
-      "Program qurban berhasil dihapus.",
+      "Program qurban berhasil dihapus."
     );
 
 
@@ -2746,36 +2989,307 @@
   }
 
 
+  /* =========================================================
+     REKENING / PAYMENT SETTINGS
+  ========================================================= */
 
-  /* =====================================================
+  async function loadPaymentSettings() {
+    if (
+      !el(
+        "paymentSettingsForm"
+      )
+    ) {
+      return;
+    }
+
+
+    try {
+      var result =
+        await db
+          .from(
+            "payment_settings"
+          )
+          .select("*")
+          .eq(
+            "id",
+            1
+          )
+          .maybeSingle();
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      var data =
+        result.data ||
+        {};
+
+
+      el("paymentBank")
+        .value =
+        data.bank_name ||
+        "";
+
+
+      el(
+        "paymentAccountNumber"
+      ).value =
+        data.account_number ||
+        "";
+
+
+      el(
+        "paymentAccountName"
+      ).value =
+        data.account_name ||
+        "";
+
+
+      /*
+        Supabase lama mungkin menyimpan
+        "\n" sebagai teks literal.
+        Ubah kembali menjadi line break.
+      */
+
+      el(
+        "paymentInstructions"
+      ).value =
+        String(
+          data.instructions ||
+          ""
+        ).replace(
+          /\\n/g,
+          "\n"
+        );
+
+
+      msg(
+        "paymentSettingsMessage",
+        ""
+      );
+
+    } catch (error) {
+      console.error(
+        "Payment settings:",
+        error
+      );
+
+
+      msg(
+        "paymentSettingsMessage",
+        error.message ||
+        "Gagal mengambil rekening."
+      );
+    }
+  }
+
+
+  async function savePaymentSettings(
+    event
+  ) {
+    event.preventDefault();
+
+
+    var bank =
+      el("paymentBank")
+        .value
+        .trim();
+
+
+    var number =
+      el(
+        "paymentAccountNumber"
+      )
+        .value
+        .trim();
+
+
+    var name =
+      el(
+        "paymentAccountName"
+      )
+        .value
+        .trim();
+
+
+    var instructions =
+      el(
+        "paymentInstructions"
+      )
+        .value
+        .trim();
+
+
+    if (!bank) {
+      msg(
+        "paymentSettingsMessage",
+        "Nama bank wajib diisi."
+      );
+
+      return;
+    }
+
+
+    if (!number) {
+      msg(
+        "paymentSettingsMessage",
+        "Nomor rekening wajib diisi."
+      );
+
+      return;
+    }
+
+
+    if (!name) {
+      msg(
+        "paymentSettingsMessage",
+        "Nama pemilik rekening wajib diisi."
+      );
+
+      return;
+    }
+
+
+    var form =
+      el(
+        "paymentSettingsForm"
+      );
+
+
+    var button =
+      form
+        ? form.querySelector(
+            'button[type="submit"]'
+          )
+        : null;
+
+
+    if (button) {
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Menyimpan...";
+    }
+
+
+    msg(
+      "paymentSettingsMessage",
+      "Menyimpan...",
+      true
+    );
+
+
+    try {
+      var result =
+        await db
+          .from(
+            "payment_settings"
+          )
+          .upsert(
+            {
+              id:
+                1,
+
+              bank_name:
+                bank,
+
+              account_number:
+                number,
+
+              account_name:
+                name,
+
+              instructions:
+                instructions,
+
+              updated_at:
+                new Date()
+                  .toISOString()
+            },
+            {
+              onConflict:
+                "id"
+            }
+          );
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      msg(
+        "paymentSettingsMessage",
+        "✓ Rekening berhasil disimpan.",
+        true
+      );
+
+
+      toast(
+        "Rekening diperbarui."
+      );
+
+
+      await loadPaymentSettings();
+
+    } catch (error) {
+      console.error(
+        error
+      );
+
+
+      msg(
+        "paymentSettingsMessage",
+        error.message ||
+        "Gagal menyimpan rekening."
+      );
+
+    } finally {
+      if (button) {
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Simpan Rekening";
+      }
+    }
+  }
+
+
+  /* =========================================================
      OVERVIEW
-  ===================================================== */
+  ========================================================= */
 
   function updateOverview() {
-
-    if (el("statKegiatan")) {
-
+    if (
+      el("statKegiatan")
+    ) {
       el("statKegiatan")
         .textContent =
-          kegiatanData.length;
+        kegiatanData.length;
     }
 
 
     var active =
       campaignData.filter(
         function (item) {
-
-          return item.aktif;
-        },
+          return (
+            !!item.aktif
+          );
+        }
       );
 
 
     var priority =
       campaignData.filter(
         function (item) {
-
-          return item.prioritas;
-        },
+          return (
+            !!item.prioritas
+          );
+        }
       );
 
 
@@ -2783,49 +3297,51 @@
       campaignData.reduce(
         function (
           sum,
-          item,
+          item
         ) {
-
           return (
             sum +
             (
               Number(
-                item.terkumpul,
+                item.terkumpul
               ) || 0
             )
           );
         },
-        0,
+        0
       );
 
 
-    if (el("statCampaign")) {
-
+    if (
+      el("statCampaign")
+    ) {
       el("statCampaign")
         .textContent =
-          active.length;
+        active.length;
     }
 
 
-    if (el("statPrioritas")) {
-
+    if (
+      el("statPrioritas")
+    ) {
       el("statPrioritas")
         .textContent =
-          priority.length;
+        priority.length;
     }
 
 
-    if (el("statTerkumpul")) {
-
+    if (
+      el("statTerkumpul")
+    ) {
       el("statTerkumpul")
         .textContent =
-          rupiah(total);
+        rupiah(total);
     }
 
 
     var container =
       el(
-        "overviewCampaignList",
+        "overviewCampaignList"
       );
 
 
@@ -2834,10 +3350,13 @@
     }
 
 
-    if (!campaignData.length) {
-
+    if (
+      !campaignData.length
+    ) {
       container.innerHTML =
-        '<div class="empty-state">Belum ada campaign.</div>';
+        '<div class="empty-state">' +
+        "Belum ada campaign." +
+        "</div>";
 
       return;
     }
@@ -2845,50 +3364,54 @@
 
     container.innerHTML =
       campaignData
-
         .slice(
           0,
-          5,
+          5
         )
-
         .map(
           function (item) {
-
             return (
               '<div class="overview-item">' +
 
               "<div>" +
 
               "<h4>" +
-              esc(item.judul) +
+              esc(
+                item.judul
+              ) +
               "</h4>" +
 
               "<span>" +
+
               esc(
                 item.kategori ||
-                "DONASI",
+                "DONASI"
               ) +
+
               " · " +
+
               (
                 item.aktif
                   ? "Aktif"
                   : "Tidak aktif"
               ) +
+
               "</span>" +
 
               "</div>" +
 
               '<div class="overview-money">' +
+
               rupiah(
-                item.terkumpul,
+                item.terkumpul
               ) +
+
               "</div>" +
 
               "</div>"
             );
-          },
+          }
         )
-
         .join("");
   }
 

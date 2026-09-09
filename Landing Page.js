@@ -1,33 +1,60 @@
 (function () {
   "use strict";
 
+
+  /* =====================================================
+     MOBILE NAVIGATION
+  ===================================================== */
+
   var menuToggle =
-    document.getElementById("menuToggle");
+    document.getElementById(
+      "menuToggle"
+    );
+
 
   var navLinks =
-    document.getElementById("navLinks");
+    document.getElementById(
+      "navLinks"
+    );
 
 
   function closeMobileMenu() {
-    if (!menuToggle || !navLinks) {
+
+    if (
+      !menuToggle ||
+      !navLinks
+    ) {
       return;
     }
 
-    navLinks.classList.remove("active");
-    menuToggle.classList.remove("active");
+
+    navLinks.classList.remove(
+      "active"
+    );
+
+
+    menuToggle.classList.remove(
+      "active"
+    );
+
 
     menuToggle.setAttribute(
       "aria-expanded",
-      "false",
+      "false"
     );
 
+
     document.body.classList.remove(
-      "menu-open",
+      "menu-open"
     );
+
   }
 
 
-  if (menuToggle && navLinks) {
+  if (
+    menuToggle &&
+    navLinks
+  ) {
 
     menuToggle.addEventListener(
       "click",
@@ -35,39 +62,48 @@
 
         event.stopPropagation();
 
+
         var isOpen =
           navLinks.classList.toggle(
-            "active",
+            "active"
           );
+
 
         menuToggle.classList.toggle(
           "active",
-          isOpen,
+          isOpen
         );
+
 
         menuToggle.setAttribute(
           "aria-expanded",
-          isOpen ? "true" : "false",
+          isOpen
+            ? "true"
+            : "false"
         );
+
 
         document.body.classList.toggle(
           "menu-open",
-          isOpen,
+          isOpen
         );
-      },
+
+      }
     );
 
 
     navLinks
       .querySelectorAll("a")
-      .forEach(function (link) {
+      .forEach(
+        function (link) {
 
-        link.addEventListener(
-          "click",
-          closeMobileMenu,
-        );
+          link.addEventListener(
+            "click",
+            closeMobileMenu
+          );
 
-      });
+        }
+      );
 
 
     document.addEventListener(
@@ -75,13 +111,19 @@
       function (event) {
 
         if (
-          !navLinks.contains(event.target) &&
-          !menuToggle.contains(event.target)
+          !navLinks.contains(
+            event.target
+          ) &&
+          !menuToggle.contains(
+            event.target
+          )
         ) {
+
           closeMobileMenu();
+
         }
 
-      },
+      }
     );
 
 
@@ -89,11 +131,16 @@
       "keydown",
       function (event) {
 
-        if (event.key === "Escape") {
+        if (
+          event.key ===
+          "Escape"
+        ) {
+
           closeMobileMenu();
+
         }
 
-      },
+      }
     );
 
 
@@ -101,14 +148,19 @@
       "resize",
       function () {
 
-        if (window.innerWidth > 720) {
+        if (
+          window.innerWidth >
+          720
+        ) {
+
           closeMobileMenu();
+
         }
 
-      },
+      }
     );
-  }
 
+  }
 
 
   /* =====================================================
@@ -116,13 +168,18 @@
   ===================================================== */
 
   var footerYear =
-    document.getElementById("footerYear");
+    document.getElementById(
+      "footerYear"
+    );
+
 
   if (footerYear) {
-    footerYear.textContent =
-      new Date().getFullYear();
-  }
 
+    footerYear.textContent =
+      new Date()
+        .getFullYear();
+
+  }
 
 
   /* =====================================================
@@ -132,25 +189,29 @@
   var SUPABASE_URL =
     "https://ljgedntbohlgdtkphqex.supabase.co";
 
+
   var SUPABASE_KEY =
     "sb_publishable_j06auKDeW4sdrJGBoIqkXg_F3dQSjV9";
 
 
-  var supabaseClient = null;
+  var supabaseClient =
+    null;
 
 
   if (
     window.supabase &&
-    window.supabase.createClient
+    window.supabase
+      .createClient
   ) {
 
     supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY,
-      );
-  }
+      window.supabase
+        .createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY
+        );
 
+  }
 
 
   /* =====================================================
@@ -158,60 +219,107 @@
   ===================================================== */
 
   function pad(number) {
+
     return number < 10
       ? "0" + number
       : String(number);
+
   }
 
 
-  function toMinutes(hhmm) {
+  function toMinutes(
+    hhmm
+  ) {
 
     if (!hhmm) {
       return 0;
     }
 
+
     var parts =
       hhmm.split(":");
 
+
     return (
-      parseInt(parts[0], 10) * 60 +
-      parseInt(parts[1], 10)
+      parseInt(
+        parts[0],
+        10
+      ) * 60 +
+      parseInt(
+        parts[1],
+        10
+      )
     );
+
   }
 
 
-  function escapeHtml(value) {
+  function escapeHtml(
+    value
+  ) {
 
     if (
       value === null ||
       value === undefined
     ) {
+
       return "";
+
     }
 
+
     return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
   }
 
 
-  function formatRupiah(value) {
+  function formatRupiah(
+    value
+  ) {
 
     return new Intl.NumberFormat(
       "id-ID",
       {
-        style: "currency",
-        currency: "IDR",
-        maximumFractionDigits: 0,
-      },
-    ).format(
-      Number(value) || 0,
-    );
-  }
+        style:
+          "currency",
 
+        currency:
+          "IDR",
+
+        maximumFractionDigits:
+          0
+      }
+    ).format(
+      Number(value) ||
+      0
+    );
+
+  }
 
 
   /* =====================================================
@@ -219,22 +327,37 @@
   ===================================================== */
 
   var PRAYER_ORDER = [
+
     "imsak",
     "subuh",
     "dzuhur",
     "ashar",
     "maghrib",
-    "isya",
+    "isya"
+
   ];
 
 
   var PRAYER_LABEL = {
-    imsak: "Imsak",
-    subuh: "Subuh",
-    dzuhur: "Dzuhur",
-    ashar: "Ashar",
-    maghrib: "Maghrib",
-    isya: "Isya",
+
+    imsak:
+      "Imsak",
+
+    subuh:
+      "Subuh",
+
+    dzuhur:
+      "Dzuhur",
+
+    ashar:
+      "Ashar",
+
+    maghrib:
+      "Maghrib",
+
+    isya:
+      "Isya"
+
   };
 
 
@@ -256,33 +379,39 @@
       '<svg class="jcard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 18a5 5 0 1 0-10 0"/><path d="M12 10V2"/></svg>',
 
     isya:
-      '<svg class="jcard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+      '<svg class="jcard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+
   };
 
 
   var FALLBACK_KOTA_ID =
     "1219";
 
-  var jadwalData = null;
 
+  var jadwalData =
+    null;
 
 
   function renderJadwal(
     jadwal,
     lokasiLabel,
-    tanggalLabel,
+    tanggalLabel
   ) {
 
-    jadwalData = jadwal;
+    jadwalData =
+      jadwal;
+
 
     var grid =
       document.getElementById(
-        "jadwalGrid",
+        "jadwalGrid"
       );
+
 
     if (!grid) {
       return;
     }
+
 
     var html = "";
 
@@ -291,71 +420,93 @@
       function (key) {
 
         html +=
+
           '<div class="jcard" data-key="' +
           key +
           '">' +
 
-          (PRAYER_ICON[key] || "") +
+          (
+            PRAYER_ICON[key] ||
+            ""
+          ) +
 
           '<div class="jname">' +
           PRAYER_LABEL[key] +
           "</div>" +
 
           '<div class="jtime">' +
+
           escapeHtml(
-            jadwal[key] || "--:--",
+            jadwal[key] ||
+            "--:--"
           ) +
+
           "</div>" +
 
           "</div>";
-      },
+
+      }
     );
 
 
-    grid.innerHTML = html;
+    grid.innerHTML =
+      html;
 
 
     var tanggal =
       document.getElementById(
-        "jadwalTanggal",
+        "jadwalTanggal"
       );
 
+
     if (tanggal) {
+
       tanggal.textContent =
-        tanggalLabel || "";
+        tanggalLabel ||
+        "";
+
     }
 
 
     var sumber =
       document.getElementById(
-        "jadwalSumber",
+        "jadwalSumber"
       );
+
 
     if (sumber) {
 
       sumber.textContent =
+
         "Wilayah: " +
+
         (
           lokasiLabel ||
           "Kota Yogyakarta"
         ) +
+
         " · Sumber: Kemenag RI";
+
     }
 
 
     var status =
       document.getElementById(
-        "jadwalStatus",
+        "jadwalStatus"
       );
 
+
     if (status) {
-      status.textContent = "";
+
+      status.textContent =
+        "";
+
     }
 
 
     highlightNextPrayer();
-  }
 
+  }
 
 
   function highlightNextPrayer() {
@@ -368,30 +519,39 @@
     var now =
       new Date();
 
+
     var nowMinutes =
-      now.getHours() * 60 +
+
+      now.getHours() *
+      60 +
+
       now.getMinutes();
 
 
     document
       .querySelectorAll(
-        "#jadwalGrid .jcard",
+        "#jadwalGrid .jcard"
       )
-      .forEach(function (card) {
+      .forEach(
+        function (card) {
 
-        card.classList.remove(
-          "active",
-        );
+          card.classList
+            .remove(
+              "active"
+            );
 
-      });
+        }
+      );
 
 
-    var upcoming = null;
+    var upcoming =
+      null;
 
 
     for (
       var i = 0;
-      i < PRAYER_ORDER.length;
+      i <
+      PRAYER_ORDER.length;
       i++
     ) {
 
@@ -399,31 +559,43 @@
         PRAYER_ORDER[i];
 
 
-      if (key === "imsak") {
+      if (
+        key === "imsak"
+      ) {
         continue;
       }
 
 
-      if (!jadwalData[key]) {
+      if (
+        !jadwalData[key]
+      ) {
         continue;
       }
 
 
       if (
         toMinutes(
-          jadwalData[key],
-        ) > nowMinutes
+          jadwalData[key]
+        ) >
+        nowMinutes
       ) {
 
-        upcoming = key;
+        upcoming =
+          key;
+
         break;
+
       }
+
     }
 
 
     var targetKey;
+
     var targetHHMM;
-    var isTomorrow = false;
+
+    var isTomorrow =
+      false;
 
 
     if (upcoming) {
@@ -431,77 +603,103 @@
       targetKey =
         upcoming;
 
+
       targetHHMM =
-        jadwalData[upcoming];
+        jadwalData[
+          upcoming
+        ];
 
 
       var activeCard =
-        document.querySelector(
-          '#jadwalGrid .jcard[data-key="' +
-          upcoming +
-          '"]',
-        );
+        document
+          .querySelector(
+
+            '#jadwalGrid .jcard[data-key="' +
+            upcoming +
+            '"]'
+
+          );
 
 
       if (activeCard) {
 
-        activeCard.classList.add(
-          "active",
-        );
+        activeCard
+          .classList
+          .add(
+            "active"
+          );
+
       }
 
     } else {
 
-      targetKey = "subuh";
+      targetKey =
+        "subuh";
+
+
       targetHHMM =
         jadwalData.subuh;
 
-      isTomorrow = true;
+
+      isTomorrow =
+        true;
 
 
       var subuhCard =
-        document.querySelector(
-          '#jadwalGrid .jcard[data-key="subuh"]',
-        );
+        document
+          .querySelector(
+            '#jadwalGrid .jcard[data-key="subuh"]'
+          );
 
 
       if (subuhCard) {
 
-        subuhCard.classList.add(
-          "active",
-        );
+        subuhCard
+          .classList
+          .add(
+            "active"
+          );
+
       }
+
     }
 
 
     var nameElement =
       document.getElementById(
-        "pcNextName",
+        "pcNextName"
       );
+
 
     var timeElement =
       document.getElementById(
-        "pcTime",
+        "pcTime"
       );
+
 
     var timerElement =
       document.getElementById(
-        "pcTimer",
+        "pcTimer"
       );
 
 
     if (nameElement) {
 
       nameElement.textContent =
-        PRAYER_LABEL[targetKey] ||
+        PRAYER_LABEL[
+          targetKey
+        ] ||
         "Sholat";
+
     }
 
 
     if (timeElement) {
 
       timeElement.textContent =
-        targetHHMM || "--:--";
+        targetHHMM ||
+        "--:--";
+
     }
 
 
@@ -511,111 +709,152 @@
     ) {
 
       var parts =
-        targetHHMM.split(":");
+        targetHHMM
+          .split(":");
 
 
       var targetDate =
         new Date(
+
           now.getFullYear(),
+
           now.getMonth(),
+
           now.getDate(),
-          parseInt(parts[0], 10),
-          parseInt(parts[1], 10),
-          0,
+
+          parseInt(
+            parts[0],
+            10
+          ),
+
+          parseInt(
+            parts[1],
+            10
+          ),
+
+          0
+
         );
 
 
       if (
         isTomorrow ||
         targetDate.getTime() <=
-          now.getTime()
+        now.getTime()
       ) {
 
         targetDate.setDate(
-          targetDate.getDate() + 1,
+          targetDate.getDate() +
+          1
         );
+
       }
 
 
       var difference =
+
         targetDate.getTime() -
         now.getTime();
 
 
       var totalSeconds =
         Math.max(
+
           0,
+
           Math.floor(
-            difference / 1000,
-          ),
+            difference /
+            1000
+          )
+
         );
 
 
       var hours =
         Math.floor(
-          totalSeconds / 3600,
+          totalSeconds /
+          3600
         );
 
 
       var minutes =
         Math.floor(
+
           (
-            totalSeconds % 3600
-          ) / 60,
+            totalSeconds %
+            3600
+          ) /
+
+          60
+
         );
 
 
       var seconds =
-        totalSeconds % 60;
+        totalSeconds %
+        60;
 
 
       timerElement.textContent =
+
         pad(hours) +
         ":" +
+
         pad(minutes) +
         ":" +
+
         pad(seconds);
+
     }
+
   }
 
 
   setInterval(
     highlightNextPrayer,
-    1000,
+    1000
   );
-
 
 
   function fetchJadwalById(
     kotaId,
-    lokasiLabel,
+    lokasiLabel
   ) {
 
     var now =
       new Date();
 
+
     var year =
       now.getFullYear();
 
+
     var month =
       pad(
-        now.getMonth() + 1,
+        now.getMonth() +
+        1
       );
+
 
     var day =
       pad(
-        now.getDate(),
+        now.getDate()
       );
 
 
     var url =
+
       "https://api.myquran.com/v2/sholat/jadwal/" +
+
       kotaId +
       "/" +
+
       year +
       "/" +
+
       month +
       "/" +
+
       day;
 
 
@@ -624,14 +863,20 @@
       .then(
         function (response) {
 
-          if (!response.ok) {
+          if (
+            !response.ok
+          ) {
+
             throw new Error(
-              "Gagal mengambil jadwal",
+              "Gagal mengambil jadwal"
             );
+
           }
 
+
           return response.json();
-        },
+
+        }
       )
 
       .then(
@@ -645,8 +890,9 @@
           ) {
 
             throw new Error(
-              "Format data tidak sesuai",
+              "Format data tidak sesuai"
             );
+
           }
 
 
@@ -655,22 +901,28 @@
 
 
           renderJadwal(
-            jadwal,
-            result.data.lokasi ||
-              lokasiLabel,
-            jadwal.tanggal || "",
-          );
-        },
-      );
-  }
 
+            jadwal,
+
+            result.data.lokasi ||
+            lokasiLabel,
+
+            jadwal.tanggal ||
+            ""
+
+          );
+
+        }
+      );
+
+  }
 
 
   function loadJadwal() {
 
     var status =
       document.getElementById(
-        "jadwalStatus",
+        "jadwalStatus"
       );
 
 
@@ -678,103 +930,136 @@
 
       status.textContent =
         "Memuat jadwal sholat…";
+
     }
 
 
     fetch(
-      "https://api.myquran.com/v2/sholat/kota/cari/yogyakarta",
+      "https://api.myquran.com/v2/sholat/kota/cari/yogyakarta"
     )
 
-      .then(function (response) {
-        return response.json();
-      })
+      .then(
+        function (response) {
 
-      .then(function (result) {
+          return response
+            .json();
 
-        var kotaId =
-          FALLBACK_KOTA_ID;
-
-        var label =
-          "Kota Yogyakarta";
-
-
-        if (
-          result &&
-          result.status &&
-          Array.isArray(result.data)
-        ) {
-
-          var match =
-            result.data.find(
-              function (kota) {
-
-                return /kota yogyakarta/i
-                  .test(
-                    kota.lokasi || "",
-                  );
-              },
-            );
-
-
-          if (match) {
-
-            kotaId = match.id;
-            label = match.lokasi;
-          }
         }
+      )
+
+      .then(
+        function (result) {
+
+          var kotaId =
+            FALLBACK_KOTA_ID;
 
 
-        return fetchJadwalById(
-          kotaId,
-          label,
-        );
-      })
+          var label =
+            "Kota Yogyakarta";
 
-      .catch(function () {
 
-        fetchJadwalById(
-          FALLBACK_KOTA_ID,
-          "Kota Yogyakarta",
-        ).catch(function () {
+          if (
+            result &&
+            result.status &&
+            Array.isArray(
+              result.data
+            )
+          ) {
 
-          if (status) {
+            var match =
+              result.data.find(
+                function (kota) {
 
-            status.textContent =
-              "Jadwal sholat belum dapat dimuat.";
+                  return /kota yogyakarta/i
+                    .test(
+                      kota.lokasi ||
+                      ""
+                    );
+
+                }
+              );
+
+
+            if (match) {
+
+              kotaId =
+                match.id;
+
+              label =
+                match.lokasi;
+
+            }
+
           }
 
 
-          var timer =
-            document.getElementById(
-              "pcTimer",
-            );
+          return fetchJadwalById(
+            kotaId,
+            label
+          );
+
+        }
+      )
+
+      .catch(
+        function () {
+
+          fetchJadwalById(
+
+            FALLBACK_KOTA_ID,
+
+            "Kota Yogyakarta"
+
+          ).catch(
+            function () {
+
+              if (status) {
+
+                status.textContent =
+                  "Jadwal sholat belum dapat dimuat.";
+
+              }
 
 
-          if (timer) {
+              var timer =
+                document.getElementById(
+                  "pcTimer"
+                );
 
-            timer.textContent =
-              "--:--:--";
-          }
-        });
-      });
+
+              if (timer) {
+
+                timer.textContent =
+                  "--:--:--";
+
+              }
+
+            }
+          );
+
+        }
+      );
+
   }
-
 
 
   /* =====================================================
      KEGIATAN
   ===================================================== */
 
-  function renderKegiatan(list) {
+  function renderKegiatan(
+    list
+  ) {
 
     var grid =
       document.getElementById(
-        "kegiatanGrid",
+        "kegiatanGrid"
       );
+
 
     var note =
       document.getElementById(
-        "kegiatanNote",
+        "kegiatanNote"
       );
 
 
@@ -788,27 +1073,37 @@
       list.length === 0
     ) {
 
-      grid.innerHTML = "";
+      grid.innerHTML =
+        "";
 
 
       if (note) {
 
-        note.hidden = false;
+        note.hidden =
+          false;
+
 
         note.textContent =
           "Belum ada kegiatan yang ditambahkan oleh takmir.";
+
       }
 
+
       return;
+
     }
 
 
     if (note) {
-      note.hidden = true;
+
+      note.hidden =
+        true;
+
     }
 
 
-    var html = "";
+    var html =
+      "";
 
 
     list.forEach(
@@ -816,30 +1111,48 @@
 
         var jadwalText =
           [
+
             kegiatan.hari,
-            kegiatan.jam,
+
+            kegiatan.jam
+
           ]
+
             .filter(Boolean)
-            .join(" · ");
+
+            .join(
+              " · "
+            );
 
 
         var imageHtml;
 
 
-        if (kegiatan.gambar_url) {
+        if (
+          kegiatan.gambar_url
+        ) {
 
           imageHtml =
+
             '<div class="keg-image">' +
 
             '<img src="' +
+
             escapeHtml(
-              kegiatan.gambar_url,
+              kegiatan.gambar_url
             ) +
+
             '" alt="' +
+
             escapeHtml(
-              kegiatan.nama_kegiatan ||
-              "Kegiatan Masjid Noor Islam",
+
+              kegiatan
+                .nama_kegiatan ||
+
+              "Kegiatan Masjid Noor Islam"
+
             ) +
+
             '" loading="lazy">' +
 
             "</div>";
@@ -847,13 +1160,20 @@
         } else {
 
           imageHtml =
+
             '<div class="keg-image keg-image-placeholder">' +
-            "<span>Masjid Noor Islam</span>" +
+
+            "<span>" +
+            "Masjid Noor Islam" +
+            "</span>" +
+
             "</div>";
+
         }
 
 
         html +=
+
           '<article class="keg-card">' +
 
           imageHtml +
@@ -862,101 +1182,172 @@
 
           (
             jadwalText
-              ? '<div class="keg-tag">' +
-                escapeHtml(jadwalText) +
-                "</div>"
+
+              ? (
+                  '<div class="keg-tag">' +
+
+                  escapeHtml(
+                    jadwalText
+                  ) +
+
+                  "</div>"
+                )
+
               : ""
           ) +
 
           "<h3>" +
+
           escapeHtml(
-            kegiatan.nama_kegiatan ||
-            "Kegiatan",
+
+            kegiatan
+              .nama_kegiatan ||
+
+            "Kegiatan"
+
           ) +
+
           "</h3>" +
 
           (
             kegiatan.deskripsi
-              ? "<p>" +
-                escapeHtml(
-                  kegiatan.deskripsi,
-                ) +
-                "</p>"
+
+              ? (
+                  "<p>" +
+
+                  escapeHtml(
+                    kegiatan.deskripsi
+                  ) +
+
+                  "</p>"
+                )
+
               : ""
           ) +
 
           "</div>" +
 
           "</article>";
-      },
+
+      }
     );
 
 
-    grid.innerHTML = html;
-  }
+    grid.innerHTML =
+      html;
 
+  }
 
 
   function loadKegiatan() {
 
-    if (!supabaseClient) {
+    if (
+      !supabaseClient
+    ) {
 
-      renderKegiatan([]);
+      renderKegiatan(
+        []
+      );
+
       return;
+
     }
 
 
     supabaseClient
-      .from("kegiatan")
-      .select("*")
+
+      .from(
+        "kegiatan"
+      )
+
+      .select(
+        "*"
+      )
+
       .order(
         "id",
         {
-          ascending: true,
-        },
+          ascending:
+            true
+        }
       )
 
-      .then(function (result) {
+      .then(
+        function (result) {
 
-        if (result.error) {
+          if (
+            result.error
+          ) {
 
-          console.error(
-            "Gagal mengambil kegiatan:",
-            result.error,
+            console.error(
+              "Gagal mengambil kegiatan:",
+              result.error
+            );
+
+
+            renderKegiatan(
+              []
+            );
+
+
+            return;
+
+          }
+
+
+          renderKegiatan(
+            result.data ||
+            []
           );
 
-          renderKegiatan([]);
-
-          return;
         }
+      )
+
+      .catch(
+        function (error) {
+
+          console.error(
+            "Kesalahan Supabase:",
+            error
+          );
 
 
-        renderKegiatan(
-          result.data || [],
-        );
-      })
+          renderKegiatan(
+            []
+          );
 
-      .catch(function (error) {
+        }
+      );
 
-        console.error(
-          "Kesalahan Supabase:",
-          error,
-        );
-
-        renderKegiatan([]);
-      });
   }
-
 
 
   /* =====================================================
      CAMPAIGN
   ===================================================== */
 
-  var campaignData = [];
+  var campaignData =
+    [];
+
+
+  /*
+    FALSE:
+    tampil maksimal 3.
+
+    TRUE:
+    tampil semua.
+  */
 
   var showAllCampaigns =
     false;
+
+
+  /*
+    Karena kartu filter Zakat /
+    Donasi di landing page sudah
+    dihapus, landing selalu
+    menampilkan semua kategori.
+  */
 
   var activeCampaignFilter =
     "ALL";
@@ -964,53 +1355,74 @@
 
   function calculatePercentage(
     terkumpul,
-    target,
+    target
   ) {
 
     var collected =
-      Number(terkumpul) || 0;
+      Number(
+        terkumpul
+      ) || 0;
+
 
     var goal =
-      Number(target) || 0;
+      Number(
+        target
+      ) || 0;
 
 
-    if (goal <= 0) {
+    if (
+      goal <= 0
+    ) {
+
       return 0;
+
     }
 
 
     return Math.min(
+
       100,
+
       Math.max(
+
         0,
+
         Math.round(
+
           collected /
           goal *
-          100,
-        ),
-      ),
-    );
-  }
+          100
 
+        )
+
+      )
+
+    );
+
+  }
 
 
   function normalizeCategory(
-    category,
+    category
   ) {
 
     return String(
-      category || "DONASI",
+      category ||
+      "DONASI"
     )
-      .trim()
-      .toUpperCase();
-  }
 
+      .trim()
+
+      .toUpperCase();
+
+  }
 
 
   function getFilteredCampaigns() {
 
     var list =
-      campaignData.slice();
+      campaignData
+        .slice();
 
 
     if (
@@ -1019,6 +1431,7 @@
     ) {
 
       return list;
+
     }
 
 
@@ -1027,31 +1440,25 @@
 
         var category =
           normalizeCategory(
-            campaign.kategori,
+            campaign.kategori
           );
-
-
-        if (
-          activeCampaignFilter ===
-          "DONASI"
-        ) {
-
-          return (
-            category !== "ZAKAT" &&
-            category !== "QURBAN"
-          );
-        }
 
 
         return (
           category ===
           activeCampaignFilter
         );
-      },
+
+      }
     );
+
   }
 
 
+  /* =====================================================
+     CAMPAIGN
+     MAX 3 / LEBIH BANYAK
+  ===================================================== */
 
   function renderCurrentCampaigns() {
 
@@ -1059,28 +1466,38 @@
       getFilteredCampaigns();
 
 
-    if (!showAllCampaigns) {
+    /*
+      Default maksimal 3.
+    */
+
+    if (
+      !showAllCampaigns
+    ) {
 
       list =
         list.slice(
           0,
-          3,
+          3
         );
+
     }
 
 
-    renderCampaign(list);
+    renderCampaign(
+      list
+    );
+
 
     updateCampaignToggleButton();
-  }
 
+  }
 
 
   function updateCampaignToggleButton() {
 
     var button =
       document.getElementById(
-        "campaignReset",
+        "campaignReset"
       );
 
 
@@ -1090,37 +1507,57 @@
 
 
     var total =
-      getFilteredCampaigns().length;
+      getFilteredCampaigns()
+        .length;
 
 
-    if (total <= 3) {
+    /*
+      Kalau jumlah campaign
+      hanya 3 atau kurang,
+      tombol disembunyikan.
+    */
 
-      button.hidden = true;
+    if (
+      total <= 3
+    ) {
+
+      button.hidden =
+        true;
+
+
       return;
+
     }
 
 
-    button.hidden = false;
+    button.hidden =
+      false;
 
 
     button.textContent =
+
       showAllCampaigns
+
         ? "Lebih Sedikit"
-        : "Lihat Semua";
+
+        : "Lebih Banyak";
+
   }
 
 
-
-  function renderCampaign(list) {
+  function renderCampaign(
+    list
+  ) {
 
     var grid =
       document.getElementById(
-        "campaignGrid",
+        "campaignGrid"
       );
+
 
     var empty =
       document.getElementById(
-        "campaignEmpty",
+        "campaignEmpty"
       );
 
 
@@ -1134,308 +1571,461 @@
       list.length === 0
     ) {
 
-      grid.innerHTML = "";
+      grid.innerHTML =
+        "";
+
 
       if (empty) {
-        empty.hidden = false;
+
+        empty.hidden =
+          false;
+
       }
 
+
       return;
+
     }
 
 
     if (empty) {
-      empty.hidden = true;
+
+      empty.hidden =
+        true;
+
     }
 
 
-    var html = "";
+    var html =
+      "";
 
 
     list.forEach(
       function (campaign) {
 
         var target =
-          Number(campaign.target) ||
-          0;
+          Number(
+            campaign.target
+          ) || 0;
+
 
         var collected =
           Number(
-            campaign.terkumpul,
+            campaign.terkumpul
           ) || 0;
 
 
         var progress =
           calculatePercentage(
             collected,
-            target,
+            target
           );
 
 
         var category =
           normalizeCategory(
-            campaign.kategori,
+            campaign.kategori
           );
 
 
         var imageHtml;
 
 
-        if (campaign.gambar_url) {
+        if (
+          campaign.gambar_url
+        ) {
 
           imageHtml =
+
             '<img src="' +
+
             escapeHtml(
-              campaign.gambar_url,
+              campaign.gambar_url
             ) +
+
             '" alt="' +
+
             escapeHtml(
+
               campaign.judul ||
-              "Campaign Masjid Noor Islam",
+              "Campaign Masjid Noor Islam"
+
             ) +
+
             '" loading="lazy">';
 
         } else {
 
           imageHtml =
+
             '<div class="campaign-image-placeholder">' +
+
             "Masjid Noor Islam" +
+
             "</div>";
+
         }
 
 
         var priority =
           campaign.prioritas
-            ? '<span class="campaign-priority">Prioritas</span>'
+
+            ? (
+                '<span class="campaign-priority">' +
+                "Prioritas" +
+                "</span>"
+              )
+
             : "";
 
 
+        /*
+          INFAQ:
+          menuju halaman Infaq / QRIS.
+
+          SELAIN INFAQ:
+          menuju halaman rekening.
+        */
+
+        var actionUrl =
+
+          category === "INFAQ"
+
+            ? (
+                "Infaq/infaq.html?campaign=" +
+
+                encodeURIComponent(
+                  campaign.id
+                ) +
+
+                "#qris"
+              )
+
+            : (
+                "Donasi/donasi.html?id=" +
+
+                encodeURIComponent(
+                  campaign.id
+                )
+              );
+
+
         html +=
+
           '<article class="campaign-card">' +
 
+
           '<div class="campaign-image">' +
+
           imageHtml +
+
           priority +
+
           "</div>" +
+
 
           '<div class="campaign-content">' +
 
+
           '<div class="campaign-category">' +
-          escapeHtml(category) +
+
+          escapeHtml(
+            category
+          ) +
+
           "</div>" +
+
 
           "<h4>" +
+
           escapeHtml(
+
             campaign.judul ||
-            "Program Masjid",
+            "Program Masjid"
+
           ) +
+
           "</h4>" +
 
+
           '<p class="campaign-description">' +
+
           escapeHtml(
+
             campaign.deskripsi ||
-            "Mari berpartisipasi dalam program kebaikan Masjid Noor Islam.",
+
+            "Mari berpartisipasi dalam program kebaikan Masjid Noor Islam."
+
           ) +
+
           "</p>" +
 
+
           '<div class="campaign-progress-head">' +
+
           "<span>" +
+
           progress +
-          "% terkumpul</span>" +
-          "<span>Target</span>" +
+
+          "% terkumpul" +
+
+          "</span>" +
+
+          "<span>" +
+          "Target" +
+          "</span>" +
+
           "</div>" +
 
+
           '<div class="campaign-progress">' +
+
           '<div class="campaign-progress-bar" style="width:' +
+
           progress +
+
           '%"></div>' +
+
           "</div>" +
+
 
           '<div class="campaign-money">' +
 
-          "<div>" +
-          "<small>Terkumpul</small>" +
-          "<strong>" +
-          formatRupiah(
-            collected,
-          ) +
-          "</strong>" +
-          "</div>" +
 
           "<div>" +
-          "<small>Target</small>" +
+
+          "<small>" +
+          "Terkumpul" +
+          "</small>" +
+
           "<strong>" +
+
           formatRupiah(
-            target,
+            collected
           ) +
+
           "</strong>" +
-          "</div>" +
 
           "</div>" +
 
-          '<a class="campaign-action" href="Infaq/infaq.html?campaign=' +
-          encodeURIComponent(
-            campaign.id,
+
+          "<div>" +
+
+          "<small>" +
+          "Target" +
+          "</small>" +
+
+          "<strong>" +
+
+          formatRupiah(
+            target
           ) +
+
+          "</strong>" +
+
+          "</div>" +
+
+
+          "</div>" +
+
+
+          '<a class="campaign-action" href="' +
+
+          actionUrl +
+
           '">' +
+
           "Donasi Sekarang" +
+
           "</a>" +
+
 
           "</div>" +
 
           "</article>";
-      },
+
+      }
     );
 
 
-    grid.innerHTML = html;
-  }
+    grid.innerHTML =
+      html;
 
+  }
 
 
   function loadCampaign() {
 
     var grid =
       document.getElementById(
-        "campaignGrid",
+        "campaignGrid"
       );
 
 
-    if (!supabaseClient) {
+    if (
+      !supabaseClient
+    ) {
 
       if (grid) {
 
         grid.innerHTML =
-          '<div class="campaign-loading">Campaign belum dapat dimuat.</div>';
+
+          '<div class="campaign-loading">' +
+
+          "Campaign belum dapat dimuat." +
+
+          "</div>";
+
       }
 
+
       return;
+
     }
 
 
     supabaseClient
 
       .from(
-        "campaign_donasi",
+        "campaign_donasi"
       )
 
-      .select("*")
+      .select(
+        "*"
+      )
 
       .eq(
         "aktif",
-        true,
+        true
       )
 
       .order(
         "prioritas",
         {
-          ascending: false,
-        },
+          ascending:
+            false
+        }
       )
 
       .order(
         "created_at",
         {
-          ascending: false,
-        },
+          ascending:
+            false
+        }
       )
 
-      .then(function (result) {
+      .then(
+        function (result) {
 
-        if (result.error) {
+          if (
+            result.error
+          ) {
 
-          console.error(
-            "Gagal mengambil campaign:",
-            result.error,
-          );
-
-          return;
-        }
-
-
-        campaignData =
-          (result.data || [])
-            .filter(
-              function (campaign) {
-
-                return (
-                  normalizeCategory(
-                    campaign.kategori,
-                  ) !== "QURBAN"
-                );
-              },
+            console.error(
+              "Gagal mengambil campaign:",
+              result.error
             );
 
 
-        activeCampaignFilter =
-          "ALL";
+            if (grid) {
 
-        showAllCampaigns =
-          false;
+              grid.innerHTML =
 
+                '<div class="campaign-loading">' +
 
-        renderCurrentCampaigns();
-      })
+                "Campaign belum dapat dimuat." +
 
-      .catch(function (error) {
+                "</div>";
 
-        console.error(
-          "Kesalahan campaign:",
-          error,
-        );
-      });
-  }
+            }
 
 
+            return;
 
-  document
-    .querySelectorAll(
-      ".service-filter",
-    )
-    .forEach(function (button) {
+          }
 
-      button.addEventListener(
-        "click",
-        function () {
+
+          /*
+            QURBAN tidak ditampilkan
+            sebagai campaign karena
+            punya section sendiri.
+          */
+
+          campaignData =
+            (
+              result.data ||
+              []
+            )
+
+              .filter(
+                function (campaign) {
+
+                  return (
+
+                    normalizeCategory(
+                      campaign.kategori
+                    ) !==
+                    "QURBAN"
+
+                  );
+
+                }
+              );
+
+
+          /*
+            Setiap refresh kembali
+            maksimal tiga.
+          */
 
           activeCampaignFilter =
-            normalizeCategory(
-              button.getAttribute(
-                "data-filter",
-              ),
-            );
+            "ALL";
 
 
-          showAllCampaigns = false;
+          showAllCampaigns =
+            false;
 
 
           renderCurrentCampaigns();
 
+        }
+      )
 
-          var head =
-            document.querySelector(
-              ".campaign-head",
-            );
+      .catch(
+        function (error) {
+
+          console.error(
+            "Kesalahan campaign:",
+            error
+          );
 
 
-          if (head) {
+          if (grid) {
 
-            head.scrollIntoView(
-              {
-                behavior: "smooth",
-                block: "start",
-              },
-            );
+            grid.innerHTML =
+
+              '<div class="campaign-loading">' +
+
+              "Campaign belum dapat dimuat." +
+
+              "</div>";
+
           }
-        },
+
+        }
       );
-    });
+
+  }
 
 
+  /* =====================================================
+     CAMPAIGN TOGGLE
+  ===================================================== */
 
   var campaignReset =
     document.getElementById(
-      "campaignReset",
+      "campaignReset"
     );
 
 
@@ -1445,6 +2035,13 @@
       "click",
       function () {
 
+
+        /*
+          Tukar kondisi:
+          false → true
+          true → false
+        */
+
         showAllCampaigns =
           !showAllCampaigns;
 
@@ -1452,11 +2049,19 @@
         renderCurrentCampaigns();
 
 
-        if (!showAllCampaigns) {
+        /*
+          Saat kembali ke
+          "Lebih Sedikit",
+          scroll ke judul Campaign.
+        */
+
+        if (
+          !showAllCampaigns
+        ) {
 
           var head =
             document.querySelector(
-              ".campaign-head",
+              ".campaign-head"
             );
 
 
@@ -1464,16 +2069,22 @@
 
             head.scrollIntoView(
               {
-                behavior: "smooth",
-                block: "start",
-              },
-            );
-          }
-        }
-      },
-    );
-  }
+                behavior:
+                  "smooth",
 
+                block:
+                  "start"
+              }
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+  }
 
 
   /* =====================================================
@@ -1481,39 +2092,56 @@
   ===================================================== */
 
   function formatWhatsapp(
-    number,
+    number
   ) {
 
     var value =
-      String(number || "")
-        .replace(/\D/g, "");
+      String(
+        number ||
+        ""
+      )
+
+        .replace(
+          /\D/g,
+          ""
+        );
 
 
     if (
-      value.startsWith("0")
+      value.startsWith(
+        "0"
+      )
     ) {
 
       value =
+
         "62" +
-        value.substring(1);
+
+        value.substring(
+          1
+        );
+
     }
 
 
     return value;
+
   }
 
 
-
-  function renderQurban(list) {
+  function renderQurban(
+    list
+  ) {
 
     var grid =
       document.getElementById(
-        "qurbanGrid",
+        "qurbanGrid"
       );
+
 
     var empty =
       document.getElementById(
-        "qurbanEmpty",
+        "qurbanEmpty"
       );
 
 
@@ -1527,23 +2155,33 @@
       list.length === 0
     ) {
 
-      grid.innerHTML = "";
+      grid.innerHTML =
+        "";
 
 
       if (empty) {
-        empty.hidden = false;
+
+        empty.hidden =
+          false;
+
       }
 
+
       return;
+
     }
 
 
     if (empty) {
-      empty.hidden = true;
+
+      empty.hidden =
+        true;
+
     }
 
 
-    var html = "";
+    var html =
+      "";
 
 
     list.forEach(
@@ -1552,57 +2190,83 @@
         var image;
 
 
-        if (qurban.gambar_url) {
+        if (
+          qurban.gambar_url
+        ) {
 
           image =
+
             '<img src="' +
+
             escapeHtml(
-              qurban.gambar_url,
+              qurban.gambar_url
             ) +
+
             '" alt="' +
+
             escapeHtml(
+
               qurban.judul ||
-              "Program Qurban",
+              "Program Qurban"
+
             ) +
+
             '" loading="lazy">';
 
         } else {
 
           image =
+
             '<div class="qurban-image-placeholder">' +
+
             "Program Qurban" +
+
             "</div>";
+
         }
 
 
         var whatsapp =
           formatWhatsapp(
-            qurban.kontak,
+            qurban.kontak
           );
 
 
         var message =
+
           "Assalamu'alaikum, saya ingin mendaftar program " +
+
           (
             qurban.judul ||
             "Qurban Masjid Noor Islam"
           ) +
+
           " di Masjid Noor Islam.";
 
 
         var whatsappUrl =
+
           whatsapp
-            ? "https://wa.me/" +
-              whatsapp +
-              "?text=" +
-              encodeURIComponent(
-                message,
+
+            ? (
+                "https://wa.me/" +
+
+                whatsapp +
+
+                "?text=" +
+
+                encodeURIComponent(
+                  message
+                )
               )
+
             : "#";
 
 
         html +=
+
           '<article class="qurban-card">' +
+
 
           '<div class="qurban-image">' +
 
@@ -1610,149 +2274,227 @@
 
           (
             qurban.prioritas
-              ? '<span class="campaign-priority">Prioritas</span>'
+
+              ? (
+                  '<span class="campaign-priority">' +
+                  "Prioritas" +
+                  "</span>"
+                )
+
               : ""
           ) +
 
           "</div>" +
+
 
           '<div class="qurban-content">' +
 
+
           '<div class="campaign-category">' +
+
           "QURBAN" +
+
           "</div>" +
+
 
           "<h3>" +
+
           escapeHtml(
+
             qurban.judul ||
-            "Program Qurban",
+            "Program Qurban"
+
           ) +
+
           "</h3>" +
 
+
           '<div class="qurban-kind">' +
+
           escapeHtml(
             qurban.jenis_hewan ||
-            "",
+            ""
           ) +
+
           "</div>" +
 
+
           '<div class="qurban-price">' +
+
           formatRupiah(
-            qurban.harga,
+            qurban.harga
           ) +
+
           "</div>" +
+
 
           (
             qurban.periode
-              ? '<div class="qurban-period">' +
-                escapeHtml(
-                  qurban.periode,
-                ) +
-                "</div>"
+
+              ? (
+                  '<div class="qurban-period">' +
+
+                  escapeHtml(
+                    qurban.periode
+                  ) +
+
+                  "</div>"
+                )
+
               : ""
           ) +
+
 
           (
             qurban.deskripsi
-              ? "<p>" +
-                escapeHtml(
-                  qurban.deskripsi,
-                ) +
-                "</p>"
+
+              ? (
+                  "<p>" +
+
+                  escapeHtml(
+                    qurban.deskripsi
+                  ) +
+
+                  "</p>"
+                )
+
               : ""
           ) +
 
+
           (
             whatsapp
-              ? '<a class="qurban-action" href="' +
-                whatsappUrl +
-                '" target="_blank" rel="noopener noreferrer">' +
-                "Daftar Qurban via WhatsApp" +
-                "</a>"
-              : '<span class="qurban-action qurban-action-disabled">' +
-                "Kontak panitia belum tersedia" +
-                "</span>"
+
+              ? (
+                  '<a class="qurban-action" href="' +
+
+                  whatsappUrl +
+
+                  '" target="_blank" rel="noopener noreferrer">' +
+
+                  "Daftar Qurban via WhatsApp" +
+
+                  "</a>"
+                )
+
+              : (
+                  '<span class="qurban-action qurban-action-disabled">' +
+
+                  "Kontak panitia belum tersedia" +
+
+                  "</span>"
+                )
           ) +
+
 
           "</div>" +
 
           "</article>";
-      },
+
+      }
     );
 
 
-    grid.innerHTML = html;
-  }
+    grid.innerHTML =
+      html;
 
+  }
 
 
   function loadQurban() {
 
-    if (!supabaseClient) {
+    if (
+      !supabaseClient
+    ) {
 
-      renderQurban([]);
+      renderQurban(
+        []
+      );
+
       return;
+
     }
 
 
     supabaseClient
 
       .from(
-        "program_qurban",
+        "program_qurban"
       )
 
-      .select("*")
+      .select(
+        "*"
+      )
 
       .eq(
         "aktif",
-        true,
+        true
       )
 
       .order(
         "prioritas",
         {
-          ascending: false,
-        },
+          ascending:
+            false
+        }
       )
 
       .order(
         "created_at",
         {
-          ascending: false,
-        },
+          ascending:
+            false
+        }
       )
 
-      .then(function (result) {
+      .then(
+        function (result) {
 
-        if (result.error) {
+          if (
+            result.error
+          ) {
 
-          console.error(
-            "Gagal mengambil Qurban:",
-            result.error,
+            console.error(
+              "Gagal mengambil Qurban:",
+              result.error
+            );
+
+
+            renderQurban(
+              []
+            );
+
+
+            return;
+
+          }
+
+
+          renderQurban(
+            result.data ||
+            []
           );
 
-          renderQurban([]);
-
-          return;
         }
+      )
+
+      .catch(
+        function (error) {
+
+          console.error(
+            "Qurban:",
+            error
+          );
 
 
-        renderQurban(
-          result.data || [],
-        );
-      })
+          renderQurban(
+            []
+          );
 
-      .catch(function (error) {
+        }
+      );
 
-        console.error(
-          "Qurban:",
-          error,
-        );
-
-        renderQurban([]);
-      });
   }
-
 
 
   /* =====================================================
@@ -1760,8 +2502,12 @@
   ===================================================== */
 
   loadJadwal();
+
   loadKegiatan();
+
   loadCampaign();
+
   loadQurban();
+
 
 })();

@@ -1,0 +1,2296 @@
+/* =========================================================
+   DONASI - MASJID NOOR ISLAM
+========================================================= */
+
+:root {
+  --green-dark: #0a2b2c;
+  --green: #0f3d3e;
+  --green-soft: #174f50;
+
+  --gold: #b8874b;
+  --gold-light: #d8b17b;
+
+  --cream: #f6f1e4;
+  --cream-soft: #fbf8f1;
+
+  --white: #ffffff;
+
+  --text: #1d2929;
+  --text-soft: #667171;
+
+  --border: #e6e1d6;
+
+  --danger: #a93c3c;
+
+  --shadow:
+    0 18px 50px rgba(10, 43, 44, 0.09);
+
+  --radius-large: 24px;
+  --radius-medium: 16px;
+  --radius-small: 10px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  background: var(--cream-soft);
+
+  color: var(--text);
+
+  font-family:
+    "Inter",
+    Arial,
+    sans-serif;
+
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.container {
+  width: min(1160px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background:
+    rgba(246, 241, 228, 0.96);
+
+  border-bottom:
+    1px solid rgba(15, 61, 62, 0.1);
+
+  backdrop-filter: blur(14px);
+}
+
+.nav-container {
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+
+/* BRAND */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+/*
+  Logo dibuat mengikuti rasio aslinya
+  agar sama seperti header halaman utama.
+*/
+
+.brand-logo-wrap {
+  width: 54px;
+
+  flex: 0 0 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-mark {
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+.brand-text {
+  line-height: 1.15;
+}
+
+.brand-name {
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.brand-place {
+  margin-top: 4px;
+
+  color: var(--gold);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* BACK BUTTON */
+
+.back-button {
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 16px;
+
+  border:
+    1px solid rgba(15, 61, 62, 0.16);
+
+  border-radius: 10px;
+
+  background: var(--white);
+
+  color: var(--green);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(184, 135, 75, 0.65);
+
+  box-shadow:
+    0 8px 22px rgba(10, 43, 44, 0.08);
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+.state-section {
+  min-height:
+    calc(100vh - 150px);
+
+  display: grid;
+  place-items: center;
+
+  padding: 70px 20px;
+}
+
+.state-card {
+  width: min(480px, 100%);
+
+  padding: 48px 32px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-large);
+
+  background: var(--white);
+
+  text-align: center;
+
+  box-shadow: var(--shadow);
+}
+
+.state-card h2 {
+  margin-top: 20px;
+
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 28px;
+}
+
+.state-card p {
+  margin-top: 8px;
+
+  color: var(--text-soft);
+
+  font-size: 14px;
+}
+
+.loader {
+  width: 42px;
+  height: 42px;
+
+  margin: auto;
+
+  border:
+    4px solid rgba(15, 61, 62, 0.12);
+
+  border-top-color:
+    var(--gold);
+
+  border-radius: 50%;
+
+  animation:
+    spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.state-icon {
+  width: 52px;
+  height: 52px;
+
+  display: grid;
+  place-items: center;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  background:
+    rgba(169, 60, 60, 0.1);
+
+  color: var(--danger);
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.primary-button {
+  min-height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 24px;
+
+  padding: 0 20px;
+
+  border-radius: 10px;
+
+  background: var(--green-dark);
+
+  color: var(--white);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   CAMPAIGN HERO
+========================================================= */
+
+.campaign-hero {
+  padding:
+    38px 0 74px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f6f1e4 0%,
+      #fbf8f1 100%
+    );
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 28px;
+
+  color: #7a8383;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.breadcrumb a {
+  color: var(--green);
+
+  transition:
+    color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--gold);
+}
+
+.campaign-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(360px, 0.92fr);
+
+  align-items: center;
+
+  gap: 54px;
+}
+
+
+/* IMAGE */
+
+.campaign-image-wrap {
+  position: relative;
+
+  overflow: hidden;
+
+  min-height: 440px;
+
+  border-radius:
+    var(--radius-large);
+
+  background:
+    #e8e2d6;
+
+  box-shadow: var(--shadow);
+}
+
+.campaign-image {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+
+  object-fit: cover;
+}
+
+.campaign-image-wrap::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 50%,
+      rgba(5, 30, 31, 0.25)
+    );
+}
+
+.campaign-category,
+.priority-badge {
+  position: absolute;
+  z-index: 2;
+
+  top: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 0 13px;
+
+  border-radius: 100px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+}
+
+.campaign-category {
+  left: 20px;
+
+  background: var(--green-dark);
+
+  color: var(--white);
+}
+
+.priority-badge {
+  right: 20px;
+
+  background: var(--gold);
+
+  color: #fff;
+}
+
+
+/* INFO */
+
+.campaign-information {
+  max-width: 510px;
+}
+
+.campaign-eyebrow,
+.section-eyebrow {
+  color: var(--gold);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.campaign-information h1 {
+  margin-top: 10px;
+
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(36px, 4vw, 54px);
+
+  line-height: 1.08;
+}
+
+.campaign-description {
+  margin-top: 18px;
+
+  color: var(--text-soft);
+
+  font-size: 15px;
+
+  white-space: pre-line;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-card {
+  margin-top: 28px;
+
+  padding: 22px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-medium);
+
+  background:
+    rgba(255, 255, 255, 0.72);
+}
+
+.amount-label {
+  color: var(--text-soft);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.amount-collected {
+  margin-top: 3px;
+
+  color: var(--green-dark);
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+
+  overflow: hidden;
+
+  margin-top: 16px;
+
+  border-radius: 100px;
+
+  background:
+    rgba(15, 61, 62, 0.1);
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green),
+      var(--gold)
+    );
+
+  transition:
+    width 0.5s ease;
+}
+
+.progress-information {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 11px;
+}
+
+.progress-information div {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-information span {
+  color: var(--text-soft);
+
+  font-size: 11px;
+}
+
+.progress-information strong {
+  margin-top: 2px;
+
+  color: var(--green-dark);
+
+  font-size: 13px;
+}
+
+.progress-percent {
+  text-align: right;
+}
+
+.donate-now-button {
+  width: 100%;
+  min-height: 52px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+
+  border-radius: 12px;
+
+  background: var(--green-dark);
+
+  color: var(--white);
+
+  font-size: 14px;
+  font-weight: 800;
+
+  box-shadow:
+    0 12px 30px rgba(10, 43, 44, 0.17);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.donate-now-button:hover {
+  background: var(--green);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-section {
+  padding:
+    82px 0 96px;
+
+  background: var(--white);
+}
+
+.payment-container {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    340px;
+
+  align-items: start;
+
+  gap: 42px;
+}
+
+.payment-main {
+  min-width: 0;
+}
+
+.section-heading {
+  max-width: 640px;
+
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  margin-top: 8px;
+
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(30px, 4vw, 42px);
+
+  line-height: 1.15;
+}
+
+.section-heading p {
+  margin-top: 12px;
+
+  color: var(--text-soft);
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BANK CARD
+========================================================= */
+
+.bank-card {
+  overflow: hidden;
+
+  border-radius:
+    var(--radius-large);
+
+  background:
+    linear-gradient(
+      135deg,
+      #0a2b2c,
+      #0f4546
+    );
+
+  color: var(--white);
+
+  box-shadow:
+    0 22px 55px rgba(10, 43, 44, 0.18);
+}
+
+.bank-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 26px 28px 22px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bank-icon {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color: var(--gold-light);
+}
+
+.bank-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.bank-label {
+  color:
+    rgba(255, 255, 255, 0.65);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bank-card h3 {
+  margin-top: 2px;
+
+  font-size: 22px;
+}
+
+.account-number-block {
+  padding:
+    26px 28px 20px;
+}
+
+.account-number-block > span,
+.account-owner span {
+  color:
+    rgba(255, 255, 255, 0.62);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.account-number-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-top: 5px;
+}
+
+.account-number-row strong {
+  overflow-wrap: anywhere;
+
+  font-size:
+    clamp(23px, 4vw, 32px);
+
+  letter-spacing: 0.04em;
+}
+
+.copy-button {
+  min-width: 72px;
+  min-height: 38px;
+
+  flex-shrink: 0;
+
+  padding: 0 14px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.16);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  color: var(--white);
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease;
+}
+
+.copy-button:hover {
+  background:
+    rgba(255, 255, 255, 0.17);
+}
+
+.account-owner {
+  display: flex;
+  flex-direction: column;
+
+  padding:
+    0 28px 27px;
+}
+
+.account-owner strong {
+  margin-top: 2px;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   INSTRUCTIONS
+========================================================= */
+
+.instruction-card {
+  margin-top: 22px;
+
+  padding: 27px 28px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-medium);
+
+  background:
+    var(--cream-soft);
+}
+
+.instruction-card h3 {
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 21px;
+}
+
+.instruction-content {
+  margin-top: 16px;
+
+  color: var(--text-soft);
+
+  font-size: 14px;
+
+  white-space: pre-line;
+}
+
+.instruction-content ol {
+  padding-left: 21px;
+}
+
+.instruction-content li {
+  margin-bottom: 9px;
+}
+
+
+/* =========================================================
+   NOTICE
+========================================================= */
+
+.payment-notice {
+  display: flex;
+
+  gap: 13px;
+
+  margin-top: 20px;
+
+  padding: 18px;
+
+  border:
+    1px solid rgba(184, 135, 75, 0.25);
+
+  border-radius:
+    var(--radius-medium);
+
+  background:
+    rgba(184, 135, 75, 0.07);
+}
+
+.notice-icon {
+  width: 28px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--gold);
+
+  color: var(--white);
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.payment-notice strong {
+  color: var(--green-dark);
+
+  font-size: 13px;
+}
+
+.payment-notice p {
+  margin-top: 3px;
+
+  color: var(--text-soft);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-card {
+  position: sticky;
+  top: 104px;
+
+  padding: 27px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    var(--radius-large);
+
+  background:
+    var(--cream-soft);
+
+  box-shadow:
+    0 14px 38px rgba(10, 43, 44, 0.07);
+}
+
+.summary-title {
+  color: var(--green-dark);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.summary-campaign {
+  margin-top: 22px;
+}
+
+.summary-category {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  border-radius: 100px;
+
+  background:
+    rgba(184, 135, 75, 0.12);
+
+  color: var(--gold);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.summary-campaign h3 {
+  margin-top: 9px;
+
+  color: var(--green-dark);
+
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.summary-divider {
+  height: 1px;
+
+  margin: 20px 0;
+
+  background: var(--border);
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 12px;
+
+  font-size: 12px;
+}
+
+.summary-row span {
+  color: var(--text-soft);
+}
+
+.summary-row strong {
+  color: var(--green-dark);
+
+  text-align: right;
+}
+
+.summary-note {
+  color: var(--text-soft);
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.secondary-button {
+  width: 100%;
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+
+  border:
+    1px solid rgba(15, 61, 62, 0.18);
+
+  border-radius: 10px;
+
+  background: var(--white);
+
+  color: var(--green);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.secondary-button:hover {
+  transform: translateY(-1px);
+
+  border-color: var(--gold);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+  position: fixed;
+  z-index: 300;
+
+  right: 24px;
+  bottom: 24px;
+
+  max-width:
+    calc(100% - 48px);
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  background: var(--green-dark);
+
+  color: var(--white);
+
+  box-shadow:
+    0 14px 38px rgba(10, 43, 44, 0.2);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform:
+    translateY(12px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  padding: 28px 0;
+
+  background: var(--green-dark);
+
+  color: var(--white);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+.footer strong {
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 17px;
+}
+
+.footer p {
+  margin-top: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  font-size: 11px;
+}
+
+.footer a {
+  color: var(--gold-light);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .campaign-layout {
+    grid-template-columns: 1fr;
+
+    gap: 34px;
+  }
+
+  .campaign-information {
+    max-width: none;
+  }
+
+  .campaign-image-wrap {
+    min-height: 380px;
+  }
+
+  .payment-container {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    position: static;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .container {
+    width:
+      min(100% - 28px, 1160px);
+  }
+
+
+  /* HEADER */
+
+  .nav-container {
+    min-height: 68px;
+
+    gap: 12px;
+  }
+
+  .brand-logo-wrap {
+    width: 44px;
+    flex-basis: 44px;
+  }
+
+  .brand-mark {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .brand-place {
+    font-size: 9px;
+  }
+
+  .back-button {
+    min-height: 38px;
+
+    padding: 0 11px;
+
+    font-size: 11px;
+  }
+
+
+  /* HERO */
+
+  .campaign-hero {
+    padding:
+      24px 0 54px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 20px;
+
+    font-size: 10px;
+  }
+
+  .campaign-layout {
+    gap: 27px;
+  }
+
+  .campaign-image-wrap {
+    min-height: 270px;
+
+    border-radius: 18px;
+  }
+
+  .campaign-category,
+  .priority-badge {
+    top: 14px;
+
+    min-height: 30px;
+
+    padding: 0 10px;
+
+    font-size: 9px;
+  }
+
+  .campaign-category {
+    left: 14px;
+  }
+
+  .priority-badge {
+    right: 14px;
+  }
+
+  .campaign-information h1 {
+    font-size: 34px;
+  }
+
+  .campaign-description {
+    font-size: 13px;
+  }
+
+  .progress-card {
+    padding: 18px;
+  }
+
+  .amount-collected {
+    font-size: 24px;
+  }
+
+
+  /* PAYMENT */
+
+  .payment-section {
+    padding:
+      58px 0 70px;
+  }
+
+  .payment-container {
+    gap: 28px;
+  }
+
+  .section-heading {
+    margin-bottom: 23px;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
+
+
+  /* BANK */
+
+  .bank-card {
+    border-radius: 18px;
+  }
+
+  .bank-card-header {
+    padding:
+      21px 20px 18px;
+  }
+
+  .bank-card h3 {
+    font-size: 19px;
+  }
+
+  .account-number-block {
+    padding:
+      22px 20px 17px;
+  }
+
+  .account-number-row {
+    align-items: flex-end;
+  }
+
+  .account-number-row strong {
+    font-size: 21px;
+  }
+
+  .copy-button {
+    min-width: 64px;
+
+    padding: 0 10px;
+  }
+
+  .account-owner {
+    padding:
+      0 20px 22px;
+  }
+
+  .instruction-card {
+    padding: 22px 20px;
+  }
+
+  .summary-card {
+    padding: 22px 20px;
+
+    border-radius: 18px;
+  }
+
+
+  /* FOOTER */
+
+  .footer-content {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .brand-logo-wrap {
+    width: 39px;
+    flex-basis: 39px;
+  }
+
+  .brand-place {
+    display: none;
+  }
+
+  .back-button {
+    padding: 0 9px;
+  }
+
+  .campaign-image-wrap {
+    min-height: 230px;
+  }
+
+  .account-number-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .copy-button {
+    width: 100%;
+  }
+
+}
+/* =========================================================
+   ADMIN MOBILE RESPONSIVE - FINAL OVERRIDE
+========================================================= */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .stat-cards {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-campaign-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  :root {
+    --sidebar-width: min(82vw, 290px);
+  }
+
+
+  /* =====================================================
+     BODY
+  ===================================================== */
+
+  .dashboard-body {
+    width: 100%;
+    min-width: 0;
+
+    overflow-x: hidden;
+  }
+
+
+  /* =====================================================
+     SIDEBAR
+  ===================================================== */
+
+  .sidebar {
+    width: var(--sidebar-width);
+
+    position: fixed;
+    z-index: 2000;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    padding:
+      22px 16px
+      calc(20px + env(safe-area-inset-bottom));
+
+    transform: translateX(-105%);
+
+    transition:
+      transform 0.28s ease;
+
+    box-shadow: none;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+
+  .sidebar.open {
+    transform: translateX(0);
+
+    box-shadow:
+      18px 0 55px
+      rgba(0, 0, 0, 0.26);
+  }
+
+
+  /* SIDEBAR BRAND */
+
+  .sidebar-brand {
+    padding:
+      0 5px 22px;
+
+    gap: 11px;
+  }
+
+
+  .sidebar-logo-wrap {
+    width: 46px;
+    flex: 0 0 46px;
+  }
+
+
+  .sidebar-logo {
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+  }
+
+
+  .sidebar-brand-name {
+    font-size: 19px;
+    line-height: 1.15;
+  }
+
+
+  .sidebar-brand-sub {
+    margin-top: 4px;
+
+    font-size: 8px;
+  }
+
+
+  /* SIDEBAR MENU */
+
+  .sidebar-menu {
+    margin-top: 20px;
+
+    gap: 5px;
+  }
+
+
+  .sidebar-link {
+    min-height: 46px;
+
+    padding:
+      11px 12px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    gap: 10px;
+  }
+
+
+  .sidebar-link span {
+    width: 24px;
+    flex: 0 0 24px;
+  }
+
+
+  .sidebar-bottom {
+    margin-top: 35px;
+
+    padding-top: 18px;
+  }
+
+
+  .sidebar-site-link,
+  .logout-button {
+    padding: 12px;
+
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     SIDEBAR OVERLAY
+  ===================================================== */
+
+  .sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1900;
+
+    visibility: hidden;
+    opacity: 0;
+
+    background:
+      rgba(4, 24, 24, 0.5);
+
+    backdrop-filter:
+      blur(2px);
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+
+  .sidebar-overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+
+  /* =====================================================
+     MAIN
+  ===================================================== */
+
+  .dashboard-main {
+    width: 100%;
+    min-width: 0;
+
+    margin-left: 0;
+  }
+
+
+  /* =====================================================
+     TOPBAR
+  ===================================================== */
+
+  .dashboard-topbar {
+    min-height: 72px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 900;
+
+    padding:
+      10px 14px;
+
+    gap: 12px;
+
+    background:
+      rgba(255, 255, 255, 0.94);
+
+    backdrop-filter:
+      blur(15px);
+  }
+
+
+  .dashboard-topbar > div:first-child {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+  }
+
+
+  .mobile-sidebar-button {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0;
+
+    border:
+      1px solid
+      rgba(15, 61, 62, 0.13);
+
+    border-radius: 10px;
+
+    color: var(--ink-deep);
+
+    background: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+  }
+
+
+  .mobile-sidebar-button:active {
+    transform: scale(0.96);
+  }
+
+
+  .topbar-eyebrow {
+    display: none;
+  }
+
+
+  .dashboard-topbar h1 {
+    margin: 0;
+
+    overflow: hidden;
+
+    font-size: 23px;
+
+    line-height: 1.15;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+  }
+
+
+  /* PROFILE */
+
+  .admin-profile {
+    flex: 0 0 auto;
+  }
+
+
+  .admin-profile-text {
+    display: none;
+  }
+
+
+  .admin-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    font-size: 18px;
+  }
+
+
+  /* =====================================================
+     CONTENT
+  ===================================================== */
+
+  .dashboard-content {
+    width: 100%;
+    max-width: none;
+
+    padding:
+      18px 14px 40px;
+
+    margin: 0;
+  }
+
+
+  .dashboard-section {
+    width: 100%;
+    min-width: 0;
+  }
+
+
+  /* =====================================================
+     WELCOME CARD
+  ===================================================== */
+
+  .welcome-card {
+    width: 100%;
+    min-height: auto;
+
+    padding:
+      26px 20px;
+
+    border-radius: 15px;
+  }
+
+
+  .welcome-card h2 {
+    max-width: 100%;
+
+    font-size: 28px;
+
+    line-height: 1.15;
+  }
+
+
+  .welcome-card p {
+    max-width: 100%;
+
+    font-size: 11px;
+  }
+
+
+  .welcome-decoration {
+    display: none;
+  }
+
+
+  /* =====================================================
+     STATS
+  ===================================================== */
+
+  .stat-cards {
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+
+    margin-top: 16px;
+  }
+
+
+  .stat-card {
+    width: 100%;
+
+    padding: 17px;
+
+    gap: 12px;
+  }
+
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+  }
+
+
+  .stat-card strong {
+    font-size: 24px;
+  }
+
+
+  .stat-card .stat-money {
+    font-size: 18px;
+  }
+
+
+  /* =====================================================
+     TOOLBAR
+  ===================================================== */
+
+  .section-toolbar {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    align-items: stretch;
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+
+  .section-toolbar > div {
+    width: 100%;
+  }
+
+
+  .section-toolbar h2 {
+    font-size: 25px;
+
+    line-height: 1.2;
+  }
+
+
+  .section-toolbar p {
+    max-width: 100%;
+
+    font-size: 10px;
+  }
+
+
+  .section-toolbar button,
+  .section-toolbar .btn-primary,
+  .section-toolbar .primary-button {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+
+  /* =====================================================
+     DASHBOARD CARD
+  ===================================================== */
+
+  .dashboard-card {
+    width: 100%;
+
+    margin-top: 16px;
+
+    border-radius: 12px;
+  }
+
+
+  .card-heading {
+    padding: 18px;
+
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+
+  .card-heading h2 {
+    font-size: 24px;
+  }
+
+
+  /* =====================================================
+     TABLE
+  ===================================================== */
+
+  .table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling:
+      touch;
+  }
+
+
+  .table-wrap table {
+    min-width: 720px;
+  }
+
+
+  th,
+  td {
+    padding:
+      13px 14px;
+  }
+
+
+  .table-actions {
+    flex-wrap: nowrap;
+  }
+
+
+  .action-button {
+    min-height: 34px;
+
+    padding:
+      7px 10px;
+  }
+
+
+  /* =====================================================
+     CAMPAIGN + QURBAN CARDS
+  ===================================================== */
+
+  .admin-campaign-grid {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+
+  .admin-campaign-card {
+    width: 100%;
+
+    border-radius: 13px;
+  }
+
+
+  .admin-campaign-image {
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+  }
+
+
+  .admin-campaign-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  .admin-campaign-content {
+    padding: 17px;
+  }
+
+
+  .admin-campaign-content h3 {
+    font-size: 22px;
+  }
+
+
+  .admin-campaign-description {
+    min-height: 0;
+  }
+
+
+  .admin-campaign-actions {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+
+  .admin-campaign-actions .action-button {
+    width: 100%;
+  }
+
+
+  /* =====================================================
+     FILTER
+  ===================================================== */
+
+  .filter-bar {
+    width:
+      calc(100vw - 28px);
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    flex-wrap: nowrap;
+
+    padding-bottom: 6px;
+
+    -webkit-overflow-scrolling:
+      touch;
+
+    scrollbar-width: thin;
+  }
+
+
+  .filter-button {
+    flex: 0 0 auto;
+  }
+
+
+  /* =====================================================
+     FORM
+  ===================================================== */
+
+  .form-grid,
+  .toggle-grid {
+    grid-template-columns: 1fr !important;
+
+    gap: 14px;
+  }
+
+
+  .field,
+  .form-field {
+    min-width: 0;
+  }
+
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+  }
+
+
+  /* =====================================================
+     REKENING
+  ===================================================== */
+
+  #section-payment {
+    width: 100%;
+    max-width: none;
+  }
+
+
+  #section-payment .dashboard-card {
+    padding: 18px !important;
+
+    margin-top: 17px;
+
+    border-radius: 13px;
+  }
+
+
+  #paymentSettingsForm {
+    width: 100%;
+  }
+
+
+  #paymentSettingsForm .form-grid {
+    grid-template-columns: 1fr !important;
+
+    gap: 14px !important;
+  }
+
+
+  #paymentSettingsForm .field:nth-child(3) {
+    grid-column: auto !important;
+  }
+
+
+  #paymentSettingsForm input {
+    min-height: 48px !important;
+  }
+
+
+  #paymentSettingsForm textarea {
+    min-height: 150px !important;
+
+    resize: vertical;
+  }
+
+
+  #paymentSettingsForm .form-actions {
+    width: 100%;
+  }
+
+
+  #paymentSettingsForm .btn-primary,
+  #paymentSettingsForm button[type="submit"] {
+    width: 100%;
+
+    min-height: 48px;
+  }
+
+
+  /* =====================================================
+     MODAL
+  ===================================================== */
+
+  .modal-backdrop {
+    padding:
+      10px;
+
+    align-items: center;
+  }
+
+
+  .modal,
+  .modal-large,
+  .modal-confirm {
+    width: 100%;
+    max-width:
+      calc(100vw - 20px);
+
+    max-height:
+      calc(100dvh - 20px);
+
+    padding:
+      20px 17px;
+
+    overflow-y: auto;
+
+    border-radius: 15px;
+  }
+
+
+  .modal-header {
+    margin-bottom: 18px;
+  }
+
+
+  .modal-header h2 {
+    font-size: 25px;
+  }
+
+
+  .modal-close {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+  }
+
+
+  .modal-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+
+    gap: 8px;
+  }
+
+
+  .modal-actions button {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  :root {
+    --sidebar-width: min(86vw, 285px);
+  }
+
+
+  .dashboard-topbar {
+    padding:
+      9px 11px;
+  }
+
+
+  .dashboard-content {
+    padding:
+      15px 11px 35px;
+  }
+
+
+  .dashboard-topbar h1 {
+    font-size: 21px;
+  }
+
+
+  .mobile-sidebar-button {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+
+  .admin-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+
+  .welcome-card {
+    padding:
+      23px 17px;
+  }
+
+
+  .welcome-card h2 {
+    font-size: 25px;
+  }
+
+
+  .section-toolbar h2 {
+    font-size: 23px;
+  }
+
+
+  .admin-campaign-content h3 {
+    font-size: 20px;
+  }
+
+}

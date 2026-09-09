@@ -1957,3 +1957,239 @@ td {
   }
 
 }
+/* =========================================================
+   REKENING / PAYMENT SETTINGS
+   RAPiHKAN LAYOUT
+========================================================= */
+
+#section-payment {
+  max-width: 1180px;
+}
+
+#section-payment .dashboard-card {
+  margin-top: 28px;
+  padding: 30px;
+  border: 1px solid rgba(15, 61, 62, 0.12);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgba(10, 43, 44, 0.06);
+}
+
+
+/* FORM GRID */
+
+#paymentSettingsForm .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+
+/* FIELD */
+
+#paymentSettingsForm .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+/* FIELD ATAS NAMA BIAR FULL WIDTH */
+
+#paymentSettingsForm .field:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+
+/* LABEL */
+
+#paymentSettingsForm label {
+  color: #0a2b2c;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* INPUT + TEXTAREA */
+
+#paymentSettingsForm input,
+#paymentSettingsForm textarea {
+  width: 100%;
+  border: 1px solid rgba(15, 61, 62, 0.14);
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1c2321;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+#paymentSettingsForm input {
+  min-height: 52px;
+  padding: 0 16px;
+}
+
+
+#paymentSettingsForm textarea {
+  min-height: 170px;
+  padding: 16px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+
+/* FOCUS */
+
+#paymentSettingsForm input:focus,
+#paymentSettingsForm textarea:focus {
+  border-color: #b8874b;
+  box-shadow:
+    0 0 0 3px rgba(184, 135, 75, 0.12);
+}
+
+
+/* BAGIAN LANGKAH PEMBAYARAN */
+
+#paymentSettingsForm > .field {
+  margin-top: 22px;
+}
+
+
+/* ACTION BUTTON */
+
+#paymentSettingsForm .form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-top: 24px;
+}
+
+
+#paymentSettingsForm .btn-primary {
+  min-width: 170px;
+  min-height: 48px;
+
+  padding: 0 22px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+/* MESSAGE */
+
+#paymentSettingsMessage {
+  min-height: 22px;
+  margin-top: 12px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  #paymentSettingsForm .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #paymentSettingsForm .field:nth-child(3) {
+    grid-column: auto;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  #section-payment .dashboard-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  #paymentSettingsForm .form-grid {
+    gap: 16px;
+  }
+
+  #paymentSettingsForm input {
+    min-height: 48px;
+  }
+
+  #paymentSettingsForm textarea {
+    min-height: 150px;
+  }
+
+  #paymentSettingsForm .form-actions {
+    margin-top: 20px;
+  }
+
+  #paymentSettingsForm .btn-primary {
+    width: 100%;
+  }
+
+}
+/* ======================================================
+   TOMBOL TUTUP SIDEBAR MOBILE
+====================================================== */
+
+.sidebar-close {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    position: fixed;
+  }
+
+  .sidebar-close {
+    position: absolute;
+    top: 20px;
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 1002;
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.04);
+  }
+}

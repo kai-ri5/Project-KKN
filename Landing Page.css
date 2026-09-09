@@ -2794,3 +2794,64 @@ footer {
   }
 
 }
+/* ======================================================
+   TOMBOL PORTAL PENGURUS
+====================================================== */
+
+.links .admin-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 9px 15px;
+
+  border: 1px solid rgba(184, 135, 75, 0.65);
+  border-radius: 8px;
+
+  background: #0a2b2c;
+  color: #f6f1e4;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Hilangkan underline animasi navbar */
+.links .admin-nav-btn::after {
+  display: none;
+}
+
+
+.links .admin-nav-btn:hover {
+  background: #0f3d3e;
+  border-color: #b8874b;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 720px) {
+
+  .links .admin-nav-btn {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 12px 16px;
+
+    border-radius: 8px;
+  }
+
+}
